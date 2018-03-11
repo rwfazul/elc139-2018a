@@ -10,16 +10,18 @@ Nome: Rhauani Weber Aita Fazul
 | Nome/Título                                               | Raijin                | Aspire E1-572   |
 | Imagem (foto, diagrama, screenshot, etc.)                 | <img src="http://nci.org.au/wp-content/uploads/2013/06/NCRIS-Raijin2-3-768x506.jpg" width="250"> | <img src="https://global-download.acer.com/Image/ModelPictures/Notebook/Aspire%20E1-572.png" width="250"> |
 | Classificação de Flynn                                    | MIMD                  | MIMD            |
-| Memória: compartilhada, distribuída ou ambas?             | Distribuída           | Compartilhada   |
+| Memória: compartilhada, distribuída ou ambas?             | Distribuída¹          | Compartilhada   |
 | Número total de núcleos de processamento                  | 87.224                | 2               |
 | Fabricante e modelo do(s) processador(es)                 | Xeon E5-2690v4        | Intel® Core™ i5-4200U |
 | Frequência do(s) processador(es)                          | 2.6GHz                | 1.60GHz ~ 2,60GHz (Turbo Boost) |
 | Memória total                                             | 327.328 GB            | 4 GB             |
 | Tipo(s) de interconexão entre os núcleos/processadores    | Infiniband EDR        | Intel® QuickPath Interconnect (QPI) |
-| Desempenho Linpack                                        | 1,676.22 (High-Performance Linpack Benchmark) | 61.6771* (Intel® Distribution for LINPACK Benchmark) |
+| Desempenho Linpack                                        | 1,676.22 (High-Performance Linpack Benchmark) | 61.6771² (Intel® Distribution for LINPACK Benchmark) |
 
 
-* O input utilizado para os testes pode ser encontrado [aqui](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t1/input.txt). O valor obtido equivale ao melhor resultado do respectivo [arquivo de log](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t1/log_output.txt).
+¹ A Memória é distribuida a nível do cluster. A nível dos nodes, existe memória compartilhada (os nodes possuem processadores dual 8- ou 14-core Intel Xeon (Sandy Bridge, Broadwell 2.6 GHz), ou seja, 16 ou 28 cores por unidade com compartilhamento de memória).
+
+² O input utilizado para os testes pode ser encontrado [aqui](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t1/input.txt). O valor obtido equivale ao melhor resultado do respectivo [arquivo de log](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t1/log_output.txt).
 
 ### Referências
 - ABC. <i>Raijin is the supercomputer Australian researchers call on to crunch the numbers.</i> https://goo.gl/a9ece1
