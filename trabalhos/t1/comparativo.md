@@ -16,24 +16,28 @@ Nome: Rhauani Weber Aita Fazul
 | Frequência do(s) processador(es)                          | 2.6GHz                | 1.60GHz ~ 2,60GHz (Turbo Boost) |
 | Memória total                                             | 327.328 GB            | 4 GB             |
 | Tipo(s) de interconexão entre os núcleos/processadores    | Infiniband EDR        | Intel® QuickPath Interconnect (QPI) |
-| Desempenho Linpack                                        | 1,676.22 (High-Performance Linpack Benchmark) | 61.6771² (Intel® Distribution for LINPACK Benchmark) |
+| Desempenho Linpack                                        | 1,676.22 (High-Performance Linpack Benchmark) | 61.6771 (Intel® Distribution for LINPACK Benchmark)² |
 
 
-¹ A Memória é distribuida a nível do cluster. A nível dos nodes, existe memória compartilhada (os nodes possuem processadores dual 8- ou 14-core Intel Xeon (Sandy Bridge, Broadwell 2.6 GHz), ou seja, 16 ou 28 cores por unidade com compartilhamento de memória).
+¹ A Memória é distribuída a nível do cluster. A nível dos nodes, existe memória compartilhada (os nodes possuem processadores dual 8- ou 14-core Intel Xeon (Sandy Bridge, Broadwell 2.6 GHz), ou seja, 16 ou 28 cores por unidade com compartilhamento de memória).
 
 ² O input utilizado para os testes pode ser encontrado [aqui](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t1/input.txt). O valor obtido equivale ao melhor resultado do respectivo [arquivo de log](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t1/log_output.txt).
 
 ### Referências
 - ABC. <i>Raijin is the supercomputer Australian researchers call on to crunch the numbers.</i> https://goo.gl/a9ece1
+- EDUX. <i>Shared memory and distributed memory multiprocessor systems.</i> https://goo.gl/bEwKoR
+- GeeksforGeeks. <i>Computer Architecture | Flynn’s taxonomy</i>. https://goo.gl/AAfvRN
 - Gizmodo. <i>Meet Australia's Fastest Supercomputer.</i> https://goo.gl/WXYvi7
 - NCI. <i>NCI NAMED AUSTRALIA’S FASTEST SUPERCOMPUTER.</i> https://goo.gl/tYcqu1
 - NCI. <i>Raijin.</i> https://goo.gl/jGpn9a
 - Netlib. <i>HPL - A Portable Implementation of the High-Performance Linpack Benchmark for Distributed-Memory Computers.</i> https://goo.gl/ks4Fap
 - insideHPC. <i>NCI Doubles Raijin Supercomputer Throughput with IBM POWER8.</i> https://goo.gl/E7tFwJ
+- IEEE Xplore Digital Library. <i>A distributed memory MIMD multi-computer with reconfigurable custom computing capabilities.</i> https://goo.gl/kq4og5
 - Intel. <i>Aspire E1-572: Product Details.</i> https://goo.gl/hPssxL
 - Intel. <i>Intel® Core™ i5-4200U Processor.</i> https://goo.gl/6abph2
 - Intel. <i>Intel® Distribution for LINPACK Benchmark.</i> https://goo.gl/d7WSTr
 - Intel. <i>QuickPath Interconnect.</i> https://goo.gl/1hUcS1
 - iTnews. <i>NCI gets $70m to overhaul Raijin supercomputer.</i> https://goo.gl/4g7wDS
 - Top500. <i>Raijin - Hybrid Cluster PRIMERGY/x3550 M5/PowerEdge/Rackable/Rackable, Xeon , Infiniband EDR, NVIDIA Tesla P100, Xeon Phi.</i> https://goo.gl/p9YF1k
+- TutorialsPoint. <i>Parallel Computer Architecture - Models.</i> https://goo.gl/1fGddB
 - ZDNet. <i>NCI scores Raijin replacement and aims for top 25 supercomputer.</i> https://goo.gl/EFpX2d
