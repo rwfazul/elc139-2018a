@@ -31,11 +31,16 @@ As opções de configuração afetam diretamente o tempo gasto em cada chamada d
 
 A figura abaixo ilustra um exemplo de perfil gerado com parâmetros de configuração altos (tamanho do vetor = 30000000 e repetições = 90). Perceba que, caso fosse gerado um perfil a partir de uma configuração menor (ex. tamanho do vetor = 3000 e repetições = 10), o número de chamadas de cada função (coluna <i>calls</i>) se manteria o mesmo. A variação ocorreria no tempo gasto em cada função.
 
-![Exemplo de perfil gerado.](https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/imagens/dotprod_seq-exemploPerfil.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/imagens/dotprod_seq-exemploPerfil.png" alt="Exemplo de perfil gerado." width="70%"/>
+</p>
+
 
 O gráfico abaixo ilustra como os parâmetros de configuração referentes ao tamanho do vetor e ao número de repetições afetam o tempo de execução do programa.
 
-![Tempo gasto pelo programa com diferentes configurações.](https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/imagens/dotprod_seq-graficoTempos.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/imagens/dotprod_seq-graficoTempos.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
+</p>
 
 Uma alternativa para diminuir estes tempo é realizar a execução em paralelo de certos trechos do programa. A seção seguinte discute como essa paralelização poderia ser realizada.
 	
