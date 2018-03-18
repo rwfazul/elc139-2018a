@@ -30,56 +30,56 @@ Aluno: Rhauani Weber Aita Fazul
 ```
 O perfil é afetado pelas opções de configuração?
 ```
-<p align="justify">As opções de configuração afetam diretamente o tempo gasto em cada chamada de função realizada pelo programa. Já no que tange o número e a ordem dessas chamadas, o perfil se mantém o mesmo independente das configurações.</p>
+As opções de configuração afetam diretamente o tempo gasto em cada chamada de função realizada pelo programa. Já no que tange o número e a ordem dessas chamadas, o perfil se mantém o mesmo independente das configurações.
 
-<p align="justify">A figura abaixo ilustra um exemplo de perfil gerado com parâmetros de configuração altos (vetor com 30000000 posições e 90 repetições do cálculo). Perceba que, caso fosse gerado um perfil a partir de uma configuração menor (ex. vetor com 3000 posições e 10 repetições do cálculo), o número de chamadas de cada função (coluna <i>calls</i>) se manteria o mesmo. A variação ocorreria no tempo gasto em cada função, conforme exemplos observados no <a href="#">perfil I</a> e <a href="#">perfil II</a>.</p>
+A figura abaixo ilustra um exemplo de perfil gerado com parâmetros de configuração altos (vetor com 30000000 posições e 90 repetições do cálculo). Perceba que, caso fosse gerado um perfil a partir de uma configuração menor (ex. vetor com 3000 posições e 10 repetições do cálculo), o número de chamadas de cada função (coluna _calls_) se manteria o mesmo. A variação ocorreria no tempo gasto em cada função, conforme exemplos observados no <a href="#">perfil I</a> e <a href="#">perfil II</a>.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/imagens/dotprod_seq-exemploPerfil.png" alt="Exemplo de perfil gerado." width="70%"/>
 </p>
 
-<p align="justify">Realizando várias execuções do programa (através do script <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/dotprod_seq/run_tests.sh"><i>run_tests.sh</i></a>), foi possível gerar o gráfico abaixo, que ilustra como diferentes parâmetros de configuração afetam o tempo de execução do programa. Duas relações podem ser observadas: i) impacto do aumento do tamanho do vetor para o cálculo do produto escalar e ii) impacto do aumento do número de repetições do cálculo.</p>
+Realizando várias execuções do programa (através do _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/dotprod_seq/run_tests.sh">_run\_tests.sh_</a>), foi possível gerar o gráfico abaixo, que ilustra como diferentes parâmetros de configuração afetam o tempo de execução do programa. Duas relações podem ser observadas: i) impacto do aumento do tamanho do vetor para o cálculo do produto escalar e ii) impacto do aumento do número de repetições do cálculo.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/imagens/dotprod_seq-graficoTempos.png" alt="Tempo gasto pelo programa com diferentes configurações." width="80%"/>
 </p>
 
-<p align="justify">Uma alternativa para diminuir estes tempo é realizar a execução em paralelo de certos trechos do programa. A seção seguinte discute como essa paralelização poderia ser realizada.</p>
+Uma alternativa para diminuir estes tempo é realizar a execução em paralelo de certos trechos do programa. A seção seguinte discute como essa paralelização poderia ser realizada.
 	
 <a name="paralelizacao"></a>	
 ### Possível paralelização 
 ```
 Pelo perfil de execução, há alguma função que poderia ser candidata a paralelização? Por quê?
 ```
-<p align="justify">Em uma análise 'black box', levando em consideração o perfil apresentado anteriormente, percebe-se que a função <i>dot_product()</i> é a responsável por 92.74% do tempo total de execução do programa. Logo, sendo o 'gargalo' de tempo, seria a opção mais lógica a ser analisada.</p>
+Em uma análise '_black box_', levando em consideração o perfil apresentado anteriormente, percebe-se que a função _dot\_product()_ é a responsável por 92.74% do tempo total de execução do programa. Logo, sendo o 'gargalo' de tempo, seria a opção mais lógica a ser analisada.
 
-<p align="justify">Já ao observar o trecho de código referente a essa função, percebe-se que a parelização poderia ser sim, de fato, realizada. Em um cenário paralelo do programa analisado, a divisão de carga entre os <i>threads</i>/processos poderia ocorrer de diversas maneiras.</p>
+Já ao observar o trecho de código referente a essa função, percebe-se que a parelização poderia ser sim, de fato, realizada. Em um cenário paralelo do programa analisado, a divisão de carga entre os _threads_/processos poderia ocorrer de diversas maneiras.
 
-<p align="justify">Sendo **r** o número de repetições do cálculo do produto escalar realizada pela função <i>dot_product()</i>, **v** o tamanho dos vetores utilizados no cálculo e **t** o número de <i>threads</i>/processos a serem criados. Três das opções de parelização possíves seriam:</p>
+Sendo **r** o número de repetições do cálculo do produto escalar realizada pela função _dot\_product()_, **v** o tamanho dos vetores utilizados no cálculo e **t** o número de _threads_/processos a serem criados. Três das opções de parelização possíves seriam:
 
-<p align="justify">- **Paralelizar as repetições**: fazer com que cada unidade de paralelização seja responsável por (**r** / **t**) das repetições do cálculo do produto escalar. Logo, desconsiderando o <i>overhead</i> de criação/gerência das <i>threads</i>/processos e considerando que seja possível realizar a execução 100% do tempo em paralelo, o tempo gasto na execução do programa reduziria em **t**;</p>
-<p align="justify">- **Paralelizar o cálculo do produto escalar**: fazer com que, dentro de uma repetição, sejam realizadas somas parcias do produto dos vetores. Desta forma, a divisão (**v** / **t**) faria com que cada unidade executasse somente os cálculos de seu intervalo (<i>range</i> de atuação) e o resultado final do cálculo fosse obtido ao somar os resultados parciais (ex. no <i>join</i> das <i>threads</i>). Logo, desconsiderando o <i>overhead</i> de criação/gerência das unidades e considerando que seja possível realizar a execução 100% do tempo em paralelo, o tempo gasto na execução do programa em cada iteração do cálculo reduziria em **t**;</p>
-<p align="justify">- **Parelelizar ambos**: Como não há dependência entre os dois laços (repetições e cálculo), poderia-se dividir as iterações em **t¹** unidades de paralelização e, em cada uma das iterações, realizar a divisão em **t²** unidades com base no intervalo do cálculo do produto escalar. Em um mundo ideial, o tempo de execução do programa seria reduzido em (**t¹** x **t²**), na prática, o desempenho possivelmente seria melhorado em uma ordem inferior.</p>
+	- **Paralelizar as repetições**: fazer com que cada unidade de paralelização seja responsável por (**r** / **t**) das repetições do cálculo do produto escalar. Logo, desconsiderando o _overhead_ de criação/gerência das <i>threads</i>/processos e considerando que seja possível realizar a execução 100% do tempo em paralelo, o tempo gasto na execução do programa reduziria em **t**;
+	- **Paralelizar o cálculo do produto escalar**: fazer com que, dentro de uma repetição, sejam realizadas somas parcias do produto dos vetores. Desta forma, a divisão (**v** / **t**) faria com que cada unidade executasse somente os cálculos de seu intervalo (_range_ de atuação) e o resultado final do cálculo fosse obtido ao somar os resultados parciais (ex. no _join_ das _threads_). Logo, desconsiderando o <i>overhead</i> de criação/gerência das unidades e considerando que seja possível realizar a execução 100% do tempo em paralelo, o tempo gasto na execução do programa em cada iteração do cálculo reduziria em **t**;
+	- **Parelelizar ambos**: Como não há dependência entre os dois laços (repetições e cálculo), poderia-se dividir as iterações em **t¹** unidades de paralelização e, em cada uma das iterações, realizar a divisão em **t²** unidades com base no intervalo do cálculo do produto escalar. Em um mundo ideial, o tempo de execução do programa seria reduzido em (**t¹** &times; **t²**), na prática, o desempenho possivelmente seria melhorado em uma ordem inferior.
 
-<p align="justify">Em complemento, a função <i>init_vectors()</i>, embora execute em uma parcela muito pequena do programa (2.79%), também poderia ser paralelizada. Caberia analisar se o <i>overhead</i> de criação/gerência das unidades de paralelização seria diluído no ganho de desempenho no momento de inicialização do vetor (vetores muito grandes tendem a compensar esta parelização).</p>
+Em complemento, a função <i>init_vectors()</i>, embora execute em uma parcela muito pequena do programa (2.79%), também poderia ser paralelizada. Caberia analisar se o <i>overhead</i> de criação/gerência das unidades de paralelização seria diluído no ganho de desempenho no momento de inicialização do vetor (vetores muito grandes tendem a compensar esta parelização).
 
    
 <!-- PARTE 2 -->
 ## Parte 2
 
 ### OProfile
-```
-<p align="justify">OProfile é um projeto <i>open source</i> que inclui uma profiler estático para sistemas Linux (<i>operf</i>), capaz de realizar o <i>profiling</i> de aplicações com um baixo <i>overhead</i>. A ferramenta utiliza o hardware de monitoramento de desempenho do(s) processador(es) para recuperar informações sobre o kernel e os executáveis do sistema. OProfile também é capaz de gerar o perfil de aplicações que rodam em uma máquina virtual Java (JVM).</p>
-```
-<p align="justify">Características:</p>
+_OProfile_ é um projeto _open source_ que inclui uma profiler estático para sistemas Linux (_operf_), capaz de realizar o _profiling_de aplicações com um baixo _overhead_. A ferramenta utiliza o hardware de monitoramento de desempenho do(s) processador(es) para recuperar informações sobre o kernel e os executáveis do sistema. OProfile também é capaz de gerar o perfil de aplicações que rodam em uma máquina virtual Java (JVM).
+
+
+Características:
 
 	- Categoria: Amostragem;
-	- Análise dos resultados: <i>Post mortem</i> com um dos utilitários inclusos (ex. <i>opreport</i>);
+	- Análise dos resultados: _Post mortem_ com um dos utilitários inclusos (ex. _opreport_);
 	- Não necessita de recompilação;
 	- O perfil pode ser gerado para todo o código rodando no sistema ou para processos individuais;	
 	- Consegue analisar os eventos da aplicação corrente, de um conjunto de processos ou threads, sub-conjunto de processadores ou do sistema inteiro;
-	- Trabalha bem com aplicações que realizam <i>fork</i>-><i>execs</i> e aplicações <i>multithreaded</i>;
-	- O <i>overhead</i> típico gira em torno de 1-8%, dependendo da frequência de amostragem e da carga de tabalho.
+	- Trabalha bem com aplicações que realizam _fork_->_execs_ e aplicações _multithreaded_;
+	- O _overhead_ típico gira em torno de 1-8%, dependendo da frequência de amostragem e da carga de tabalho.
 
 <a name="opinstalacao"></a>	
 #### Instalação 
@@ -91,39 +91,38 @@ Pelo perfil de execução, há alguma função que poderia ser candidata a paral
 <a name="opconfig"></a>	
 #### Configuração e funcionamento
 
-<p align="justify">Realizar o <i>profiling</i> com o <i>operf</i> permite direcionar, com precisão, o perfil desejado (ex. único processo ou múltiplos). Formas de controlar o profiler e a listagem de parâmetros de configuração podem ser encontradas em detalhes <a href="http://oprofile.sourceforge.net/doc/controlling-profiler.html">aqui</a>. Para utilizar a ferramenta com uma configuração básica (sem opções definidas) é utilizado o seguinte comando:</p>
+Realizar o _profiling_ com o **_operf_** permite direcionar, com precisão, o perfil desejado (ex. único processo ou múltiplos). Formas de controlar o _profiler_ e a listagem de parâmetros de configuração podem ser encontradas em detalhes <a href="http://oprofile.sourceforge.net/doc/controlling-profiler.html">aqui</a>. Para utilizar a ferramenta com uma configuração básica (sem opções definidas) é utilizado o seguinte comando:
 
 ```
 	$ operf ./meu_programa <meus_args>
 ```
 
-<p align="justify">Quando ./meu_programa finalizar (ou quando Crtl+C for pressionado), o <i>profiling</i> finaliza (o diretório <i>oprofile_data</i> é criado) e o resultado pode ser analisado com as ferramentas de pós-processamento. O utilitário <i>opreport</i> é a principal ferramenta para obter os resultados formatados a partir do Oprofile.</p>
+Quando _./meu/_programa_ finalizar (ou quando _Crtl+C_ for pressionado), o _profiling_ finaliza (o diretório _oprofile\_data_ é criado) e o resultado pode ser analisado com as ferramentas de pós-processamento. O utilitário **_opreport_** é a principal ferramenta para obter os resultados formatados a partir do _Oprofile_.
 
-<p align="justify">A ferramenta pode ser utilizada para analisar o resultado das mais variadas formas, como por exemplo, comparar resultados de dois perfis diferentes, gerar um XML com os dados e exibir o grafo de chamadas das funções. A listagem de parâmetros de configuração podem ser encontradas em detalhes <a href="http://oprofile.sourceforge.net/doc/opreport.html">aqui</a>. O seguinte comando resulta na forma mais básica de análise dos resultados:</p>
+A ferramenta pode ser utilizada para analisar o resultado das mais variadas formas, como por exemplo, comparar resultados de dois perfis diferentes, gerar um XML com os dados e exibir o grafo de chamadas das funções. A listagem de parâmetros de configuração podem ser encontradas em detalhes <a href="http://oprofile.sourceforge.net/doc/opreport.html">aqui</a>. O seguinte comando resulta na forma mais básica de análise dos resultados:
 
 ```
 	$ opreport
 ```
 
-<p align="justify">Este comando deve ser executado no mesmo diretório onde o comando para realizar o perfil foi executado (por <i>default</i> no mesmo diretório de ./meu_programa).</p>
+Este comando deve ser executado no mesmo diretório onde o comando para realizar o perfil foi executado (por _default_ no mesmo diretório de _./meu\_programa_).
 
 <a name="opresultados"></a>	
 #### Resultados
 
 
 ### Callgrind
-```
-<p align="justify">Callgrind é uma ferramenta de <i>profiling</i> inclusa no <i>framework open source</i> Valgrind. Por ser uma framework muito bem consolidado e com grande apoio da comunidade, possui uma documentação extensiva e diversas outras ferramentas para apoio e funcionalidades extras.</p>
-```
-<p align="justify">Características:</p>
+<i>Callgrind</i> é uma ferramenta de _profiling_ inclusa no _framework open source_ **_Valgrind_**. Por ser uma _framework_ muito bem consolidado e que recebe grande apoio da comunidade, possui uma documentação extensiva e diversas outras ferramentas para apoio e funcionalidades extras.
+
+Características:
 
 	- Categoria: Instrumentação;
-	- Análise dos resultados: <i>Post mortem</i>;
+	- Análise dos resultados: _Post mortem_;
 	- Não necessita de recompilação;
-	- Também consegue realizar o perfil de bibliotecas compartilhadas, plugins;
-	- Trabalha bem com aplicações <i>multithreaded</i>;
+	- Também consegue realizar o perfil de bibliotecas compartilhadas, _plugins_ e demais recursos;
+	- Trabalha bem com aplicações _multithreaded_;
 	- Possui ferramentas muito boas para visualização dos dados dos perfis gerados;
-	- O desempenho do programa é bastante prejudicado (instrumentação gera maior <i>overhead</i> que amostragem) ao realizar o <i>profiling</i>;
+	- O desempenho do programa é bastante prejudicado (instrumentação gera maior _overhead_ que amostragem) ao realizar o _profiling_;
 	
 <a name="cginstalacao"></a>	
 #### Instalação 
@@ -131,25 +130,25 @@ Pelo perfil de execução, há alguma função que poderia ser candidata a paral
 	$ sudo apt-get install valgrind kcachegrind graphviz
 ```
 
-O comando acima inclui a ferramenta para visualização <i>KCachegrind</i> (que por sua vez necessita da <i>graphviz</i>).
+O comando acima inclui a ferramenta para visualização **_KCachegrind_** (que por sua vez necessita do pacote _graphviz_).
 
 <a name="cgconfig"></a>	
 #### Configuração e funcionamento
 
-<p align="justify">Primeiramente deve-se realizar o <i>profiling</i> da aplicação com o Callgrind. Formas de controlar o profiler e a listagem de parâmetros de configuração podem ser encontradas em detalhes <a href="http://valgrind.org/docs/manual/cl-manual.html#cl-manual.options">aqui</a>. Para utilizar a ferramenta com uma configuração básica é utilizado o seguinte comando:</p>
+Primeiramente deve-se realizar o _profiling_ da aplicação com o _Callgrind_. Formas de controlar o _profiler_ e a listagem de parâmetros de configuração podem ser encontradas em detalhes <a href="http://valgrind.org/docs/manual/cl-manual.html#cl-manual.options">aqui</a>. Para utilizar a ferramenta com uma configuração básica é utilizado o seguinte comando:
 
 ```
 	$ valgrind --tool=callgrind ./meu_programa <meus_args>
 ```
 
 
-<p align="justify">O resultado será salvo em um arquivo de saída (por padrão no mesmo diretório). Este arquivo pode ser lido em um editor de texto qualquer, porém é aconselhado o uso de uma ferramenta específica para a visualização, como o <i>KCachegrind</i>.</p>
+O resultado será salvo em um arquivo de saída (por padrão no mesmo diretório). Este arquivo pode ser lido em um editor de texto qualquer, porém é aconselhado o uso de uma ferramenta específica para a visualização, como o _KCachegrind_.
 
 ```
 	$ kcachegrind callgrind.out.PID
 ```
 
-<p align="justify">Detalhes dos recursos da ferramenta são abordados na seção seguinte.</p>
+Detalhes dos recursos da ferramenta são abordados na seção seguinte.
 
 <a name="cgresultados"></a>	
 #### Resultados
