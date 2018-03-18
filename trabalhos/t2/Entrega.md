@@ -55,11 +55,11 @@ Em uma análise '_black box_', levando em consideração o perfil apresentado an
 
 Já ao observar o trecho de código referente a essa função, percebe-se que a parelização poderia ser sim, de fato, realizada. Em um cenário paralelo do programa analisado, a divisão de carga entre os _threads_/processos poderia ocorrer de diversas maneiras.
 
-Sendo **r** o número de repetições do cálculo do produto escalar realizada pela função _dot\_product()_, **v** o tamanho dos vetores utilizados no cálculo e **t** o número de _threads_/processos a serem criados. Três das opções de parelização possíves seriam:
+Sendo **_r_** o número de repetições do cálculo do produto escalar realizada pela função _dot\_product()_, **_v_** o tamanho dos vetores utilizados no cálculo e **_t_** o número de _threads_/processos a serem criados. Três das opções de parelização possíves seriam:
 
-	- **Paralelizar as repetições**: fazer com que cada unidade de paralelização seja responsável por (**r** / **t**) das repetições do cálculo do produto escalar. Logo, desconsiderando o _overhead_ de criação/gerência das <i>threads</i>/processos e considerando que seja possível realizar a execução 100% do tempo em paralelo, o tempo gasto na execução do programa reduziria em **t**;
-	- **Paralelizar o cálculo do produto escalar**: fazer com que, dentro de uma repetição, sejam realizadas somas parcias do produto dos vetores. Desta forma, a divisão (**v** / **t**) faria com que cada unidade executasse somente os cálculos de seu intervalo (_range_ de atuação) e o resultado final do cálculo fosse obtido ao somar os resultados parciais (ex. no _join_ das _threads_). Logo, desconsiderando o <i>overhead</i> de criação/gerência das unidades e considerando que seja possível realizar a execução 100% do tempo em paralelo, o tempo gasto na execução do programa em cada iteração do cálculo reduziria em **t**;
-	- **Parelelizar ambos**: Como não há dependência entre os dois laços (repetições e cálculo), poderia-se dividir as iterações em **t¹** unidades de paralelização e, em cada uma das iterações, realizar a divisão em **t²** unidades com base no intervalo do cálculo do produto escalar. Em um mundo ideial, o tempo de execução do programa seria reduzido em (**t¹** &times; **t²**), na prática, o desempenho possivelmente seria melhorado em uma ordem inferior.
+- **Paralelizar as repetições**: fazer com que cada unidade de paralelização seja responsável por (**_r_** / **_t_**) das repetições do cálculo do produto escalar. Logo, desconsiderando o _overhead_ de criação/gerência das <i>threads</i>/processos e considerando que seja possível realizar a execução 100% do tempo em paralelo, o tempo gasto na execução do programa reduziria em **_t_**;
+- **Paralelizar o cálculo do produto escalar**: fazer com que, dentro de uma repetição, sejam realizadas somas parcias do produto dos vetores. Desta forma, a divisão (**_v_** / **_t_**) faria com que cada unidade executasse somente os cálculos de seu intervalo (_range_ de atuação) e o resultado final do cálculo fosse obtido ao somar os resultados parciais (ex. no _join_ das _threads_). Logo, desconsiderando o <i>overhead</i> de criação/gerência das unidades e considerando que seja possível realizar a execução 100% do tempo em paralelo, o tempo gasto na execução do programa em cada iteração do cálculo reduziria em **_t_**;
+- **Parelelizar ambos**: Como não há dependência entre os dois laços (repetições e cálculo), poderia-se dividir as iterações em **_t¹_** unidades de paralelização e, em cada uma das iterações, realizar a divisão em **_t²_** unidades com base no intervalo do cálculo do produto escalar. Em um mundo ideial, o tempo de execução do programa seria reduzido em (**_t¹_** &times; **_t²_**), na prática, o desempenho possivelmente seria melhorado em uma ordem inferior.
 
 Em complemento, a função <i>init_vectors()</i>, embora execute em uma parcela muito pequena do programa (2.79%), também poderia ser paralelizada. Caberia analisar se o <i>overhead</i> de criação/gerência das unidades de paralelização seria diluído no ganho de desempenho no momento de inicialização do vetor (vetores muito grandes tendem a compensar esta parelização).
 
@@ -68,18 +68,19 @@ Em complemento, a função <i>init_vectors()</i>, embora execute em uma parcela 
 ## Parte 2
 
 ### OProfile
-_OProfile_ é um projeto _open source_ que inclui uma profiler estático para sistemas Linux (_operf_), capaz de realizar o _profiling_de aplicações com um baixo _overhead_. A ferramenta utiliza o hardware de monitoramento de desempenho do(s) processador(es) para recuperar informações sobre o kernel e os executáveis do sistema. OProfile também é capaz de gerar o perfil de aplicações que rodam em uma máquina virtual Java (JVM).
+_OProfile_ é um projeto _open source_ que inclui uma profiler estático para sistemas Linux (_operf_), capaz de realizar o _profiling_ de aplicações com um baixo _overhead_. A ferramenta utiliza o hardware de monitoramento de desempenho do(s) processador(es) para recuperar informações sobre o kernel e os executáveis do sistema. _OProfile_ também é capaz de gerar o perfil de aplicações que rodam em uma máquina virtual Java (JVM).
 
 
 Características:
 
-	- Categoria: Amostragem;
-	- Análise dos resultados: _Post mortem_ com um dos utilitários inclusos (ex. _opreport_);
-	- Não necessita de recompilação;
-	- O perfil pode ser gerado para todo o código rodando no sistema ou para processos individuais;	
-	- Consegue analisar os eventos da aplicação corrente, de um conjunto de processos ou threads, sub-conjunto de processadores ou do sistema inteiro;
-	- Trabalha bem com aplicações que realizam _fork_->_execs_ e aplicações _multithreaded_;
-	- O _overhead_ típico gira em torno de 1-8%, dependendo da frequência de amostragem e da carga de tabalho.
+- Categoria: Amostragem;
+- Análise dos resultados: _Post mortem_ com um dos utilitários inclusos (ex. _opreport_);
+- Não necessita de recompilação;
+- O perfil pode ser gerado para todo o código rodando no sistema ou para processos individuais;	
+- Consegue analisar os eventos da aplicação corrente, de um conjunto de processos ou threads, sub-conjunto de processadores ou do sistema inteiro;
+- Trabalha bem com aplicações que realizam _fork_->_execs_ e aplicações _multi-threaded_;
+- Pode atuar sobre aplicações que já estão rodando, bastanto apontar seu PID e finalizar o _profiling_ com _CTRL+C_;
+- O _overhead_ típico gira em torno de 1-8%, dependendo da frequência de amostragem e da carga de tabalho.
 
 <a name="opinstalacao"></a>	
 #### Instalação 
@@ -97,7 +98,7 @@ Realizar o _profiling_ com o **_operf_** permite direcionar, com precisão, o pe
 	$ operf ./meu_programa <meus_args>
 ```
 
-Quando _./meu/_programa_ finalizar (ou quando _Crtl+C_ for pressionado), o _profiling_ finaliza (o diretório _oprofile\_data_ é criado) e o resultado pode ser analisado com as ferramentas de pós-processamento. O utilitário **_opreport_** é a principal ferramenta para obter os resultados formatados a partir do _Oprofile_.
+Quando _./meu\_programa_ finalizar (ou quando _Crtl+C_ for pressionado), o _profiling_ finaliza (o diretório _oprofile\_data_ é criado) e o resultado pode ser analisado com as ferramentas de pós-processamento. O utilitário **_opreport_** é a principal ferramenta para obter os resultados formatados a partir do _Oprofile_.
 
 A ferramenta pode ser utilizada para analisar o resultado das mais variadas formas, como por exemplo, comparar resultados de dois perfis diferentes, gerar um XML com os dados e exibir o grafo de chamadas das funções. A listagem de parâmetros de configuração podem ser encontradas em detalhes <a href="http://oprofile.sourceforge.net/doc/opreport.html">aqui</a>. O seguinte comando resulta na forma mais básica de análise dos resultados:
 
@@ -109,7 +110,33 @@ Este comando deve ser executado no mesmo diretório onde o comando para realizar
 
 <a name="opresultados"></a>	
 #### Resultados
+O programa utilizado para os testes (<a href="">_seriesPI.c_</a>) é uma aplicação _multi-threaded_ que utiliza _Pthreads_. Seu funcionamento é descrito abaixo:
 
+- Consiste em um programa que calcula o valor de Pi através de quatro séries matemáticas distintas;
+- É criado um processo (através da chamada de sistema _fork_) para cada uma das séries (estrutura _master/slave_, onde o mestre é o processo inicial _./seriesPi_);
+- Cada processo escravo cria **_n_** _threads_, sendo este o parâmetro recebido pela linha de comando (_argc_);
+- Cada _thread_ realiza uma parte do cálculo de sua respectiva série. A divisão de carga de cada _thread_ utiliza como base o número total de iterações necessárias para o cálculo de cada uma das seríe. O total é distribuído em intervalos de mesmo tamanho entre as **_n_** _threads_.
+
+Como a aplicação possui mais de uma _thread_ (para os testes, utilizou-se **_n_** = 4), as configurações para execução do profiler foram as seguintes:
+
+```
+	$ operf --separate-thread --separate-cpu --callgraph ./seriesPi 4
+```
+
+E para visualizar os resultados:
+
+```
+	$ opereport --long-filenames --merge --callgraph --xml
+```
+
+A figura abaixo ilustra o resultado obtido:
+
+<p align="justify">
+	<img src="" alt="" width="80%"/>
+</p>
+
+
+Todos os resultados gerados podem ser encotrados <a href="">aqui</a>. Ferramentas de visualização gráficas podem ser utilizadas para facilitar a análise, durante a apresentação do próximo _profiler_ uma destas possíveis ferramentas será apresentada.
 
 ### Callgrind
 <i>Callgrind</i> é uma ferramenta de _profiling_ inclusa no _framework open source_ **_Valgrind_**. Por ser uma _framework_ muito bem consolidado e que recebe grande apoio da comunidade, possui uma documentação extensiva e diversas outras ferramentas para apoio e funcionalidades extras.
@@ -120,7 +147,7 @@ Características:
 	- Análise dos resultados: _Post mortem_;
 	- Não necessita de recompilação;
 	- Também consegue realizar o perfil de bibliotecas compartilhadas, _plugins_ e demais recursos;
-	- Trabalha bem com aplicações _multithreaded_;
+	- Trabalha bem com aplicações que realizam _fork_->_execs_ e aplicações _multi-threaded_;
 	- Possui ferramentas muito boas para visualização dos dados dos perfis gerados;
 	- O desempenho do programa é bastante prejudicado (instrumentação gera maior _overhead_ que amostragem) ao realizar o _profiling_;
 	
@@ -142,7 +169,7 @@ Primeiramente deve-se realizar o _profiling_ da aplicação com o _Callgrind_. F
 ```
 
 
-O resultado será salvo em um arquivo de saída (por padrão no mesmo diretório). Este arquivo pode ser lido em um editor de texto qualquer, porém é aconselhado o uso de uma ferramenta específica para a visualização, como o _KCachegrind_.
+O resultado da execução do programa será salvo em um arquivo de saída (por padrão no mesmo diretório) para cada processo/_thread_, sufixado com seu PID. Este arquivo pode ser lido em um editor de texto qualquer, porém é aconselhado o uso de uma ferramenta específica para a visualização, como o _KCachegrind_. Para isso, o seguinte comando pode ser executado:
 
 ```
 	$ kcachegrind callgrind.out.PID
@@ -152,7 +179,20 @@ Detalhes dos recursos da ferramenta são abordados na seção seguinte.
 
 <a name="cgresultados"></a>	
 #### Resultados
-If you are running a multi-threaded application and specify the command line option --separate-threads=yes, every thread will be profiled on its own and will create its own profile dump. Thus, the last two methods will only generate one dump of the currently running thread. With the other methods, you will get multiple dumps (one for each thread) on a dump request.
+
+O programa <a href="">_seriesPI.c_</a>, já apresentado anteriormente, também foi utilizado para os testes com o _callgrind_. O comando utilizado para execução foi:
+
+```
+	$ valgrind --tool=callgrind --separate-threads=yes ./seriesPi 4
+```
+
+A opção --_separate-threads_=_yes_ faz com que um perfil seja gerado para cada _thread_, o argumento 4 diz respeito a quantidade de _threads_ que cada processo gerado pelo programa (total de 4 processos) cria para realizar os cálculos de cada série. Ao total são criados 4 processos e 16 _threads_. Sendo assim, conforme os arquivos de saída que podem ser observados <a href="">aqui</a>, pode-se observar o perfil individual de cada uma das _threads_ e, também, de cada um dos processos.
+
+A figura abaixo ilustra um exemplo de um perfil analisado com o _KCachegrind_.
+
+<p align="justify">
+	<img src="" alt="" width="80%"/>
+</p>
 
 ### Extra
 	- Dúvidas e/ou dificuldades encontradas
@@ -161,15 +201,16 @@ If you are running a multi-threaded application and specify the command line opt
 <!-- REFERÊNCIAS -->
 <a name="referencias"></a>
 ## Referências 
-
-- The Geek Stuff. <i>GPROF Tutorial – How to use Linux GNU GCC Profiling Tool.</i> https://goo.gl/unADsP
-- sourceware. <i>GNU gprof.</i> https://goo.gl/A5ie8Y
-
-- OProfile. <i>OProfile - A System Profiler for Linux.</i> http://oprofile.sourceforge.net/news/
-- IBM. <i>Getting started with OProfile.</i> https://goo.gl/SYkFXL
-- Oprofile. <i>Chapter 3. Controlling the profiler.</i> http://oprofile.sourceforge.net/doc/controlling-profiler.html
-- Oprofile. <i>Image summaries and symbol summaries (opreport).</i> http://oprofile.sourceforge.net/doc/opreport.html
-
-- Valgrind. <i>Callgrind: a call-graph generating cache and branch prediction profiler.</i> http://valgrind.org/docs/manual/cl-manual.html
-https://baptiste-wicht.com/posts/2011/09/profile-c-application-with-callgrind-kcachegrind.html
-http://valgrind.org/docs/manual/cl-manual.html#cl-manual.options
+- gprof
+	- sourceware. <i>GNU gprof.</i> https://goo.gl/A5ie8Y
+	- The Geek Stuff. <i>GPROF Tutorial – How to use Linux GNU GCC Profiling Tool.</i> https://goo.gl/unADsP
+- OProfile
+	- IBM. <i>Getting started with OProfile.</i> https://goo.gl/SYkFXL
+	- OProfile. <i>OProfile - A System Profiler for Linux.</i> https://goo.gl/xsQMst
+	- Oprofile. <i>Chapter 3. Controlling the profiler.</i> https://goo.gl/HQgHm6
+	- Oprofile. <i>Image summaries and symbol summaries (opreport).</i> https://goo.gl/C2apr3
+- Callgrind
+	- Baptiste. <i>How to profile C++ application with Callgrind / KCacheGrind.</i> https://goo.gl/K4KwUQ
+	- Gernot.Klingler. <i>gprof, Valgrind and gperftools - an evaluation of some tools for application level CPU profiling on Linux.</i> https://goo.gl/jcnukg
+	- KCachegrind. <i>KCachegrind: Call Graph Viewer.</i> https://goo.gl/kqua7t
+	- Valgrind. <i>Callgrind: a call-graph generating cache and branch prediction profiler.</i> https://goo.gl/DWCL9G
