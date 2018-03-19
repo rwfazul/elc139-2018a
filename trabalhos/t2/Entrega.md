@@ -34,16 +34,16 @@ O perfil é afetado pelas opções de configuração?
 ```
 As opções de configuração afetam diretamente o tempo gasto em cada chamada de função realizada pelo programa. Já no que tange o número e a ordem dessas chamadas, o perfil se mantém o mesmo independente das configurações.
 
-A figura abaixo ilustra um exemplo de perfil gerado com parâmetros de configuração altos (vetor com 30000000 posições e 90 repetições do cálculo). Perceba que, caso fosse gerado um perfil a partir de uma configuração menor (ex. vetor com 3000000 posições e 15 repetições do cálculo), o número de chamadas de cada função (coluna _calls_) se manteria o mesmo. A variação ocorreria no tempo gasto em cada função, conforme exemplos observados nos arquivos <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte\_1/perfis/gprof\_profile1.txt" alt="Perfil gprof exemplo um">_gprof\_profile1_</a> e <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte\_1/perfis/gprof\_profile2.txt" alt="Perfil gprof exemplo dois">_gprof\_profile2_</a>.
+A figura abaixo ilustra um exemplo de perfil gerado com parâmetros de configuração altos (vetor com 30000000 posições e 90 repetições do cálculo). Perceba que, caso fosse gerado um perfil a partir de uma configuração menor (ex. vetor com 3000000 posições e 15 repetições do cálculo), o número de chamadas de cada função (coluna _calls_) se manteria o mesmo. A variação ocorreria no tempo gasto em cada função, conforme exemplos observados nos arquivos <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_1/perfis/gprof_profile1.txt" alt="Perfil gprof exemplo um">_gprof_profile1_</a> e <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_1/perfis/gprof_profile2.txt" alt="Perfil gprof exemplo dois">_gprof_profile2_</a>.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte\_1/imagens/dotprod\_seq-exemploPerfil.png" alt="Exemplo de perfil gerado." width="70%"/>
+  <img src="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_1/imagens/dotprod_seq-exemploPerfil.png" alt="Exemplo de perfil gerado." width="70%"/>
 </p>
 
 Realizando várias execuções do programa (através do _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/dotprod\_seq/run\_tests.sh">_run\_tests.sh_</a>), foi possível gerar o gráfico abaixo, que ilustra como diferentes parâmetros de configuração afetam o tempo de execução do programa. Duas relações podem ser observadas: i) impacto do aumento do tamanho do vetor para o cálculo do produto escalar e ii) impacto do aumento do número de repetições do cálculo.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte\_1/imagens/dotprod\_seq-graficoTempos.png" alt="Tempo gasto pelo programa com diferentes configurações." width="80%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_1/imagens/dotprod_seq-graficoTempos.png" alt="Tempo gasto pelo programa com diferentes configurações." width="80%"/>
 </p>
 
 Uma alternativa para diminuir estes tempo é realizar a execução em paralelo de certos trechos do programa. A seção seguinte discute como essa paralelização poderia ser realizada.
@@ -134,16 +134,16 @@ Existem diversas opções para visualização dos resultados, algumas das análi
 	$ opreport --merge tgid --details --exclude-dependent
 ```
 
-A figura abaixo ilustra o resultado obtido analisando o desempenho do programa entre as diferentes CPUs (threads foram unidas com **_--merge tgid_** para obter os valores). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte\_2/perfis/oprofile\_profile1.txt" alt="Perfil OProfile exemplo um.">_oprofile\_profile1_</a>.
+A figura abaixo ilustra o resultado obtido analisando o desempenho do programa entre as diferentes CPUs (threads foram unidas com **_--merge tgid_** para obter os valores). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_2/perfis/oprofile_profile1.txt" alt="Perfil OProfile exemplo um.">_oprofile\_profile1_</a>.
         
 <p align="justify">
-	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte\_2/imagens/oprofile\_tgdi.png" alt="OProfile com união de threads." width="80%"/>
+	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/oprofile_tgdi.png" alt="OProfile com união de threads." width="80%"/>
 </p>
 
 A figura abaixo ilustra o resultado obtido em um contexto global (threads e CPUs foram unidas com **_--merge tgid,cpu_** para obter os valores). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte\_2/perfis/oprofile\_profile2.txt" alt="Perfil OProfile exemplo dois.">_oprofile\_profile2_</a>.
        
 <p align="justify">
-	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte\_2/imagens/oprofile\_tgdi_cpu.png" alt="OProfile com união de threads e CPUs." width="80%"/>
+	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/oprofile_tgdi_cpu.png" alt="OProfile com união de threads e CPUs." width="80%"/>
 </p>
 
 Como esperado, o cálculo das outras duas séries (_viete_ e _nilakantha_) ocorreram tão rapidamente que o _profiler_ não conseguiu obter as suas respectivas amostras. Este é um dos problemas de realizar a análise de aplicações _multi-threaded_ em _profilers_ da que atuam com amostragem. 
