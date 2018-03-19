@@ -40,7 +40,7 @@ A figura abaixo ilustra um exemplo de perfil gerado com parâmetros de configura
   <img src="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_1/imagens/dotprod_seq-exemploPerfil.png" alt="Exemplo de perfil gerado." width="70%"/>
 </p>
 
-Realizando várias execuções do programa (através do _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/dotprod\_seq/run\_tests.sh">_run\_tests.sh_</a>), foi possível gerar o gráfico abaixo, que ilustra como diferentes parâmetros de configuração afetam o tempo de execução do programa. Duas relações podem ser observadas: i) impacto do aumento do tamanho do vetor para o cálculo do produto escalar e ii) impacto do aumento do número de repetições do cálculo.
+Realizando várias execuções do programa (através do _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/dotprod_seq/run_tests.sh">_run\_tests.sh_</a>), foi possível gerar o gráfico abaixo, que ilustra como diferentes parâmetros de configuração afetam o tempo de execução do programa. Duas relações podem ser observadas: i) impacto do aumento do tamanho do vetor para o cálculo do produto escalar e ii) impacto do aumento do número de repetições do cálculo.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_1/imagens/dotprod_seq-graficoTempos.png" alt="Tempo gasto pelo programa com diferentes configurações." width="80%"/>
@@ -53,7 +53,7 @@ Uma alternativa para diminuir estes tempo é realizar a execução em paralelo d
 ```
 Pelo perfil de execução, há alguma função que poderia ser candidata a paralelização? Por quê?
 ```
-Em uma análise '_black box_', levando em consideração o perfil apresentado anteriormente, percebe-se que a função **_dot\_product()_** é a responsável por 92.74% do tempo total de execução do programa. Logo, sendo o 'gargalo' de tempo, seria a opção mais lógica a ser analisada, pois  um tempo de execução elevado tende a elevar as chances de melhorias de desempenho via paralelização.
+Em uma análise '_black box_', levando em consideração o perfil apresentado anteriormente, percebe-se que a função **_dot\_product()_** é a responsável por **92.74%** do tempo total de execução do programa. Logo, sendo o 'gargalo' de tempo, seria a opção mais lógica a ser analisada, pois  um tempo de execução elevado tende a elevar as chances de melhorias de desempenho via paralelização.
 
 Já ao observar o trecho de código referente a essa função, percebe-se que a paralelização poderia ser sim, de fato, realizada. Em um cenário paralelo do programa analisado, a divisão de carga entre os _threads_/processos poderia ocorrer de diversas maneiras.
 
@@ -63,7 +63,7 @@ Sendo **_r_** o número de repetições do cálculo do produto escalar realizada
 - **Paralelizar o cálculo do produto escalar**: fazer com que, dentro de uma repetição, sejam realizadas somas parcias do produto dos vetores. Desta forma, a divisão (**_v_** / **_t_**) faria com que cada unidade executasse somente os cálculos de seu intervalo (_range_ de atuação) e o resultado final do cálculo fosse obtido ao somar os resultados parciais (ex. no _join_ das _threads_). Logo, desconsiderando o <i>overhead</i> de criação/gerência das unidades e considerando que seja possível realizar a execução 100% do tempo em paralelo, o tempo gasto na execução do programa em cada iteração do cálculo reduziria em **_t_**;
 - **Parelelizar ambos**: Como não há dependência entre os dois laços (repetições e cálculo), poderia-se dividir as iterações em **_t¹_** unidades de paralelização e, em cada uma das iterações, realizar a divisão em **_t²_** unidades com base no intervalo do cálculo do produto escalar. Em um mundo ideial, o tempo de execução do programa seria reduzido em (**_t¹_** &times; **_t²_**), na prática, o desempenho possivelmente seria melhorado em uma ordem inferior.
 
-Em complemento, a função **_init_vectors()_**, embora execute em uma parcela de tempo menor (2.79%, conforme exemplo anterior), também poderia ser paralelizada. Caberia analisar se o _overhead_ de criação/gerência das unidades de paralelização seria diluído no ganho de desempenho no momento de inicialização do vetor (vetores muito grandes tendem a compensar esta paralelização).
+Em complemento, a função **_init_vectors()_**, embora execute em uma parcela de tempo menor (**2.79%**, conforme exemplo anterior), também poderia ser paralelizada. Caberia analisar se o _overhead_ de criação/gerência das unidades de paralelização seria diluído no ganho de desempenho no momento de inicialização do vetor (vetores muito grandes tendem a compensar esta paralelização).
 
 <!-- PARTE 2 -->
 ## Parte 2
@@ -134,16 +134,16 @@ Existem diversas opções para visualização dos resultados, algumas das análi
 	$ opreport --merge tgid --details --exclude-dependent
 ```
 
-A figura abaixo ilustra o resultado obtido analisando o desempenho do programa entre as diferentes CPUs (threads foram unidas com **_--merge tgid_** para obter os valores). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_2/perfis/oprofile_profile1.txt" alt="Perfil OProfile exemplo um.">_oprofile\_profile1_</a>.
+A figura abaixo ilustra o resultado obtido analisando o desempenho do programa entre as diferentes CPUs (para obtenção dos valores, _threads_ foram unidas com a opção **_'--merge tgid'_**'). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_2/perfis/oprofile_profile1.txt" alt="Perfil OProfile exemplo um.">_oprofile\_profile1_</a>.
         
-<p align="justify">
+<p align="center">
 	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/oprofile_tgdi.png" alt="OProfile com união de threads." width="80%"/>
 </p>
 
-A figura abaixo ilustra o resultado obtido em um contexto global (threads e CPUs foram unidas com **_--merge tgid,cpu_** para obter os valores). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte\_2/perfis/oprofile\_profile2.txt" alt="Perfil OProfile exemplo dois.">_oprofile\_profile2_</a>.
+A figura abaixo ilustra o resultado obtido em um contexto global (para obtenção dos valores, _threads_ e CPUs foram unidas com a opção **_'--merge tgid,cpu'_**). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_2/perfis/oprofile_profile2.txt" alt="Perfil OProfile exemplo dois.">_oprofile\_profile2_</a>.
        
-<p align="justify">
-	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/oprofile_tgdi_cpu.png" alt="OProfile com união de threads e CPUs." width="80%"/>
+<p align="center">
+	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/oprofile_tgdi_cpu.png" alt="OProfile com união de threads e CPUs." width="50%"/>
 </p>
 
 Como esperado, o cálculo das outras duas séries (_viete_ e _nilakantha_) ocorreram tão rapidamente que o _profiler_ não conseguiu obter as suas respectivas amostras. Este é um dos problemas de realizar a análise de aplicações _multi-threaded_ em _profilers_ da que atuam com amostragem. 
