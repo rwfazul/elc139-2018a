@@ -82,13 +82,13 @@ O programa utilizado para os testes (<a href="https://github.com/rwfazul/elc139-
 Supondo **_n_** = 4, para cada processo gerado pelo programa (total de quatro processos) cria-se quatro threads para realizar os cálculos de cada série. Logo, ao total seriam criados 4 processos e 16 _threads_ (em complemento com a _thread_ inicial de todos os processos). A figura abaixo ilustra a estrutura criada pelo programa:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/estrutura-programa.png" alt="Estrutura do programa com quatro threads." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/estrutura-programa.png" alt="Estrutura do programa com quatro threads." width="45%"/>
 </p>
 
 Um exemplo de saída da execução do programa com **_n_** = 4 é observado a seguir:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/output-programa.png" alt="Exemplo de output do programa." width="45%" id="output"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/output-programa.png" alt="Exemplo de output do programa." width="40%" id="output"/>
 </p>
 
 Espera-se que um ponto interessante de análise seja o fato de que as séries de _viete_ e _nilakantha_ são calculadas com poucas iterações (15 e 500 iterações, respectivamente), enquanto as seríes de _wallis_ e _leibniz_ são muito mais onerosas (ambas com 900000000 de iterações). Sendo assim, existe a possibilidade de que perfis alcançados por **amostragem** não consigam monitorar alguns dos cálculos.
@@ -170,7 +170,7 @@ Como esperado, o cálculo das outras duas séries (_viete_ e _nilakantha_) ocorr
 Ferramentas de visualização gráficas podem ser utilizadas para facilitar a análise e visualizar o grafo de chamadas das funções (_call graph_), durante a apresentação do próximo _profiler_ uma destas possíveis ferramentas será apresentada.
 
 ### _Callgrind_
-<i>Callgrind</i> é uma ferramenta de _profiling_ inclusa no _framework open source_ **_Valgrind_**. Por ser uma _framework_ muito bem consolidado e que recebe grande suporte da comunidade, possui uma documentação extensiva e diversas outras ferramentas para apoio e funcionalidades extras.
+<i>Callgrind</i> é uma ferramenta de _profiling_ inclusa no _framework open source_ **_Valgrind_**. Por ser uma _framework_ muito bem consolidado e que recebe grande suporte da comunidade, possui uma documentação extensiva e diversas outros	 para apoio e funcionalidades extras.
 
 <a name="cgcaracteristicas"></a>	
 #### Características:
@@ -235,13 +235,13 @@ Perceba, que mesmo com esta carga de trabalho tão pequena, o _Callgrind_ conseg
 Um recurso interessante da ferramenta _Kcachegrind_ é a geração de um gráfico de chamadas (_call graph_). Abaixo é ilustrado o gráfico de chamadas referente a série de _wallis_.
 
 <p align="center">
-	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/callgrind_callgraph.png" alt="KCachegrind visualização call graph." width="80%"/>
+	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/callgrind_callgraph.png" alt="KCachegrind visualização call graph." width="40%"/>
 </p>
 
 Em contrapartida com a completude e corretude de perfis gerados com ferramentas como o _Callgrind_, algumas desvantagens são aparentes. Conforme esperado, a instrumentação realizada pelo _Callgrind_ afeta, de fato, o desempenho do programa. Houve dificuldades em executar o programa com suas configurações normais por conta do número de iterações realizadas pelas duas últimas séries e, em específico, da série de _leibniz_, que possui um cálculo muito mais oneroso e demorado. Abaixo é realizado uma comparação dos tempos de execução dos cálculos, com e sem o uso dos _profilers_:
 
 <p align="center">
-	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/profilers_overhead.png" alt="Overhead gerado pelos profilers." width="40%"/>
+	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/profilers_overhead.png" alt="Overhead gerado pelos profilers." width="80%"/>
 </p>
 
 O _overhead_ gerado pelo _Callgrind_ afetou o programa em níveis tão grandes que o cálculo da série de _leibniz_ não conseguiu ser finalizado. Ferramentas do próprio _Callgrind_ permitem analisar melhor este tipo de problema. Para tal, o seguinte comando foi executado enquanto o _profiling_ estava sendo realizado:
