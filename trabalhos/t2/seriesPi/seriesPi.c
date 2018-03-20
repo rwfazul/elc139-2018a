@@ -1,4 +1,4 @@
-/* gcc -o seriesPI seriesPI.c -pthread -lm */
+/* gcc -o seriesPi seriesPi.c -pthread -lm */
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
