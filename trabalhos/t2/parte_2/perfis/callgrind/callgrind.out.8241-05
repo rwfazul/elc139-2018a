@@ -1,0 +1,359 @@
+version: 1
+creator: callgrind-3.11.0
+pid: 8241
+cmd:  ./seriesPi 4
+part: 1
+thread: 5
+
+
+desc: I1 cache: 
+desc: D1 cache: 
+desc: LL cache: 
+
+desc: Timerange: Basic block 0 - 1350053491
+desc: Trigger: Program termination
+
+positions: line
+events: Ir
+summary: 3037500549
+
+
+ob=(3) /lib/x86_64-linux-gnu/libc-2.23.so
+fl=(129) /build/glibc-Cl5G7W/glibc-2.23/misc/../sysdeps/unix/sysv/linux/x86_64/clone.S
+fn=(550) clone
+81 1
++1 1
++1 1
++10 1
++2 1
++1 1
++11 1
++1 1
++1 1
+cob=(5) /lib/x86_64-linux-gnu/libpthread-2.23.so
+cfi=(124) /build/glibc-Cl5G7W/glibc-2.23/nptl/pthread_create.c
+cfn=(552) start_thread
+calls=1 254 
+* 3037500540
+
+fl=(103) /build/glibc-Cl5G7W/glibc-2.23/malloc/malloc.c
+fn=(438) _int_malloc
+3349 3
+-30 2
++30 1
+-30 4
++30 3
+-30 1
++30 3
++4 3
++14 2
++2 3
++2 1
+-1 1
+-1 1
++1 1
++5 2
++29 2
++2 3
++1 3
++2 1
+-2 1
++2 2
+3819 14
+-2 1
++2 1
+-2 1
++2 2
+5002 1
+3817 1
++2 1
+5004 1
+3819 1
+5004 1
+3819 3
+5004 2
+3819 4
+5002 2
+3469 5
+3833 9
+3603 2
++73 2
++1 2
++1 2
++1 2
++1 2
++5 2
++4 3
++3 4
+-3 3
++3 4
+-3 2
++3 3
+3792 1
++3 1
+-2 2
++2 2
++5 1
+-3 1
++1 1
++2 1
+-1 1
++1 2
++2 1
+-2 4
++2 1
++3 1
+1879 3
+
+fn=(608) free
+2934 5
++5 2
++1 2
++6 2
++23 6
+
+fn=(416) malloc
+2902 3
++5 2
++1 2
++3 5
+fi=(105) /build/glibc-Cl5G7W/glibc-2.23/malloc/arena.c
+846 1
+cfn=(580) get_free_list
+calls=1 712 
+* 42
++1 1
+-1 1
++1 1
+fe=(103)
+2913 3
+cfn=(438)
+calls=1 3349 
+* 149
++3 1
+-3 1
++3 1
++8 5
++2 14
++3 4
+
+fl=(91) /build/glibc-Cl5G7W/glibc-2.23/setjmp/../sysdeps/x86_64/bsd-_setjmp.S
+fn=(374) _setjmp
+30 1
++2 1
+cfi=(92) /build/glibc-Cl5G7W/glibc-2.23/setjmp/../sysdeps/x86_64/setjmp.S
+cfn=(376) __sigsetjmp
+calls=1 -6 
+* 28
+
+fl=(92)
+fn=(376)
+26 1
++9 1
++1 2
++1 1
++4 1
++1 1
++1 1
++1 1
++1 1
++2 2
++2 1
++1 1
++1 1
++2 2
++2 1
++9 1
+cfi=(93) /build/glibc-Cl5G7W/glibc-2.23/setjmp/sigjmp.c
+cfn=(378) __sigjmp_save
+calls=1 -36 
+* 9
+
+fl=(123) /build/glibc-Cl5G7W/glibc-2.23/misc/../sysdeps/unix/syscall-template.S
+fn=(618) madvise
+84 4
++1 1
+
+fl=(93)
+fn=(378)
+28 1
++1 1
+-1 2
++1 2
++5 3
+
+fl=(133) /build/glibc-Cl5G7W/glibc-2.23/stdlib/cxa_thread_atexit_impl.c
+fn=(594) __call_tls_dtors
+145 3
++1 4
++18 4
+
+fl=(105)
+fn=(580)
+712 1
++2 1
+-1 1
++2 1
+-2 1
++2 1
++2 7
++1 1
++1 2
++5 1
+-3 2
++3 1
+-97 1
++98 1
+-98 1
+729 5
++2 2
++2 1
++1 7
++1 1
++5 3
+
+fl=(125) /build/glibc-Cl5G7W/glibc-2.23/misc/../sysdeps/unix/sysv/linux/getpagesize.c
+fn=(520) getpagesize
+28 4
++2 1
+
+fl=(83) /build/glibc-Cl5G7W/glibc-2.23/ctype/ctype-info.c
+fn=(308) __ctype_init
+31 5
++2 1
++2 1
+-4 1
++4 1
+-4 1
++2 3
++2 3
+
+ob=(2) ???
+fl=(16) ???
+fn=(610) res_thread_freeres
+0 20
+
+fn=(604) strerror_thread_freeres
+0 1
+cob=(3)
+cfi=(103)
+cfn=(608)
+calls=1 2934 
+0 17
+0 3
+
+fn=(600) __libc_thread_freeres
+0 9
+cfn=(602) arena_thread_freeres
+calls=1 0 
+0 28
+0 3
+cfn=(612) __rpc_thread_destroy
+calls=1 0 
+0 11
+cfn=(610)
+calls=1 0 
+0 20
+cfn=(604)
+calls=1 0 
+0 21
+0 16
+
+fn=(612)
+0 11
+
+fn=(602)
+0 28
+
+ob=(7) /home/rhau/Desktop/S.I/Programação Paralela/elc139-2018a/trabalhos/t2/seriesPi/seriesPi
+fl=(88) ???
+fn=(562) wallis_serie
+0 3037500032
+cob=(3)
+cfi=(103)
+cfn=(416)
+calls=1 2902 
+0 236
+0 1
+0 11
+
+ob=(5)
+fl=(124)
+fn=(552)
+254 4
++6 1
++1 4
++4 3
++3 1
+cob=(3)
+cfi=(83)
+cfn=(308)
+calls=1 31 
+* 16
+* 1
++3 4
++11 5
++9 2
++20 1
+-4 1
++1 1
++3 1
+cob=(3)
+cfi=(91)
+cfn=(374)
+calls=1 30 
+* 30
+* 1
++1 1
+-1 1
++1 1
++3 2
++2 3
++12 2
++4 2
+cob=(7)
+cfi=(88)
+cfn=(562)
+calls=1 0 
+* 3037500280
+* 1
++10 1
+cob=(3)
+cfi=(133)
+cfn=(594)
+calls=1 145 
+* 11
+* 1
+130 4
+349 1
+cob=(2)
+cfi=(16)
+cfn=(600)
+calls=1 0 
+* 108
+* 1
++5 4
++5 3
++30 2
++37 1
+cob=(3)
+cfi=(125)
+cfn=(520)
+calls=1 28 
+* 5
+* 1
++3 8
++1 2
++1 2
++20 3
++3 3
+-22 3
+cob=(3)
+cfi=(123)
+cfn=(618)
+calls=1 84 
+* 5
+* 1
+* 1
+
+totals: 3037500549
