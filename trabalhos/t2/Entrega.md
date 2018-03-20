@@ -11,6 +11,7 @@ Aluno: Rhauani Weber Aita Fazul
 	- [Variação de perfil](#variacao)
 	- [Possível paralelização](#paralelizacao)
 - [Parte 2](#parte-2)
+	- [Programa utilizado (SeriesPi)](#seriespi)
 	- [_OProfile_](#oprofile)
 		- [Instalação](#opinstalacao)
 		- [Características](#opcaracteristicas)
@@ -68,6 +69,32 @@ Em complemento, a função **_init_vectors()_**, embora execute em uma parcela d
 <!-- PARTE 2 -->
 ## Parte 2
 
+<a href="seriespi"></a>
+### Programa utilizado (SeriesPi)
+O programa utilizado para os testes (<a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/seriesPi/seriesPi.c">_seriesPi.c_</a>) é uma aplicação _multi-threaded_ que utiliza _Pthreads_. Seu funcionamento é descrito abaixo:
+
+- Consiste em um programa que calcula o valor de Pi através de quatro séries matemáticas distintas (_viete_, _nilakantha_, _wallis_ e _leibniz_);
+- É criado um processo (através da chamada de sistema _fork_) para cada uma das séries (estrutura _master/slave_, onde o mestre é o processo inicial _./seriesPi_);
+- Cada processo escravo cria **_n_** _threads_, sendo este o parâmetro recebido pela linha de comando (_argc_);
+- Cada _thread_ realiza uma parte do cálculo de sua respectiva série. A divisão de carga de cada _thread_ utiliza como base o número total de iterações necessárias para o cálculo de cada uma das seríe. O total é distribuído em intervalos de mesmo tamanho entre as **_n_** _threads_;
+- Os resultados parciais são unidos e calculados nos _joins_ das threads.
+
+Supondo **_n_** = 4, para cada processo gerado pelo programa (total de quatro processos) cria-se quatro threads para realizar os cálculos de cada série. Logo, ao total seriam criados 4 processos e 16 _threads_ (em complemento com a _thread_ inicial de todos os processos). A figura abaixo ilustra a estrutura criada pelo programa:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/estrutura-programa.png" alt="Estrutura do programa com quatro threads." width="80%"/>
+</p>
+
+Um exemplo de saída da execução do programa com **_n_** = 4 é observado a seguir:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/output-programa.png" alt="Exemplo de output do programa." width="80%" id="output"/>
+</p>
+
+Espera-se que um ponto interessante de análise seja o fato de que as séries de _viete_ e _nilakantha_ são calculadas com poucas iterações (15 e 500 iterações, respectivamente), enquanto as seríes de _wallis_ e _leibniz_ são muito mais onerosas (ambas com 900000000 de iterações). Sendo assim, existe a possibilidade de que perfis alcançados por **amostragem** não consigam monitorar alguns dos cálculos.
+
+Em contrapartida, em _profilers_ que atuam por **instrumentação**, espera-se que as séries de  _wallis_ e _leibniz_ não sejam analisadas com um desempenho satisfatório, tendo em vista que esta categoria de _profilers_ tende a ser extremamente intrusiva no momento de execução do programa.s 
+
 ### _OProfile_
 _OProfile_ é um projeto _open source_ que inclui um profiler estático para sistemas Linux (_operf_), capaz de realizar o _profiling_ de aplicações com um **baixo _overhead_**. A ferramenta utiliza o _hardware_ de monitoramento de desempenho do(s) processador(es) da máquina para recuperar informações sobre o _kernel_ e os executáveis do sistema. _OProfile_ também é capaz de gerar o perfil de aplicações que rodam em uma máquina virtual Java (JVM).
 
@@ -79,7 +106,7 @@ _OProfile_ é um projeto _open source_ que inclui um profiler estático para sis
 - Não necessita de recompilação;
 - O perfil pode ser gerado para todo o código rodando no sistema ou para processos individuais;	
 - Consegue analisar os eventos da aplicação corrente, de um conjunto de processos ou threads, sub-conjunto de processadores ou do sistema inteiro;
-- Trabalha bem com aplicações que realizam _fork_->_execs_ e aplicações **_multi-threaded_**;
+- Trabalha bem com aplicações que realizam _fork_&rarr;_execs_ e aplicações **_multi-threaded_**;
 - Pode atuar sobre aplicações que já estão rodando, bastanto apontar seu PID e finalizar o _profiling_ com _CTRL+C_;
 - O _overhead_ típico gira em torno de 1-8%, dependendo da frequência de amostragem e da carga de tabalho.
 
@@ -111,15 +138,7 @@ Este comando deve ser executado no mesmo diretório onde o comando para realizar
 
 <a name="opresultados"></a>	
 #### Resultados
-O programa utilizado para os testes (<a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/seriesPi/seriesPi.c">_seriesPi.c_</a>) é uma aplicação _multi-threaded_ que utiliza _Pthreads_. Seu funcionamento é descrito abaixo:
-
-- Consiste em um programa que calcula o valor de Pi através de quatro séries matemáticas distintas (_viete_, _nilakantha_, _wallis_ e _leibniz_);
-- É criado um processo (através da chamada de sistema _fork_) para cada uma das séries (estrutura _master/slave_, onde o mestre é o processo inicial _./seriesPi_);
-- Cada processo escravo cria **_n_** _threads_, sendo este o parâmetro recebido pela linha de comando (_argc_);
-- Cada _thread_ realiza uma parte do cálculo de sua respectiva série. A divisão de carga de cada _thread_ utiliza como base o número total de iterações necessárias para o cálculo de cada uma das seríe. O total é distribuído em intervalos de mesmo tamanho entre as **_n_** _threads_;
-- Espera-se que um ponto interessante de análise seja o fato de que as séries de _viete_ e _nilakantha_ são calculadas com poucas iterações (15 e 500 iterações, respectivamente), enquanto as seríes de _wallis_ e _leibniz_ são muito mais onerosas (ambas com 900000000 de iterações). Sendo assim, existe a possibilidade de que perfis alcançados por amostragem não consigam monitorar alguns dos cálculos.
-
-Como a aplicação possui mais de uma _thread_ (para os testes, utilizou-se **_n_** = 4), as configurações para execução do _profiler_ foram as seguintes:
+Conforme já apresentado, o programa <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/seriesPi/seriesPi.c">_seriesPi.c_</a> é uma aplicação _multi-threaded_ que utiliza _Pthreads_. Como a aplicação possui mais de uma _thread_ (para os testes, utilizou-se **_n_** = 4), as configurações para execução do _profiler_ foram as seguintes:
 
 ```
 	$ operf --separate-thread --separate-cpu --callgraph ./seriesPi 4
@@ -134,7 +153,7 @@ Existem diversas opções para visualização dos resultados, algumas das análi
 	$ opreport --merge tgid --details --exclude-dependent
 ```
 
-A figura abaixo ilustra o resultado obtido analisando o desempenho do programa entre as diferentes CPUs (para obtenção dos valores, _threads_ foram unidas com a opção **_'--merge tgid'_**'). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_2/perfis/oprofile_profile1.txt" alt="Perfil OProfile exemplo um.">_oprofile\_profile1_</a>.
+A figura abaixo ilustra o resultado obtido analisando o desempenho do programa entre as diferentes CPUs (para obtenção dos valores, _threads_ foram unidas com a opção **_'--merge tgid'_**). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_2/perfis/oprofile_profile1.txt" alt="Perfil OProfile exemplo um.">_oprofile\_profile1_</a>.
         
 <p align="center">
 	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/oprofile_tgdi.png" alt="OProfile com união de threads." width="80%"/>
@@ -143,12 +162,12 @@ A figura abaixo ilustra o resultado obtido analisando o desempenho do programa e
 A figura abaixo ilustra o resultado obtido em um contexto global (para obtenção dos valores, _threads_ e CPUs foram unidas com a opção **_'--merge tgid,cpu'_**). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_2/perfis/oprofile_profile2.txt" alt="Perfil OProfile exemplo dois.">_oprofile\_profile2_</a>.
        
 <p align="center">
-	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/oprofile_tgdi_cpu.png" alt="OProfile com união de threads e CPUs." width="50%"/>
+	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/oprofile_tgdi_cpu.png" alt="OProfile com união de threads e CPUs." width="40%"/>
 </p>
 
 Como esperado, o cálculo das outras duas séries (_viete_ e _nilakantha_) ocorreram tão rapidamente que o _profiler_ não conseguiu obter as suas respectivas amostras. Este é um dos problemas de realizar a análise de aplicações _multi-threaded_ em _profilers_ da que atuam com amostragem. 
 
-Ferramentas de visualização gráficas podem ser utilizadas para facilitar a análise e visualizar o grafo de chamadas das funções (_callgraph_), durante a apresentação do próximo _profiler_ uma destas possíveis ferramentas será apresentada.
+Ferramentas de visualização gráficas podem ser utilizadas para facilitar a análise e visualizar o grafo de chamadas das funções (_call graph_), durante a apresentação do próximo _profiler_ uma destas possíveis ferramentas será apresentada.
 
 ### _Callgrind_
 <i>Callgrind</i> é uma ferramenta de _profiling_ inclusa no _framework open source_ **_Valgrind_**. Por ser uma _framework_ muito bem consolidado e que recebe grande suporte da comunidade, possui uma documentação extensiva e diversas outras ferramentas para apoio e funcionalidades extras.
@@ -160,7 +179,7 @@ Ferramentas de visualização gráficas podem ser utilizadas para facilitar a an
 - Análise dos resultados: **_Post mortem_**;
 - Não necessita de recompilação;
 - Também consegue realizar o perfil de bibliotecas compartilhadas, _plugins_ e demais recursos;
-- Trabalha bem com aplicações que realizam _fork_->_execs_ e aplicações **_multi-threaded_**;
+- Trabalha bem com aplicações que realizam _fork_&rarr;_execs_ e aplicações **_multi-threaded_**;
 - Possui ferramentas muito boas para visualização dos dados dos perfis gerados;
 - O desempenho do programa é bastante prejudicado (instrumentação gera maior _overhead_ que amostragem) ao realizar o _profiling_;
 	
@@ -193,19 +212,64 @@ Detalhes dos recursos da ferramenta são abordados na seção seguinte.
 <a name="cgresultados"></a>	
 #### Resultados
 
-O programa <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/seriesPi/seriesPi.c">_seriesPi.c_</a>, já apresentado anteriormente, também foi utilizado para os testes com o _callgrind_. O comando utilizado para execução foi:
+O programa <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/seriesPi/seriesPi.c">_seriesPi.c_</a> também foi utilizado para os testes com o _callgrind_. O comando utilizado para execução foi:
 
 ```
 	$ valgrind --tool=callgrind --separate-threads=yes ./seriesPi 4
 ```
 
-A opção **'--_separate-threads=yes_'** faz com que um perfil seja gerado para cada _thread_, o argumento 4 diz respeito a quantidade de _threads_ que cada processo gerado pelo programa (total de 4 processos) cria para realizar os cálculos de cada série. Ao total são criados 4 processos e 16 _threads_. Sendo assim, conforme os arquivos de saída que podem ser observados <a href="">aqui</a>, pode-se observar o perfil individual de cada uma das _threads_ e, também, de cada um dos processos.
+A opção **'--_separate-threads=yes_'** faz com que um perfil seja gerado para cada _thread_. Sendo assim, pode-se observar o perfil individual de cada uma das _threads_ e, por consequência, de cada um dos processos. Para análise de todos os perfis gerados, utilizou-se:
 
-A figura abaixo ilustra um exemplo de um perfil analisado com o _KCachegrind_.
+```
+	$ kcachegrind callgrind.out.*
+```
+
+Ao contrário do _Oprofile_, o _Callgrind_, que atua através de instrumentação, consegue traçar o perfil de funções que acabam sua execução muito rapidamente. A figura abaixo ilustra um exemplo de perfil analisado com o _KCachegrind_ referente a série de _viete_, esta série realiza 15 iterações ao total, sendo que pelo uso das 4 _threads_, a divisão de carga para cada _thread_ resulta em 3 _threads_ com 4 iterações cada e 1 _thread_ com apenas 3 iterações.
 
 <p align="justify">
-	<img src="" alt="" width="80%"/>
+	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/callgrind_viete.png" alt="" width="80%"/>
 </p>
+
+Perceba, que mesmo com esta carga de trabalho tão pequena, o _Callgrind_ consegue realizar uma análise fiel. No caso da figura acima, a _thread_ 2 do processo com PID 7353 é a _thread_ que executou apenas 3 das iterações da série.
+
+Um recurso interessante da ferramenta _Kcachegrind_ é a geração de um gráfico de chamadas (_call graph_). Abaixo é ilustrado o gráfico de chamadas referente a série de _wallis_.
+
+<p align="justify">
+	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/callgrind_callgraph.png" alt="" width="80%"/>
+</p>
+
+Em contrapartida com a completude e corretude de perfis gerados com ferramentas como o _Callgrind_, algumas desvantagens são aparentes. Conforme esperado, a instrumentação realizada pelo _Callgrind_ afeta, de fato, o desempenho do programa. Houve dificuldades em executar o programa com suas configurações normais por conta do número de iterações realizadas pelas duas últimas séries e, em específico, da série de _leibniz_, que possui um cálculo muito mais oneroso e demorado. Abaixo é realizado uma comparação dos tempos de execução dos cálculos, com e sem o uso dos _profilers_:
+
+<p align="justify">
+	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/profilers_overhead.png" alt="" width="80%"/>
+</p>
+
+O _overhead_ gerado afetou o programa em níveis tão grandes que o cálculo da série de _leibniz_ não conseguiu ser finalizado. Ferramentas do próprio _Callgrind_ permitem analisar melhor este tipo de problema. Para tal, o seguinte comando foi executado enquanto o _profiling_ estava sendo realizado:
+
+```
+	$ callgrind_control -e -b
+```
+
+Este comando permite observar e controlar interativamente o status de um programa atualmente em execução sob o controle do Callgrind, sem interromper o programa. Assim, é possível obter informações de estatísticas, bem como o rastreamento de pilha atual e solicitar zeramento de contadores ou despejo de dados do perfil. 
+
+<p align="justify">
+	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/callgrind_overhead-threads.png" alt="" width="80%"/>
+</p>
+
+Com isso, percebeu-se que as _threads_ responsáveis pelo cálculo da série de _leibniz_ estavam sobrecarregadas (_Ir_ diz respeito aos contadores de eventos de instruções lidas). Ao analisar as _threads_ individualmente (ex. _thread_ 4) obteve-se:
+
+<p align="justify">
+	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/callgrind_overhead-thread4.png" alt="" width="80%"/>
+</p>
+
+No exemplo, a função _pow()_ foi chamada 19.173.093 vezes (somente nessa _thread_ referente ao processo específico do cálculo de _leibniz_) e, em cada uma das chamadas, o _Callgrind_ estava realizando o monitoramento. Deste modo, tentou-se zerar todos os contadores de eventos com o comando:
+
+```
+	$ callgrind_control --zero
+```
+
+Ainda assim, a execução do programa (em específico do cálculo referente a esta série), não conseguiu ser finalizado em mais de 30 minutos de execução do programa com os contadores sendo zerados periodicamente a cada 3 minutos.
+
 
 ### Extra
 	- Dúvidas e/ou dificuldades encontradas
