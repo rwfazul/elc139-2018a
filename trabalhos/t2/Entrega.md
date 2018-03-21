@@ -35,19 +35,19 @@ O perfil é afetado pelas opções de configuração?
 ```
 As opções de configuração afetam diretamente o tempo gasto em cada chamada de função realizada pelo programa. Já no que tange o número e a ordem dessas chamadas, o perfil se mantém o mesmo independente das configurações.
 
-A figura abaixo ilustra um exemplo de perfil gerado com parâmetros de configuração altos (vetor com 30000000 posições e 90 repetições do cálculo). Perceba que, caso fosse gerado um perfil a partir de uma configuração menor (ex. vetor com 3000000 posições e 15 repetições do cálculo), o número de chamadas de cada função (coluna _calls_) se manteria o mesmo. A variação ocorreria no tempo gasto em cada função, conforme exemplos observados nos arquivos <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_1/perfis/gprof_profile1.txt" alt="Perfil gprof exemplo um">_gprof_profile1_</a> e <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_1/perfis/gprof_profile2.txt" alt="Perfil gprof exemplo dois">_gprof_profile2_</a>.
+A figura abaixo ilustra um exemplo de perfil gerado com parâmetros de configuração altos (vetor com 30.000.000 posições e 90 repetições do cálculo). Perceba que, caso fosse gerado um perfil a partir de uma configuração menor (ex. vetor com 3.000.000 posições e 15 repetições do cálculo), o número de chamadas de cada função (coluna _calls_) se manteria o mesmo. A variação ocorreria no tempo gasto em cada função, conforme exemplos observados nos arquivos <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_1/perfis/gprof_profile1.txt" alt="Perfil gprof exemplo um">_gprof_profile1_</a> e <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_1/perfis/gprof_profile2.txt" alt="Perfil gprof exemplo dois">_gprof_profile2_</a>.
 
 <p align="center">
   <img src="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_1/imagens/dotprod_seq-exemploPerfil.png" alt="Exemplo de perfil gerado." width="70%"/>
 </p>
 
-Realizando várias execuções do programa (através do _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/dotprod_seq/run_tests.sh">_run\_tests.sh_</a>), foi possível gerar o gráfico abaixo, que ilustra como diferentes parâmetros de configuração afetam o tempo de execução do programa. Duas relações podem ser observadas: i) impacto do aumento do tamanho do vetor para o cálculo do produto escalar e ii) impacto do aumento do número de repetições do cálculo.
+Realizando várias execuções do programa (através do _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/dotprod_seq/run_tests.sh">_run\_tests.sh_</a>), foi possível gerar o gráfico abaixo, que ilustra como diferentes parâmetros de configuração afetam o tempo de execução do programa, sendo este representado em escala logarítmica. Duas relações podem ser observadas: i) impacto do aumento do tamanho do vetor para o cálculo do produto escalar e ii) impacto do aumento do número de repetições do cálculo.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_1/imagens/dotprod_seq-graficoTempos.png" alt="Tempo gasto pelo programa com diferentes configurações." width="80%"/>
 </p>
 
-Uma alternativa para diminuir estes tempo é realizar a execução em paralelo de certos trechos do programa. A seção seguinte discute como essa paralelização poderia ser realizada.
+Uma alternativa para diminuir estes tempos é realizar a execução em paralelo de certos trechos do programa. A seção seguinte discute como essa paralelização poderia ser realizada.
 	
 <a name="paralelizacao"></a>	
 ### Possível paralelização 
@@ -56,9 +56,9 @@ Pelo perfil de execução, há alguma função que poderia ser candidata a paral
 ```
 Em uma análise '_black box_', levando em consideração o perfil apresentado anteriormente, percebe-se que a função **_dot\_product()_** é a responsável por **92.74%** do tempo total de execução do programa. Logo, sendo o 'gargalo' de tempo, seria a opção mais lógica a ser analisada, pois  um tempo de execução elevado tende a elevar as chances de melhorias de desempenho via paralelização.
 
-Já ao observar o trecho de código referente a essa função, percebe-se que a paralelização poderia ser sim, de fato, realizada. Em um cenário paralelo do programa analisado, a divisão de carga entre os _threads_/processos poderia ocorrer de diversas maneiras.
+Já ao observar o trecho de código referente a essa função, percebe-se que a paralelização poderia ser sim, de fato, realizada. Em um cenário paralelo do programa analisado, a divisão de carga entre as _threads_/processos poderia ocorrer de diversas maneiras.
 
-Sendo **_r_** o número de repetições do cálculo do produto escalar realizada pela função _dot\_product()_, **_v_** o tamanho dos vetores utilizados no cálculo e **_t_** o número de _threads_/processos a serem criados. Três das opções de paralelização possíves seriam:
+Sendo **_r_** o número de repetições do cálculo do produto escalar realizado pela função _dot\_product()_, **_v_** o tamanho dos vetores utilizados no cálculo e **_t_** o número de _threads_/processos a serem criados. Três das opções de paralelização possíves seriam:
 
 - **Paralelizar as repetições**: fazer com que cada unidade de paralelização seja responsável por (**_r_** / **_t_**) das repetições do cálculo do produto escalar. Logo, desconsiderando o _overhead_ de criação/gerência das <i>threads</i>/processos e considerando que seja possível realizar a execução 100% do tempo em paralelo, o tempo gasto na execução do programa reduziria em **_t_**;
 - **Paralelizar o cálculo do produto escalar**: fazer com que, dentro de uma repetição, sejam realizadas somas parcias do produto dos vetores. Desta forma, a divisão (**_v_** / **_t_**) faria com que cada unidade executasse somente os cálculos de seu intervalo (_range_ de atuação) e o resultado final do cálculo fosse obtido ao somar os resultados parciais (ex. no _join_ das _threads_). Logo, desconsiderando o <i>overhead</i> de criação/gerência das unidades e considerando que seja possível realizar a execução 100% do tempo em paralelo, o tempo gasto na execução do programa em cada iteração do cálculo reduziria em **_t_**;
@@ -91,7 +91,7 @@ Um exemplo de saída da execução do programa com **_n_** = 4 é observado a se
   <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/output-programa.png" alt="Exemplo de output do programa." width="40%" id="output"/>
 </p>
 
-Espera-se que um ponto interessante de análise seja o fato de que as séries de _viete_ e _nilakantha_ são calculadas com poucas iterações (15 e 500 iterações, respectivamente), enquanto as seríes de _wallis_ e _leibniz_ são muito mais onerosas (ambas com 900000000 de iterações). Sendo assim, existe a possibilidade de que perfis alcançados por **amostragem** não consigam monitorar alguns dos cálculos.
+Espera-se que um ponto interessante de análise seja o fato de que as séries de _viete_ e _nilakantha_ são calculadas com poucas iterações (15 e 500 iterações, respectivamente), enquanto as seríes de _wallis_ e _leibniz_ são muito mais onerosas (ambas com 900.000.000 de iterações). Sendo assim, existe a possibilidade de que perfis alcançados por **amostragem** não consigam monitorar alguns dos cálculos.
 
 Em contrapartida, em _profilers_ que atuam por **instrumentação**, espera-se que as séries de  _wallis_ e _leibniz_ não sejam analisadas com um desempenho satisfatório, tendo em vista que esta categoria de _profilers_ tende a ser extremamente intrusiva no momento de execução do programa. 
 
@@ -100,14 +100,13 @@ _OProfile_ é um projeto _open source_ que inclui um profiler estático para sis
 
 <a name="opcaracteristicas"></a>	
 #### Características
-
 - Categoria: **Amostragem**;
 - Análise dos resultados: **_Post mortem_** com um dos utilitários inclusos (ex. _opreport_);
 - Não necessita de recompilação;
 - O perfil pode ser gerado para todo o código rodando no sistema ou para processos individuais;	
 - Consegue analisar os eventos da aplicação corrente, de um conjunto de processos ou threads, sub-conjunto de processadores ou do sistema inteiro;
-- Trabalha bem com aplicações que realizam _fork_&rarr;_execs_ e aplicações **_multithreaded_**;
-- Pode atuar sobre aplicações que já estão rodando, bastanto apontar seu PID e finalizar o _profiling_ com _CTRL+C_;
+- Trabalha razoavelmente bem com aplicações que realizam _fork_&rarr;_execs_ e aplicações **_multithreaded_**;
+- Pode atuar sobre aplicações que já estão rodando, bastanto apontar seu PID e finalizar o _profiling_ com alguma interrupção (ex. _CTRL+C_);
 - O _overhead_ típico gira em torno de 1-8%, dependendo da frequência de amostragem e da carga de tabalho.
 
 <a name="opinstalacao"></a>	
@@ -119,7 +118,6 @@ _OProfile_ é um projeto _open source_ que inclui um profiler estático para sis
 
 <a name="opconfig"></a>	
 #### Configuração e funcionamento
-
 Realizar o _profiling_ com o **_operf_** permite direcionar, com precisão, o perfil desejado (ex. único processo ou múltiplos). Formas de controlar o _profiler_ e a listagem de parâmetros de configuração podem ser encontradas em detalhes <a href="http://oprofile.sourceforge.net/doc/controlling-profiler.html">aqui</a>. Para utilizar a ferramenta com uma configuração básica (sem opções definidas) é utilizado o seguinte comando:
 
 ```
@@ -153,13 +151,13 @@ Existem diversas opções para visualização dos resultados, algumas das análi
 	$ opreport --merge tgid --details --exclude-dependent
 ```
 
-A figura abaixo ilustra o resultado obtido analisando o desempenho do programa entre as diferentes CPUs (para obtenção dos valores, _threads_ foram unidas com a opção **_'--merge tgid'_**). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_2/perfis/oprofile/oprofile_profile1.txt" alt="Perfil OProfile exemplo um.">_oprofile\_profile1_</a>.
+A figura abaixo ilustra o resultado obtido analisando o desempenho do programa entre as diferentes CPUs (para obtenção dos valores, as _threads_ foram unidas com a opção **_'--merge tgid'_**). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_2/perfis/oprofile/oprofile_profile1.txt" alt="Perfil OProfile exemplo um.">_oprofile\_profile1_</a>.
         
 <p align="center">
 	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/oprofile_tgdi.png" alt="OProfile com união de threads." width="80%"/>
 </p>
 
-A figura abaixo ilustra o resultado obtido em um contexto global (para obtenção dos valores, _threads_ e CPUs foram unidas com a opção **_'--merge tgid,cpu'_**). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_2/perfis/oprofile/oprofile_profile2.txt" alt="Perfil OProfile exemplo dois.">_oprofile\_profile2_</a>.
+A figura abaixo ilustra o resultado obtido em um contexto global (para obtenção dos valores, as _threads_ e as CPUs foram unidas com a opção **_'--merge tgid,cpu'_**). Apenas as informações importantes para o exemplo foram mantidas, o resultado completo pode ser encontrado em <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/parte_2/perfis/oprofile/oprofile_profile2.txt" alt="Perfil OProfile exemplo dois.">_oprofile\_profile2_</a>.
        
 <p align="center">
 	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/oprofile_tgdi_cpu.png" alt="OProfile com união de threads e CPUs." width="40%"/>
@@ -170,13 +168,12 @@ Como esperado, o cálculo das outras duas séries (_viete_ e _nilakantha_) ocorr
 Ferramentas de visualização gráficas podem ser utilizadas para facilitar a análise e visualizar o grafo de chamadas das funções (_call graph_), durante a apresentação do próximo _profiler_ uma destas possíveis ferramentas será apresentada.
 
 ### _Callgrind_
-<i>Callgrind</i> é uma ferramenta de _profiling_ inclusa no _framework open source_ **_Valgrind_**. Por ser uma _framework_ muito bem consolidado e que recebe grande suporte da comunidade, possui uma documentação extensiva e diversas outros	 para apoio e funcionalidades extras.
+<i>Callgrind</i> é uma ferramenta de _profiling_ inclusa no _framework open source_ **_Valgrind_**. Por ser uma _framework_ muito bem consolidado e que recebe grande suporte da comunidade, possui uma documentação extensiva e diversos outros utilitários para apoio e funcionalidades extras.
 
 <a name="cgcaracteristicas"></a>	
 #### Características:
-
 - Categoria: **Instrumentação**;
-- Análise dos resultados: **_Post mortem_**;
+- Análise dos resultados: **_Post mortem_** com alguma ferramenta de visualização (ex. _KCachegrind_);
 - Não necessita de recompilação;
 - Também consegue realizar o perfil de bibliotecas compartilhadas, _plugins_ e demais recursos;
 - Trabalha bem com aplicações que realizam _fork_&rarr;_execs_ e aplicações **_multithreaded_**;
@@ -193,15 +190,13 @@ Ferramentas de visualização gráficas podem ser utilizadas para facilitar a an
 
 <a name="cgconfig"></a>	
 #### Configuração e funcionamento
-
 Primeiramente deve-se realizar o _profiling_ da aplicação com o _Callgrind_. Formas de controlar o _profiler_ e a listagem de parâmetros de configuração podem ser encontradas em detalhes <a href="http://valgrind.org/docs/manual/cl-manual.html#cl-manual.options">aqui</a>. Para utilizar a ferramenta com uma configuração básica é utilizado o seguinte comando:
 
 ```
 	$ valgrind --tool=callgrind ./meu_programa <meus_args>
 ```
 
-
-O resultado da execução do programa será salvo em um arquivo de saída (por padrão no mesmo diretório) para cada processo/_thread_, sufixado com seu PID. Este arquivo pode ser lido em um editor de texto qualquer, porém é aconselhado o uso de uma ferramenta específica para a visualização, como o **_KCachegrind_**. Para isso, o seguinte comando pode ser executado:
+O resultado da execução do programa será salvo em um arquivo de saída (por padrão no mesmo diretório) para cada processo/_thread_, sufixado com seu PID/_threadID_. Este arquivo pode ser lido em um editor de texto qualquer, porém é aconselhado o uso de uma ferramenta específica para a visualização, como o **_KCachegrind_**. Para isso, o seguinte comando pode ser executado:
 
 ```
 	$ kcachegrind callgrind.out.PID
@@ -211,7 +206,6 @@ Detalhes dos recursos da ferramenta são abordados na seção seguinte.
 
 <a name="cgresultados"></a>	
 #### Resultados
-
 O programa <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t2/seriesPi/seriesPi.c">_seriesPi.c_</a> também foi utilizado para os testes com o _callgrind_. O comando utilizado para execução foi:
 
 ```
@@ -230,7 +224,7 @@ Ao contrário do _Oprofile_, o _Callgrind_, que atua através de instrumentaçã
 	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/callgrind_viete.png" alt="Exemplo de visualização no KCachegrind." width="80%"/>
 </p>
 
-Perceba, que mesmo com esta carga de trabalho tão pequena, o _Callgrind_ consegue realizar uma análise fiel. No caso da figura acima, a _thread_ 2 do processo com PID 7353 é a _thread_ que executou apenas 3 das iterações da série. Todos os perfis gerados durante este _profiling_ podem ser encontrados <a href="https://github.com/rwfazul/elc139-2018a/tree/master/trabalhos/t2/parte_2/perfis/callgrind">aqui</a>.
+Perceba, que mesmo com esta carga de trabalho tão pequena, o _Callgrind_ consegue realizar uma análise fiel. No caso da figura acima, a _thread_ com _ID_ 2 do processo com PID 7353 é a _thread_ que executou apenas 3 das iterações da série. Todos os perfis gerados durante este _profiling_ podem ser encontrados <a href="https://github.com/rwfazul/elc139-2018a/tree/master/trabalhos/t2/parte_2/perfis/callgrind">aqui</a>.
 
 Um recurso interessante da ferramenta _Kcachegrind_ é a geração de um gráfico de chamadas (_call graph_). Abaixo é ilustrado o gráfico de chamadas referente a série de _wallis_.
 
@@ -250,7 +244,7 @@ O _overhead_ gerado pelo _Callgrind_ afetou o programa em níveis tão grandes q
 	$ callgrind_control -e -b
 ```
 
-Este comando permite observar e controlar interativamente o status de um programa atualmente em execução sob o controle do Callgrind, sem interromper o programa. Assim, é possível obter informações de estatísticas, bem como o rastreamento de pilha atual e solicitar zeramento de contadores ou despejo de dados do perfil. 
+Este comando permite observar e controlar interativamente o status de um programa atualmente em execução sob o controle do _Callgrind_, sem interromper o programa. Assim, é possível obter informações e estatísticas, bem como o rastreamento de pilha atual e solicitar zeramento de contadores ou despejo de dados do perfil. 
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/callgrind_overhead-threads.png" alt="Overhead threads callgrind." width="45%"/>
@@ -269,7 +263,6 @@ No exemplo, a função _pow()_ foi chamada 19.173.093 vezes (somente nessa _thre
 ```
 
 Ainda assim, a execução do programa (em específico do cálculo referente a esta série), não conseguiu ser finalizado em mais de 30 minutos de execução do programa com os contadores sendo zerados periodicamente a cada 3 minutos.
-
 
 ### Extra
 	- Dúvidas e/ou dificuldades encontradas
