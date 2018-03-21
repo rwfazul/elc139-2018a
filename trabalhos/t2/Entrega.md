@@ -273,7 +273,7 @@ Ainda assim, a execução do programa (em específico do cálculo referente a es
 
 ### Extra
 	- Dúvidas e/ou dificuldades encontradas
-- Houve tentativa de teste do _profiler_ _**gpertools**_, porém a visualização dos resultados apresentou erros. Este _profiler_ não possui uma documentação tão completa quando comparado aos _profilers_ testados, o que dificulta seu uso.
+Houve tentativa de teste do _profiler_ <a href="https://github.com/gperftools/gperftools">_gperftools_</a>, que inclui a ferramenta de análise <a href="https://github.com/google/pprof">_pprof_</a>, porém a visualização dos resultados apresentou erros. Este _profiler_ não possui uma documentação tão completa quando comparado aos _profilers_ testados, o que dificulta seu uso.
 
 <!-- REFERÊNCIAS -->
 <a name="referencias"></a>
