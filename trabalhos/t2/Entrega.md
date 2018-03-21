@@ -62,7 +62,7 @@ Sendo **_r_** o número de repetições do cálculo do produto escalar realizada
 
 - **Paralelizar as repetições**: fazer com que cada unidade de paralelização seja responsável por (**_r_** / **_t_**) das repetições do cálculo do produto escalar. Logo, desconsiderando o _overhead_ de criação/gerência das <i>threads</i>/processos e considerando que seja possível realizar a execução 100% do tempo em paralelo, o tempo gasto na execução do programa reduziria em **_t_**;
 - **Paralelizar o cálculo do produto escalar**: fazer com que, dentro de uma repetição, sejam realizadas somas parcias do produto dos vetores. Desta forma, a divisão (**_v_** / **_t_**) faria com que cada unidade executasse somente os cálculos de seu intervalo (_range_ de atuação) e o resultado final do cálculo fosse obtido ao somar os resultados parciais (ex. no _join_ das _threads_). Logo, desconsiderando o <i>overhead</i> de criação/gerência das unidades e considerando que seja possível realizar a execução 100% do tempo em paralelo, o tempo gasto na execução do programa em cada iteração do cálculo reduziria em **_t_**;
-- **Parelelizar ambos**: Como não há dependência entre os dois laços (repetições e cálculo), poderia-se dividir as iterações em **_t¹_** unidades de paralelização e, em cada uma das iterações, realizar a divisão em **_t²_** unidades com base no intervalo do cálculo do produto escalar. Em um mundo ideial, o tempo de execução do programa seria reduzido em (**_t¹_** &times; **_t²_**), na prática, o desempenho possivelmente seria melhorado em uma ordem inferior.
+- **Parelelizar ambos**: como não há dependência entre os dois laços (repetições e cálculo), poderia-se dividir as iterações em **_t¹_** unidades de paralelização e, em cada uma das iterações, realizar a divisão em **_t²_** unidades com base no intervalo do cálculo do produto escalar. Em um mundo ideial, o tempo de execução do programa seria reduzido em (**_t¹_** &times; **_t²_**), na prática, o desempenho possivelmente seria melhorado em uma ordem inferior.
 
 Em complemento, a função **_init_vectors()_**, embora execute em uma parcela de tempo menor (**2.79%**, conforme exemplo anterior), também poderia ser paralelizada. Caberia analisar se o _overhead_ de criação/gerência das unidades de paralelização seria diluído no ganho de desempenho no momento de inicialização do vetor (vetores muito grandes tendem a compensar esta paralelização).
 
@@ -230,7 +230,7 @@ Ao contrário do _Oprofile_, o _Callgrind_, que atua através de instrumentaçã
 	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/callgrind_viete.png" alt="Exemplo de visualização no KCachegrind." width="80%"/>
 </p>
 
-Perceba, que mesmo com esta carga de trabalho tão pequena, o _Callgrind_ consegue realizar uma análise fiel. No caso da figura acima, a _thread_ 2 do processo com PID 7353 é a _thread_ que executou apenas 3 das iterações da série.
+Perceba, que mesmo com esta carga de trabalho tão pequena, o _Callgrind_ consegue realizar uma análise fiel. No caso da figura acima, a _thread_ 2 do processo com PID 7353 é a _thread_ que executou apenas 3 das iterações da série. Todos os perfis gerados durante este _profiling_ podem ser encontrados <a href="https://github.com/rwfazul/elc139-2018a/tree/master/trabalhos/t2/parte_2/perfis/callgrind">aqui</a>.
 
 Um recurso interessante da ferramenta _Kcachegrind_ é a geração de um gráfico de chamadas (_call graph_). Abaixo é ilustrado o gráfico de chamadas referente a série de _wallis_.
 
@@ -238,7 +238,7 @@ Um recurso interessante da ferramenta _Kcachegrind_ é a geração de um gráfic
 	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/callgrind_callgraph.png" alt="KCachegrind visualização call graph." width="40%"/>
 </p>
 
-Em contrapartida com a completude e corretude de perfis gerados com ferramentas como o _Callgrind_, algumas desvantagens são aparentes. Conforme esperado, a instrumentação realizada pelo _Callgrind_ afeta, de fato, o desempenho do programa. Houve dificuldades em executar o programa com suas configurações normais por conta do número de iterações realizadas pelas duas últimas séries e, em específico, da série de _leibniz_, que possui um cálculo muito mais oneroso e demorado. Abaixo é realizado uma comparação dos tempos de execução dos cálculos, com e sem o uso dos _profilers_:
+Em contrapartida com a completude e corretude de perfis gerados a partir de ferramentas como o _Callgrind_, algumas desvantagens são aparentes. Conforme esperado, a instrumentação realizada pelo _Callgrind_ afeta, de fato, o desempenho do programa. Houve dificuldades em executar o programa com suas configurações normais por conta do número de iterações realizadas pelas duas últimas séries e, em específico, da série de _leibniz_, que possui um cálculo muito mais oneroso e demorado. Abaixo é realizado uma comparação dos tempos de execução dos cálculos, com e sem o uso dos _profilers_:
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t2/parte_2/imagens/profilers_overhead.png" alt="Overhead gerado pelos profilers." width="80%"/>
@@ -273,7 +273,7 @@ Ainda assim, a execução do programa (em específico do cálculo referente a es
 
 ### Extra
 	- Dúvidas e/ou dificuldades encontradas
-- Dificuldade com visualização dos resultados com outro profiler testado (gperftools). Documentação não muito boa.
+- Houve tentativa de teste do _profiler_ _**gpertools**_, porém a visualização dos resultados apresentou erros. Este _profiler_ não possui uma documentação tão completa quando comparado aos _profilers_ testados, o que dificulta seu uso.
 
 <!-- REFERÊNCIAS -->
 <a name="referencias"></a>
