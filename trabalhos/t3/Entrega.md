@@ -29,34 +29,44 @@ Aluno: Rhauani Weber Aita Fazul
 - Considerando o tempo (em segundos) mostrado na saída do programa, qual foi a aceleração com o uso de threads?
 
 Considerando os seguintes resultados:
-	- Execução sequencial:
+
+- Execução sequencial:
+
 ```
 ./pthreads_dotprod 1 1000000 2000
 10000.000000
 1 thread(s), 8837103 usec
 ```
-	- Execução com threads:
+
+- Execução com threads:
+
 ```
 ./pthreads_dotprod2 1 500000 2000
 5000.000000
 1 thread(s), 4420286 usec
 ```
 O fator de aceleração (_speedup_) pode ser calculado da seguinte maneira:
-![\Large S(n)=\frac{tempo de execução serial}{tempo de execução paralelo}\](https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D)
 
-Considerando que o computador onde os testes foram realizados possui dois núcleos de processamento:
+![speedup-formula](https://latex.codecogs.com/svg.latex?S(n)%3D%5Cfrac%7Bt_s%7D%7Bt_p%7D)
+
+Onde _n_ equivale a quantidade de processadores, _t<sub>s</sub>_ equivale ao tempo de execução serial e _t<sub></sub>_ ao tempo de execução paralelo. Considerando que o computador onde os testes foram realizados possui dois núcleos de processamento:
 
 ![\Large S(2)=\frac{8837103}{4420286}=\1.999215209\](https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D)
 
+
 Sendo S(2) &cong; 2, obteve-se um _speedup_ próximo ao ideal (_speedup_ linear). E, considerando os resultados obtidos em outra execução do programa, conforme apresentado abaixo.
-	- Execução sequencial:
+
+- Execução sequencial:
+
 ```
 ./pthreads_dotprod 1 1000000 2000
 10000.000000
 1 thread(s), 8989450 usec
 
 ```
-	- Execução com threads:
+
+- Execução com threads:
+
 ```
 ./pthreads_dotprod2 1 500000 2000
 5000.000000
@@ -65,7 +75,7 @@ Sendo S(2) &cong; 2, obteve-se um _speedup_ próximo ao ideal (_speedup_ linear)
 
 ![\Large S(2)=\frac{8989450}{4421713}=\2.033024305\](https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D)
 
-Tendo em vista que S(2) > 2, obteve-se um Obteve-se um _superlinear speedup_. Uma possível explicação para isso é o efeito da memória cache resultante das diferentes hierarquias de memória do computador.
+Tendo em vista que S(2) > 2, obteve-se um _superlinear speedup_. Uma possível explicação para isso é o efeito da memória cache resultante das diferentes hierarquias de memória do computador.
 
 Portando, em ambos os cenários apresentados, conclui-se que o algorítimo de cálculo de produto escalar paralelizado em _pthreads\_dotprod_ teve um ganho de desempenho substâncial quando comparado a uma execução sequencial.
 
