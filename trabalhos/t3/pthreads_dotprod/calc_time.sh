@@ -8,7 +8,7 @@ MAX_ARGS=4 # <file_name> <nthreads> <worksize> <repetitions>
 RunTests () {
 	file=$1
 	start=0
-	end=30
+	end=30 #30 execucoes para cada configuracao de teste
 	time_finish=0
 	
 	for (( i = $start; i < $end; i++ )) 
