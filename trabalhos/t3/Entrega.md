@@ -28,7 +28,7 @@ Aluno: Rhauani Weber Aita Fazul
 ### Questão 2
 - Considerando o tempo (em segundos) mostrado na saída do programa, qual foi a aceleração com o uso de threads?
 
-Considerando os seguintes resultados:
+Tomando como base os seguintes resultados:
 
 - Execução sequencial:
 
@@ -47,16 +47,15 @@ Considerando os seguintes resultados:
 ```
 O fator de aceleração (_speedup_) pode ser calculado da seguinte maneira:
 
-![speedup-formula](https://latex.codecogs.com/svg.latex?S(n)%3D%5Cfrac%7Bt_s%7D%7Bt_p%7D)
+<p align="center">![speedup-formula](https://latex.codecogs.com/svg.latex?S(n)%3D%5Cfrac%7Bt_s%7D%7Bt_p%7D</p>
 
-Onde _n_ equivale a quantidade de processadores, _t<sub>s</sub>_ equivale ao tempo de execução serial e _t<sub></sub>_ ao tempo de execução paralelo. Considerando que o computador onde os testes foram realizados possui dois núcleos de processamento:
+Onde _n_ equivale a quantidade de processadores, _t<sub>s</sub>_ equivale ao tempo de execução serial e _t<sub>p</sub>_ ao tempo de execução paralelo. Logo, considerando que o computador onde os testes foram realizados possui dois núcleos de processamento:
 
-![\Large S(2)=\frac{8837103}{4420286}=\1.999215209\](https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D)
+<p align="center">![speedup-linear](https://latex.codecogs.com/svg.latex?S(2)%3D%5Cfrac%7B8837103%7D%7B4420286%7D%3D%7B1.999215209%7D)</p>
 
+Sendo _S(2)_ &cong; _2_, obteve-se um _speedup_ próximo ao ideal (_speedup_ linear), o que demonstra que o programa possui um forte ganho com a paralelização realizada. Ainda nesse contexto, realizou-se uma nova execução do programa em que os resultados obtidos foram:
 
-Sendo S(2) &cong; 2, obteve-se um _speedup_ próximo ao ideal (_speedup_ linear). E, considerando os resultados obtidos em outra execução do programa, conforme apresentado abaixo.
-
-- Execução sequencial:
+- Execução sequencial:	
 
 ```
 ./pthreads_dotprod 1 1000000 2000
@@ -73,30 +72,80 @@ Sendo S(2) &cong; 2, obteve-se um _speedup_ próximo ao ideal (_speedup_ linear)
 1 thread(s), 4421713 usec
 ```
 
-![\Large S(2)=\frac{8989450}{4421713}=\2.033024305\](https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D)
+<p align="center">![speedup-superlinear](https://latex.codecogs.com/svg.latex?S(2)%3D%5Cfrac%7B8989450%7D%7B4421713%7D%3D%7B2.033024305%7D)</p>
 
-Tendo em vista que S(2) > 2, obteve-se um _superlinear speedup_. Uma possível explicação para isso é o efeito da memória cache resultante das diferentes hierarquias de memória do computador.
+Sendo _S(2)_ > _2_, obteve-se um _superlinear speedup_. Uma possível explicação para isso é o efeito da memória cache resultante das diferentes hierarquias de memória do computador.
 
-Portando, em ambos os cenários apresentados, conclui-se que o algorítimo de cálculo de produto escalar paralelizado em _pthreads\_dotprod_ teve um ganho de desempenho substâncial quando comparado a uma execução sequencial.
+Portando, neste cenário, em ambos os casos apresentados, conclui-se que o algorítimo de cálculo de produto escalar paralelizado em _pthreads\_dotprod_ teve um ganho de desempenho substâncial quando comparado a execução sequencial.
 
 ### Questão 3
 - A aceleração (speedup) se sustenta para outros tamanhos de vetores, números de threads e repetições? Para responder a essa questão, você terá que realizar diversas execuções, variando o tamanho do problema (tamanho dos vetores e número de repetições) e o número de threads (1, 2, 4, 8..., dependendo do número de núcleos). Cada caso deve ser executado várias vezes, para depois calcular-se um tempo de processamento médio para cada caso. Atenção aos fatores que podem interferir na confiabilidade da medição: uso compartilhado do computador, tempos muito pequenos, etc.
 
 Para realizar as comparações apresentadas a seguir, utilizou-se as seguintes baterias de testes (30 execuções de cada configuração):
 
-|   THREADS   |					TAMANHO DOS VETORES  				    |	     REPETIÇÕES 	  |
-| ----------- | ----------------------------------------------------------------------------------  | --------------------------- |
-|     1	      |	\[ 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000 \] | \[ 100, 1000, 2000, 3000 \] |
-|     2	      |	\[ 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000 \] | \[ 100, 1000, 2000, 3000 \] |
-|     4       |	\[ 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000 \] | \[ 100, 1000, 2000, 3000 \] |
-|     8       |	\[ 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000 \] | \[ 100, 1000, 2000, 3000 \] |
-|     16      |	\[ 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000 \] | \[ 100, 1000, 2000, 3000 \] |
-|     32      |	\[ 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000 \] | \[ 100, 1000, 2000, 3000 \] |
-|     64      |	\[ 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000 \] | \[ 100, 1000, 2000, 3000 \] |
-|     128     |	\[ 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000 \] | \[ 100, 1000, 2000, 3000 \] |
-|     256     |	\[ 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000 \] | \[ 100, 1000, 2000, 3000 \] |
-|     512     |	\[ 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000 \] | \[ 100, 1000, 2000, 3000 \] |
-|     1024    |	\[ 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000 \] | \[ 100, 1000, 2000, 3000 \] |
+|                    		      NUM\_THREADS = 1			                 |
+| -------------------------------------------------------------------------------------- |
+| TAM\_VETS  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| -------------------------------------------------------------------------------------- | 
+| 1.000      | 	563		|		   |		      |			 |
+| 10.000     |	1371		|		   |		      |			 |
+| 100.000    |	7481		|		   |		      |			 |
+| 1.000.000  |	51763		|		   |		      |			 |
+| 10.000.000 |	448580		|		   |		      |			 |
+
+|                    		      NUM\_THREADS = 2			                 |
+| -------------------------------------------------------------------------------------- |
+| TAM\_VETS  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| -------------------------------------------------------------------------------------- | 
+| 1.000      | 778		|		   |		      |			 |
+| 10.000     | 1698		|		   |		      |			 |
+| 100.000    | 9186		|		   |		      |			 |
+| 1.000.000  | 72660		|		   |		      |			 |
+| 10.000.000 | 453612		|		   |		      |			 |
+
+|                    		      NUM\_THREADS = 4			                 |
+| -------------------------------------------------------------------------------------- |
+| TAM\_VETS  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| -------------------------------------------------------------------------------------- | 
+| 1.000      | 573		|		   |		      |			 |
+| 10.000     | 1587		|		   |		      |			 |
+| 100.000    | 8850		|		   |		      |			 |
+| 1.000.000  | 80817		|		   |		      |			 |
+| 10.000.000 | 792414		|		   |		      |			 |
+
+|                    		      NUM\_THREADS = 8			                 |
+| -------------------------------------------------------------------------------------- |
+| TAM\_VETS  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| -------------------------------------------------------------------------------------- | 
+| 1.000      | 			|		   |		      |			 |
+| 10.000     |			|		   |		      |			 |
+| 100.000    |			|		   |		      |			 |
+| 1.000.000  |			|		   |		      |			 |
+| 10.000.000 |			|		   |		      |			 |
+
+|                    		      NUM\_THREADS = 16			                 |
+| -------------------------------------------------------------------------------------- |
+| TAM\_VETS  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| -------------------------------------------------------------------------------------- | 
+| 1.000      | 			|		   |		      |			 |
+| 5.000      |			|		   |		      |			 |
+| 10.000     |			|		   |		      |			 |
+| 50.000     |			|	 	   |	 	      |			 |
+| 100.000    |			|		   |		      |			 |
+| 500.000    | 			|	 	   |		      |			 |
+| 1.000.000  |			|		   |		      |			 |
+| 5.000.000  |			|		   |		      |			 |
+| 10.000.000 |			|		   |		      |			 |
+
+|                    		      NUM\_THREADS = 32	       	                         | 
+| -------------------------------------------------------------------------------------- |
+| TAM\_VETS  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| -------------------------------------------------------------------------------------- | 
+| 1.000      | 			|		   |		      |			 |
+| 10.000     |			|		   |		      |			 |
+| 100.000    |			|		   |		      |			 |
+| 1.000.000  |			|		   |		      |			 |
+| 10.000.000 |			|		   |		      |			 |
 
 ### Questão 4
 - Elabore um gráfico/tabela de aceleração a partir dos dados obtidos no exercício anterior.
