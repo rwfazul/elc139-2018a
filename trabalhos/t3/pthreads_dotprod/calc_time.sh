@@ -28,6 +28,6 @@ RunTests () {
 if [ $ARGC -ne $MAX_ARGS ]; then 
     echo -e "Uso: $0 <file_name> <nthreads> <worksize> <repetitions>\n">&2 #testes param.
 else
-   # make
+    make
     RunTests $1 $2 $3 $4 # $1 = file_name, $2 = num_threads, $3 tam_vets, $4 = repeticoes
 fi
