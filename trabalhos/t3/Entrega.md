@@ -81,69 +81,91 @@ Portando, neste cenário, em ambos os casos apresentados, conclui-se que o algor
 ### Questão 3
 - A aceleração (speedup) se sustenta para outros tamanhos de vetores, números de threads e repetições? Para responder a essa questão, você terá que realizar diversas execuções, variando o tamanho do problema (tamanho dos vetores e número de repetições) e o número de threads (1, 2, 4, 8..., dependendo do número de núcleos). Cada caso deve ser executado várias vezes, para depois calcular-se um tempo de processamento médio para cada caso. Atenção aos fatores que podem interferir na confiabilidade da medição: uso compartilhado do computador, tempos muito pequenos, etc.
 
-Para realizar as comparações apresentadas a seguir, utilizou-se as seguintes baterias de testes (30 execuções de cada configuração):
+Para realizar a análise, o parâmetro referente ao tamanho dos vetores foi utilizado com base no número de threads. Para exemplificar, tomando como exemplo a seguinte execução:
+
+```
+	$ ./pthreads_dotprod 1 10000 10
+```
+
+Os argumentos são, respectivamente, <_nthreads_>, <_worksize_> e <_repetitions_>. Se fosse utilizado 4 _threads_, o _worksize_ deve ser recalculado:
+ 
+```
+	$ ./pthreads_dotprod 4 2500 10
+```
+
+Sendo assim, _worksize(thread#id)_ = _worksize(total)_ / _nthread_. Esse cuidado foi tomado em todas baterias de testes realizadas. Abaixo estão ilustrando os valores médios (em segundos) de cada execução, para obtenção desses valores foram realizadas 30 execuções de cada configuração de teste, onde foi realizada uma média aritimética simples dos valores de execução individual: Tempo(s) = &Sigma (n=0..30) execucao<sub>n</sub> / 30. 
 
 - NUM\_THREADS = 1
 
 | TAM\_VETS  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
-| 1.000      | 	563		|		   |		      |			 |
-| 10.000     |	1371		|		   |		      |			 |
-| 100.000    |	7481		|		   |		      |			 |
-| 1.000.000  |	51763		|		   |		      |			 |
-| 10.000.000 |	448580		|		   |		      |			 |
+| 1.000      | 	0.000663	| 0.004471	   | 0.008478	      | 0.013945	 |
+| 10.000     |	0.001450	| 0.008326	   | 0.047678	      |	0.088564         |
+| 100.000    |	0.008683	| 0.050750	   | 0.427975	      |	0.841297         |
+| 1.000.000  |	0.051537	| 0.449532         | 4.439322         |	8.848498	 |
+| 10.000.000 |	0.448649	| 4.424125         | 44.10462	      |	88.10289         |
 
 - NUM\_THREADS = 2
 
 | TAM\_VETS  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
-| 1.000      | 778		|		   |		      |			 |
-| 10.000     | 1698		|		   |		      |			 |
-| 100.000    | 9186		|		   |		      |			 |
-| 1.000.000  | 72660		|		   |		      |			 |
-| 10.000.000 | 453612		|		   |		      |			 |
+| 1.000      | 0.000537		| 0.000885         | 0.004165	      |	0.007521         |
+| 10.000     | 0.000996		| 0.004357         | 0.024239         |	0.047905	 |
+| 100.000    | 0.004397		| 0.026254	   | 0.214525	      |	0.428951	 |
+| 1.000.000  | 0.032828		| 0.232192         | 2.266735	      | 4.556499	 |
+| 10.000.000 | 0.222738		| 2.282915         | 23.45902         |	49.11765	 |
 
 - NUM\_THREADS = 4	
 
 | TAM\_VETS  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
-| 1.000      | 573		|		   |		      |			 |
-| 10.000     | 1587		|		   |		      |			 |
-| 100.000    | 8850		|		   |		      |			 |
-| 1.000.000  | 80817		|		   |		      |			 |
-| 10.000.000 | 792414		|		   |		      |			 |
+| 1.000      | 0.000586		| 0.000788	   | 0.003156	      | 0.005268	 |
+| 10.000     | 0.000806		| 0.003186	   | 0.019892	      |	0.039089	 |
+| 100.000    | 0.003641		| 0.020139	   | 0.193465	      |	0.389723	 |
+| 1.000.000  | 0.020849		| 0.201132	   | 1.985106	      | 4.153111	 |
+| 10.000.000 | 0.199382		| 2.056176	   | 22.08599	      |	47.47029	 |
 
 - NUM\_THREADS = 8
 
 | TAM\_VETS  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
-| 1.000      | 			|		   |		      |			 |
-| 10.000     |			|		   |		      |			 |
-| 100.000    |			|		   |		      |			 |
-| 1.000.000  |			|		   |		      |			 |
-| 10.000.000 |			|		   |		      |			 |
+| 1.000      | 0.000860		| 0.000902	   | 0.003259	      | 0.005180	 |
+| 10.000     | 0.000968		| 0.003318	   | 0.020204	      | 0.039533	 |
+| 100.000    | 0.003443		| 0.020226         | 0.194986	      |	0.388560	 |
+| 1.000.000  | 0.020576		| 0.201583         | 1.990362	      | 4.345865	 |
+| 10.000.000 | 0.204278		| 1.997682	   | 21.58099	      |	47.04251	 |
 
 - NUM\_THREADS = 16	
 
 | TAM\_VETS  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
-| 1.000      | 			|		   |		      |			 |
-| 10.000     |			|		   |		      |			 |
-| 100.000    |			|		   |		      |			 |
-| 1.000.000  |			|		   |		      |			 |
-| 10.000.000 |			|		   |		      |			 |
+| 1.000      | 0.001215		| 0.001305	   | 0.003341	      | 0.005331	 |
+| 10.000     | 0.001307		| 0.003279	   | 0.020541	      |	0.040552	 |
+| 100.000    | 0.003403		| 0.020585	   | 0.195229         |	0.386702	 |
+| 1.000.000  | 0.021161		| 0.199856	   | 1.972717	      | 3.948927	 |
+| 10.000.000 | 0.201536		| 20.81036	   | 24.31045	      |	49.22075	 |
 
 -  NUM\_THREADS = 32
 
-|				     NUM\_THREADS = 32					 |
-| ---------- | ---------------- | ---------------- | ---------------- | ---------------- |
 | TAM\_VETS  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
-| 1.000      | 			|		   |		      |			 |
-| 10.000     |			|		   |		      |			 |
-| 100.000    |			|		   |		      |			 |
-| 1.000.000  |			|		   |		      |			 |
-| 10.000.000 |			|		   |		      |			 |
+| 1.000      | 0.001876		| 0.001960	   | 0.003343	      | 0.005474	 |
+| 10.000     | 0.002094		| 0.003418         | 0.020361	      |	0.040006 	 |
+| 100.000    | 0.003479		| 0.020657         | 0.194581	      |	0.386753	 |
+| 1.000.000  | 0.020745		| 0.195829	   | 1.947502         |	4.122186	 |
+| 10.000.000 | 0.201797		| 1.990973	   | 22.79035	      |	47.98167	 |
+
+-  NUM\_THREADS = 1024
+
+| TAM\_VETS  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
+| 1.000      | -		| -	   	   | -	      	      | -	 	 |
+| 10.000     | 0.036666		| 0.034348         | 0.042275	      |	0.059018 	 |
+| 100.000    | 0.037224		| 0.041402         | 0.212358	      |	0.404867 	 |
+| 1.000.000  | 0.040600		| 0.209328	   | 1.986754         |	3.948843 	 |
+| 10.000.000 | 0.213893		| 1.943035	   | 20.17412	      |	44.40787	 |
+
+
 
 ### Questão 4
 - Elabore um gráfico/tabela de aceleração a partir dos dados obtidos no exercício anterior.
