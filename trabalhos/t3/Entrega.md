@@ -76,7 +76,7 @@ Sendo _S(2)_ &cong; 2, obteve-se um _speedup_ próximo ao ideal (_speedup_ linea
 
 Sendo _S(2)_ > 2, obteve-se um _superlinear speedup_. Uma possível explicação para isso é o efeito da memória cache resultante das diferentes hierarquias de memória do computador.
 
-Portando, neste cenário, em ambos os casos apresentados, conclui-se que o algorítimo de cálculo de produto escalar paralelizado em  [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) teve um ganho de desempenho substâncial quando comparado a execução sequencial.
+Portando, neste cenário, em ambos os casos apresentados, conclui-se que o algorítimo de cálculo de produto escalar paralelizado em  [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) teve um ganho de desempenho substâncial quando comparado a sua execução sequencial.
 
 ### Questão 3
 - A aceleração (_speedup_) se sustenta para outros tamanhos de vetores, números de _threads_ e repetições? Para responder a essa questão, você terá que realizar diversas execuções, variando o tamanho do problema (tamanho dos vetores e número de repetições) e o número de _threads_ (1, 2, 4, 8..., dependendo do número de núcleos). Cada caso deve ser executado várias vezes, para depois calcular-se um tempo de processamento médio para cada caso. Atenção aos fatores que podem interferir na confiabilidade da medição: uso compartilhado do computador, tempos muito pequenos, etc.
@@ -93,7 +93,9 @@ Os argumentos são, respectivamente, <_nthreads_>, <_worksize_> e <_repetitions_
 	$ ./pthreads_dotprod 4 2500 10
 ```
 
-Sendo assim, _worksize_(_thread_<sub><i>i</i></sub>) = _tam\_vets_ &divide; _nthreads_. Esse cuidado foi tomado em todas baterias de testes realizadas. Abaixo estão ilustrando os valores médios (em segundos) de cada execução, para obtenção desses valores foram realizadas 30 execuções de cada configuração de teste, onde foi realizada uma média aritimética simples dos valores de execução individual, onde: _Tempo(s)_ = &Sigma;<sub><i>n</i>=1..30</sub> tempoExecucao<sub>n</sub> &divide; 30.
+Sendo assim, _worksize_(_thread_<sub><i>i</i></sub>) = _tam\_vets_ &divide; _nthreads_. Esse cuidado foi tomado em todas baterias de testes realizadas. 
+
+Abaixo estão ilustrando os valores médios (em segundos) de cada execução, para obtenção desses valores foram realizadas 30 execuções de cada configuração de teste, onde foi realizada uma média aritimética simples dos tempos de execução individual, onde: _T(s)_ = (&Sigma;<sub><i>n</i>=1..30</sub> T<sub>n</sub>) &divide; 30.
 
 - **_nthreads_** = 1
 
@@ -159,7 +161,7 @@ Sendo assim, _worksize_(_thread_<sub><i>i</i></sub>) = _tam\_vets_ &divide; _nth
 
 | tam\_vets  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
-| 1.000      | -		| -	   	   |       	      | -	 	 |
+| 1.000      | -		| -	   	   | -      	      | -	 	 |
 | 10.000     | 0.036666		| 0.034348         | 0.042275	      |	0.059018 	 |
 | 100.000    | 0.037224		| 0.041402         | 0.212358	      |	0.404867 	 |
 | 1.000.000  | 0.040600		| 0.209328	   | 1.986754         |	3.948843 	 |
@@ -167,11 +169,11 @@ Sendo assim, _worksize_(_thread_<sub><i>i</i></sub>) = _tam\_vets_ &divide; _nth
 
 Constatou-se que, para poucas repetições e _worksizes_ muito pequenos, o _overhead_ gerado pelas _threads_, embora baixo, pode fazer com que o _speedup_ ganhado pela parelização não se sustente. Porém, a medida que o valor de pelo menos um detes parâmetros aumente, o _speedup_ será mantido independente do número de _threads_.
 
-Isso se comprova pois, mesmo utilizando um valor de _threads_ muito mais alto que o recomendado (número de unidades de processamento/_cores_), como nos testes em que _nthreads_ = 1024, o _overhead_ de criação e gerenciamento dessas unidades é diluído no tempo. Logo, a média de tempos de execução neste cenário acaba por ser inferior do que os valores obtidos na execução puramente sequencial.
+Isso se comprova pois, mesmo utilizando um valor de _threads_ muito mais alto que o recomendado (número de unidades de processamento/_cores_), como nos testes em que _nthreads_ = 1024, o _overhead_ de criação e gerenciamento dessas unidades é diluído no tempo. Logo, a média de tempos de execução neste cenário acaba por ser inferior do que os valores obtidos na execução puramente sequencial do programa.
 
-Neste sentido, observou-se alguns resultados que não eram esperados. Tempo em vista que o computador onde os testes foram realizados possui um processador _Dual-core_ (ou seja, dois núcleos), acreditava-se que o maior desempenho seria obtido nos cenários onde foram utilizadas 2 _threads_ ou, no máximo, 4 _threads_ (devido a tecnologia _Hyper-Threading_, que faz com que cada núcleo do processador execute mais de um thread "simultaneamente"). Porém, houve testes em que obteve-se maior desempenho mesmo com _nthreads_ > 4.
+Neste sentido, observou-se alguns resultados que não eram esperados. Tendo em vista que o computador onde os testes foram realizados possui um processador _Dual-core_ (ou seja, dois núcleos), acreditava-se que o maior desempenho seria obtido nos cenários onde foram utilizadas 2 _threads_ ou, no máximo, 4 _threads_ (devido a tecnologia _Hyper-Threading_, que faz com que cada núcleo do processador execute mais de um thread "simultaneamente"). Porém, houve testes em que obteve-se maior desempenho mesmo com _nthreads_ > 4.
 
-Mesmo que _user space threads_ sejam _lightweight_, esperava-se que o _overhead_ gerado em alguns casos (ex. _nthreads_ = 1024) fosse prejudicar o desempenho do programa. Acredita-se que [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) implemente uma lógica que, indiretamente, tenha favorecido a parelização com maiores números de _threads_, em outras palavras, o cálculo realizado pelo programa faz com que o _overhead_ como, por exemplo o número maior de trocas de contexto/estado gerado pelo uso de mais _threads_, não seja significativo.
+Mesmo que _user space threads_ sejam _lightweight_, esperava-se que o _overhead_ gerado em alguns casos (ex. _nthreads_ = 1024) fosse prejudicar o desempenho do programa. Acredita-se que [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) implemente uma lógica que, indiretamente, tenha favorecido a parelização um número de _threads_ maior, em outras palavras, o cálculo realizado pelo programa faz com que o _overhead_ (como o número maior de trocas de contexto/estado gerado pelo uso de mais _threads_), não seja significativo a ponto de afetar os tempos obtidos.
 
 ### Questão 4
 - Elabore um gráfico/tabela de aceleração a partir dos dados obtidos no exercício anterior.
@@ -179,12 +181,18 @@ Mesmo que _user space threads_ sejam _lightweight_, esperava-se que o _overhead_
 ### Questão 5
 - Explique as diferenças entre [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) e [pthreads_dotprod2.c](pthreads_dotprod/pthreads_dotprod2.c). Com as linhas removidas, o programa está correto?
 
+A única diferença entre os programas é que [pthreads_dotprod2.c](pthreads_dotprod/pthreads_dotprod2.c) faz uso de _locks_ (_mutexes_), para controle de concorrência (prevenir _race conditions_) envolvendo a varíavel da estrutura compartilhada (_dotdata_) que recebe os resultados das somas parciais do cálculo do produto escalar realizadas pelas _threads_.
 
-<a name="variacao"></a>
-### Variaçao de perfil 
-	
-<a name="paralelizacao"></a>	
+```
+   pthread\_mutex\_lock (&mutexsum);
+   dotdata.c += mysum;
+   pthread\_mutex\_unlock (&mutexsum);
+```
 
+Neste caso, o uso de _mutexsem_ irá garantir um acesso serializado para a atualização de valores em _dotdata.c_. Ou seja, se uma _thread_ _t1_ estiver nesta seção crítica, a entrada de outras _threads_ só será permitada após _t1_ liberar o acesso. Como a acesso a varíavel da _struct_ _dotdata_ é compartilhada entre todas as _threads_, o uso do _mutex_ evita _race conditions_. 
+
+Tendo em vista que na maioria das CPUs modernas a operação de leitura e escrita em objetos alinhados seja atômica, é interessante ressaltar que dificilmente a instrução _dotdata.c += mysum_ causaria algum problema de sincronização. De todo modo, arquiteturas diferentes têm regras diferentes, logo é mais seguro incluir o _mutex_ para garantir a correteza do programa independente da ordem de escalonamento/intercalação das _threads_.
+ 
 <!-- OpenMP -->
 ## OpenMP
 openmp 4.0
