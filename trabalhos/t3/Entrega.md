@@ -38,7 +38,7 @@ Tomando como base os seguintes resultados:
 1 thread(s), 8837103 usec
 ```
 
-- Execução com threads:
+- Execução com _threads_:
 
 ```
 ./pthreads_dotprod2 1 500000 2000
@@ -53,7 +53,7 @@ Onde _n_ equivale a quantidade de processadores, <i>t<sub>s</sub></i> equivale a
 
 <p align="center"><img src="https://latex.codecogs.com/svg.latex?S(2)%3D%5Cfrac%7B8837103%7D%7B4420286%7D%3D%7B1.999215209%7D" alt="speedup linear"/></p>
 
-Sendo _S_(2) &cong; 2, obteve-se um _speedup_ próximo ao ideal (_speedup_ linear), o que demonstra que o programa possui um forte ganho com a paralelização realizada. Ainda nesse contexto, realizou-se uma nova execução do programa em que os resultados obtidos foram:
+Sendo _S(2)_ &cong; 2, obteve-se um _speedup_ próximo ao ideal (_speedup_ linear), o que demonstra que o programa possui um forte ganho com a paralelização realizada. Ainda nesse contexto, realizou-se uma nova execução do programa em que os resultados obtidos foram:
 
 - Execução sequencial:	
 
@@ -64,7 +64,7 @@ Sendo _S_(2) &cong; 2, obteve-se um _speedup_ próximo ao ideal (_speedup_ linea
 
 ```
 
-- Execução com threads:
+- Execução com _threads_:
 
 ```
 ./pthreads_dotprod2 1 500000 2000
@@ -74,9 +74,9 @@ Sendo _S_(2) &cong; 2, obteve-se um _speedup_ próximo ao ideal (_speedup_ linea
 
 <p align="center"><img src="https://latex.codecogs.com/svg.latex?S(2)%3D%5Cfrac%7B8989450%7D%7B4421713%7D%3D%7B2.033024305%7D" alt="speedup superlinear"></p>
 
-Sendo _S_(2) > 2, obteve-se um _superlinear speedup_. Uma possível explicação para isso é o efeito da memória cache resultante das diferentes hierarquias de memória do computador.
+Sendo _S(2)_ > 2, obteve-se um _superlinear speedup_. Uma possível explicação para isso é o efeito da memória cache resultante das diferentes hierarquias de memória do computador.
 
-Portando, neste cenário, em ambos os casos apresentados, conclui-se que o algorítimo de cálculo de produto escalar paralelizado em _pthreads\_dotprod_ teve um ganho de desempenho substâncial quando comparado a execução sequencial.
+Portando, neste cenário, em ambos os casos apresentados, conclui-se que o algorítimo de cálculo de produto escalar paralelizado em  [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) teve um ganho de desempenho substâncial quando comparado a execução sequencial.
 
 ### Questão 3
 - A aceleração (_speedup_) se sustenta para outros tamanhos de vetores, números de _threads_ e repetições? Para responder a essa questão, você terá que realizar diversas execuções, variando o tamanho do problema (tamanho dos vetores e número de repetições) e o número de _threads_ (1, 2, 4, 8..., dependendo do número de núcleos). Cada caso deve ser executado várias vezes, para depois calcular-se um tempo de processamento médio para cada caso. Atenção aos fatores que podem interferir na confiabilidade da medição: uso compartilhado do computador, tempos muito pequenos, etc.
@@ -87,13 +87,13 @@ Para realizar a análise, o parâmetro referente ao tamanho dos vetores foi util
 	$ ./pthreads_dotprod 1 10000 10
 ```
 
-Os argumentos são, respectivamente, <_nthreads_>, <_worksize_> e <_repetitions_>. Se fosse utilizado 4 _threads_, o _worksize_ deve ser recalculado:
+Os argumentos são, respectivamente, <_nthreads_>, <_worksize_> e <_repetitions_>. Se, por exemplo, fosse utilizado 4 _threads_, o _worksize_ precisaria ser recalculado:
  
 ```
 	$ ./pthreads_dotprod 4 2500 10
 ```
 
-Sendo assim, _worksize_(_thread_<sub><i>i</i></sub>) = _tam\_vets_ &divide; _nthreads_. Esse cuidado foi tomado em todas baterias de testes realizadas. Abaixo estão ilustrando os valores médios (em segundos) de cada execução, para obtenção desses valores foram realizadas 30 execuções de cada configuração de teste, onde foi realizada uma média aritimética simples dos valores de execução individual, onde: Tempo(_s_) = &Sigma;<sub><i>n</i>=1..30</sub> tempoExecucao<sub>n</sub> / 30.
+Sendo assim, _worksize_(_thread_<sub><i>i</i></sub>) = _tam\_vets_ &divide; _nthreads_. Esse cuidado foi tomado em todas baterias de testes realizadas. Abaixo estão ilustrando os valores médios (em segundos) de cada execução, para obtenção desses valores foram realizadas 30 execuções de cada configuração de teste, onde foi realizada uma média aritimética simples dos valores de execução individual, onde: _Tempo(s)_ = &Sigma;<sub><i>n</i>=1..30</sub> tempoExecucao<sub>n</sub> &divide; 30.
 
 - **_nthreads_** = 1
 
@@ -157,13 +157,21 @@ Sendo assim, _worksize_(_thread_<sub><i>i</i></sub>) = _tam\_vets_ &divide; _nth
 
 -  **_nthreads_** = 1024
 
-| tam\_vets   |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| tam\_vets  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
-| 1.000      | -		| -	   	   | -	      	      | -	 	 |
+| 1.000      | -		| -	   	   |       	      | -	 	 |
 | 10.000     | 0.036666		| 0.034348         | 0.042275	      |	0.059018 	 |
 | 100.000    | 0.037224		| 0.041402         | 0.212358	      |	0.404867 	 |
 | 1.000.000  | 0.040600		| 0.209328	   | 1.986754         |	3.948843 	 |
 | 10.000.000 | 0.213893		| 1.943035	   | 20.17412	      |	44.40787	 |
+
+Constatou-se que, para poucas repetições e _worksizes_ muito pequenos, o _overhead_ gerado pelas _threads_, embora baixo, pode fazer com que o _speedup_ ganhado pela parelização não se sustente. Porém, a medida que o valor de pelo menos um detes parâmetros aumente, o _speedup_ será mantido independente do número de _threads_.
+
+Isso se comprova pois, mesmo utilizando um valor de _threads_ muito mais alto que o recomendado (número de unidades de processamento/_cores_), como nos testes em que _nthreads_ = 1024, o _overhead_ de criação e gerenciamento dessas unidades é diluído no tempo. Logo, a média de tempos de execução neste cenário acaba por ser inferior do que os valores obtidos na execução puramente sequencial.
+
+Neste sentido, observou-se alguns resultados que não eram esperados. Tempo em vista que o computador onde os testes foram realizados possui um processador _Dual-core_ (ou seja, dois núcleos), acreditava-se que o maior desempenho seria obtido nos cenários onde foram utilizadas 2 _threads_ ou, no máximo, 4 _threads_ (devido a tecnologia _Hyper-Threading_, que faz com que cada núcleo do processador execute mais de um thread "simultaneamente"). Porém, houve testes em que obteve-se maior desempenho mesmo com _nthreads_ > 4.
+
+Mesmo que _user space threads_ sejam _lightweight_, esperava-se que o _overhead_ gerado em alguns casos (ex. _nthreads_ = 1024) fosse prejudicar o desempenho do programa. Acredita-se que [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) implemente uma lógica que, indiretamente, tenha favorecido a parelização com maiores números de _threads_, em outras palavras, o cálculo realizado pelo programa faz com que o _overhead_ como, por exemplo o número maior de trocas de contexto/estado gerado pelo uso de mais _threads_, não seja significativo.
 
 ### Questão 4
 - Elabore um gráfico/tabela de aceleração a partir dos dados obtidos no exercício anterior.
