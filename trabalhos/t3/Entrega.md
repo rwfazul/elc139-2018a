@@ -8,12 +8,12 @@ Aluno: Rhauani Weber Aita Fazul
 ## Sumário
 
 - [Pthreads](#pthreads)
-	- [Questão 1](#questao-1)
-	- [Questão 2](#questao-2)
-	- [Questão 3](#questao-3)
-	- [Questão 4](#questao-4)
-	- [Questão 5](#questao-5)
-- [OpenMP]P(#openmp)
+	- [Questão 1](#questão-1)
+	- [Questão 2](#questão-2)
+	- [Questão 3](#questão-3)
+	- [Questão 4](#questão-4)
+	- [Questão 5](#questão-5)
+- [OpenMP](#openmp)
 	- [Programa utilizado (SeriesPi)](#seriespi)
 	- [_OProfile_](#oprofile)
 - [Extra](#extra)
@@ -47,9 +47,9 @@ Tomando como base os seguintes resultados:
 ```
 O fator de aceleração (_speedup_) pode ser calculado da seguinte maneira:
 
-<p align="center"><img src="https://latex.codecogs.com/svg.latex?S(n)%3D%5Cfrac%7Bt_s%7D%7Bt_p%7D" alt="speedup formula" /></p>
+<p align="center"><img src="https://latex.codecogs.com/svg.latex?S(p)%3D%5Cfrac%7Bt_s%7D%7Bt_p%7D" alt="speedup formula" /></p>
 
-Onde _n_ equivale a quantidade de processadores, <i>t<sub>s</sub></i> equivale ao tempo de execução serial e <i>t<sub>p</sub></i> ao tempo de execução paralelo. Logo, considerando que o computador onde os testes foram realizados possui dois núcleos de processamento:
+Onde _p_ equivale a quantidade de processadores, <i>t<sub>s</sub></i> equivale ao tempo de execução serial e <i>t<sub>p</sub></i> ao tempo de execução paralelo. Logo, considerando que o computador onde os testes foram realizados possui dois núcleos de processamento:
 
 <p align="center"><img src="https://latex.codecogs.com/svg.latex?S(2)%3D%5Cfrac%7B8837103%7D%7B4420286%7D%3D%7B1.999215209%7D" alt="speedup linear"/></p>
 
@@ -93,33 +93,35 @@ Os argumentos são, respectivamente, <_nthreads_>, <_worksize_> e <_repetitions_
 	$ ./pthreads_dotprod 4 2500 10
 ```
 
-Sendo assim, _worksize_(_thread_<sub><i>i</i></sub>) = _tam\_vets_ &divide; _nthreads_. Esse cuidado foi tomado em todas baterias de testes realizadas. 
+Sendo assim, _worksize_(_thread_<sub><i>i</i></sub>) = <i>worksize<sub>total</sub></i> &divide; _nthreads_. Esse cuidado foi tomado em todas baterias de testes realizadas. 
 
-Abaixo estão ilustrando os valores médios (em segundos) de cada execução, para obtenção desses valores foram realizadas 30 execuções de cada configuração de teste, onde foi realizada uma média aritimética simples dos tempos de execução individual, onde: _T(s)_ = (&Sigma;<sub><i>n</i>=1..30</sub> T<sub>n</sub>) &divide; 30.
+Abaixo estão ilustrando os valores médios (em segundos) de cada execução, para obtenção desses valores foram realizadas 30 execuções de cada  configuração de teste, onde foi realizada uma média aritimética simples dos tempos de execução individual, em que: _T(s)_ = (&Sigma;<sub><i>n</i>=1..30</sub> T<sub>n</sub>) &divide; 30. 
 
-- **_nthreads_** = 1
+O _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/pthreads_dotprod/calc_time.sh">calc_time.sh</a> foi utilizado para realizar as execuções e calcular as médias de tempo apresentadas a seguir.
 
-| tam\_vets  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+- Tempo de execução com 1 thread.
+
+| <i>worksize<sub>total</sub></i>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
-| 1.000      | 	0.000663	| 0.004471	   | 0.008478	      | 0.013945	 |
+| 1.000      | 	0.000663	| 0.001471	   | 0.008478	      | 0.013945	 |
 | 10.000     |	0.001450	| 0.008326	   | 0.047678	      |	0.088564         |
 | 100.000    |	0.008683	| 0.050750	   | 0.427975	      |	0.841297         |
 | 1.000.000  |	0.051537	| 0.449532         | 4.439322         |	8.848498	 |
 | 10.000.000 |	0.448649	| 4.424125         | 44.10462	      |	88.10289         |
 
-- **_nthreads_** = 2
+- Tempo de execução com 2 threads.
 
-| tam\_vets  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| <i>worksize<sub>total</sub></i>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
 | 1.000      | 0.000537		| 0.000885         | 0.004165	      |	0.007521         |
 | 10.000     | 0.000996		| 0.004357         | 0.024239         |	0.047905	 |
 | 100.000    | 0.004397		| 0.026254	   | 0.214525	      |	0.428951	 |
-| 1.000.000  | 0.032828		| 0.232192         | 2.266735	      | 4.556499	 |
+| 1.000.000  | 0.032828		| 0.232192         | 2.266735	      | 4.456499	 |
 | 10.000.000 | 0.222738		| 2.282915         | 23.45902         |	49.11765	 |
 
-- **_nthreads_** = 4	
+- Tempo de execução com 4 threads.
 
-| tam\_vets  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| <i>worksize<sub>total</sub></i> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
 | 1.000      | 0.000586		| 0.000788	   | 0.003156	      | 0.005268	 |
 | 10.000     | 0.000806		| 0.003186	   | 0.019892	      |	0.039089	 |
@@ -127,45 +129,45 @@ Abaixo estão ilustrando os valores médios (em segundos) de cada execução, pa
 | 1.000.000  | 0.020849		| 0.201132	   | 1.985106	      | 4.153111	 |
 | 10.000.000 | 0.199382		| 2.056176	   | 22.08599	      |	47.47029	 |
 
-- **_nthreads_** = 8
+-Tempo de execução com 8 threads.
 
-| tam\_vets  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| <i>worksize<sub>total</sub></i>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
 | 1.000      | 0.000860		| 0.000902	   | 0.003259	      | 0.005180	 |
 | 10.000     | 0.000968		| 0.003318	   | 0.020204	      | 0.039533	 |
 | 100.000    | 0.003443		| 0.020226         | 0.194986	      |	0.388560	 |
-| 1.000.000  | 0.020576		| 0.201583         | 1.990362	      | 4.345865	 |
+| 1.000.000  | 0.020576		| 0.201583         | 1.990362	      | 4.245865	 |
 | 10.000.000 | 0.204278		| 1.997682	   | 21.58099	      |	47.04251	 |
 
-- **_nthreads_** = 16	
+- Tempo de execução com 16 threads.
 
-| tam\_vets  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| <i>worksize<sub>total</sub></i>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
 | 1.000      | 0.001215		| 0.001305	   | 0.003341	      | 0.005331	 |
 | 10.000     | 0.001307		| 0.003279	   | 0.020541	      |	0.040552	 |
 | 100.000    | 0.003403		| 0.020585	   | 0.195229         |	0.386702	 |
 | 1.000.000  | 0.021161		| 0.199856	   | 1.972717	      | 3.948927	 |
-| 10.000.000 | 0.201536		| 20.81036	   | 24.31045	      |	49.22075	 |
+| 10.000.000 | 0.201536		| 1.990246	   | 24.31045	      |	47.22075	 |
 
--  **_nthreads_** = 32
+- Tempo de execução com 32 threads.
 
-| tam\_vets  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| <i>worksize<sub>total</sub></i> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
 | 1.000      | 0.001876		| 0.001960	   | 0.003343	      | 0.005474	 |
 | 10.000     | 0.002094		| 0.003418         | 0.020361	      |	0.040006 	 |
 | 100.000    | 0.003479		| 0.020657         | 0.194581	      |	0.386753	 |
-| 1.000.000  | 0.020745		| 0.195829	   | 1.947502         |	4.122186	 |
+| 1.000.000  | 0.020745		| 0.195829	   | 1.947502         |	4.092186	 |
 | 10.000.000 | 0.201797		| 1.990973	   | 22.79035	      |	47.98167	 |
 
--  **_nthreads_** = 1024
+- Tempo de execução com 1024 threads.
 
-| tam\_vets  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| <i>worksize<sub>total</sub></i> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
 | 1.000      | -		| -	   	   | -      	      | -	 	 |
 | 10.000     | 0.036666		| 0.034348         | 0.042275	      |	0.059018 	 |
 | 100.000    | 0.037224		| 0.041402         | 0.212358	      |	0.404867 	 |
-| 1.000.000  | 0.040600		| 0.209328	   | 1.986754         |	3.948843 	 |
-| 10.000.000 | 0.213893		| 1.943035	   | 20.17412	      |	44.40787	 |
+| 1.000.000  | 0.040600		| 0.209328	   | 1.986754         |	4.105810 	 |
+| 10.000.000 | 0.213893		| 1.943035	   | 21.17412	      |	46.40787	 |
 
 Constatou-se que, para poucas repetições e _worksizes_ muito pequenos, o _overhead_ gerado pelas _threads_, embora baixo, pode fazer com que o _speedup_ ganhado pela parelização não se sustente. Porém, a medida que o valor de pelo menos um detes parâmetros aumente, o _speedup_ será mantido independente do número de _threads_.
 
@@ -175,8 +177,117 @@ Neste sentido, observou-se alguns resultados que não eram esperados. Tendo em v
 
 Mesmo que _user space threads_ sejam _lightweight_, esperava-se que o _overhead_ gerado em alguns casos (ex. _nthreads_ = 1024) fosse prejudicar o desempenho do programa. Acredita-se que [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) implemente uma lógica que, indiretamente, tenha favorecido a parelização um número de _threads_ maior, em outras palavras, o cálculo realizado pelo programa faz com que o _overhead_ (como o número maior de trocas de contexto/estado gerado pelo uso de mais _threads_), não seja significativo a ponto de afetar os tempos obtidos.
 
+Com base nesses resultados, os seguintes gráficos podem ser gerados para facilitar a visualização:
+
+- Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize<sub>total</sub></i> de 1.000:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize1000.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+
+- Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize<sub>total</sub></i> de 10.000:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize10000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize10000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+
+- Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize<sub>total</sub></i> de 100.000:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize100000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize100000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+
+- Desempenho do programa variando o número de _threads_ e repetiçoes <i>worksize<sub>total</sub></i> de 1.000.000:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize1000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize1000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+
+
+- Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize<sub>total</sub></i> de 10.000.000:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize10000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize10000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+
 ### Questão 4
 - Elabore um gráfico/tabela de aceleração a partir dos dados obtidos no exercício anterior.
+
+As tabelas a seguir representam o _speedup_ alcançado com a parelização. Para cada um dos cenários, utilizou-se as médias de tempo apresentadas anteriormente. Todos os cálculos utilizam como base os tempos da execução sequencial <i>t<sub>s</sub></i> já apresentados.
+
+- _Speedup_ obtido com 2 threads.
+
+| <i>worksize<sub>total</sub></i>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 1.234636872	| 1.662146893	   | 2.035534214      |	1.854141736 	 |
+| 10.000     | 1.455823293	| 1.910947900	   | 1.966995338      |	1.848742302	 |
+| 100.000    | 1.974755515	| 1.933038775	   | 1.994988929      |	1.961289285 	 |
+| 1.000.000  | 1.569909833	| 1.936035695	   | 1.958465370      |	1.985526755      |
+| 10.000.000 | 2.014245436	| 1.937928044	   | 1.880070864      |	1.793711426      |
+
+- _Speedup_ obtido com 4 threads.
+
+| <i>worksize<sub>total</sub></i>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 1.131399317	| 1.866751269	   | 2.686311787      | 2.647114655      |
+| 10.000     | 1.799007444	| 2.613308223	   | 2.396842952      |	2.265701348      |	
+| 100.000    | 2.384784400	| 2.519986097	   | 2.212157238      |	2.158705029      |	
+| 1.000.000  | 2.471917118	| 2.235009844	   | 2.236314837      |	2.130571035      |	
+| 10.000.000 | 2.250198112	| 2.151627584	   | 1.996950103      |	1.855958537      |
+
+- _Speedup_ obtido com 8 threads.
+
+| <i>worksize<sub>total</sub></i>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 0.770930233	| 1.630820399	   | 2.601411476      |	<span style="color: blue;">2.692084942</span>	 |
+| 10.000     | 1.497933884	| 2.509342978	   | 2.359829737      |	2.240254977	 |	
+| 100.000    | 2.521928551	| 2.509146643	   | 2.194901172      |	2.165166255	 |
+| 1.000.000  | 2.504714230	| 2.230009475	   | 2.230409343      |	2.084027165	 |
+| 10.000.000 | 2.196266852	| 2.214629255	   | 2.043679182      |	1.872835654	 |
+
+- _Speedup_ obtido com 16 threads.
+
+| <i>worksize<sub>total</sub></i> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 0.545679012	| 1.127203065	   | 2.537563604      | 2.615831926      |
+| 10.000     | 1.109410865	| 2.539188777	   | 2.321113870      |	2.183961334	 |
+| 100.000    | 2.551572142	| 2.465387418	   | 2.192169196      |	2.175569301	 |
+| 1.000.000  | 2.435470913	| 2.249279481	   | 2.250359276      |	2.240734762	 |
+| 10.000.000 | 2.226148182	| 2.222903489	   | 1.814224747      |	1.865766427	 |
+
+- _Speedup_ obtido com 32 threads.
+
+| <i>worksize<sub>total</sub></i>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 0.353411514	| 0.750510204	   | 2.536045468      | 2.547497260      |
+| 10.000     | 0.692454632	| 2.435927443	   | 2.341633515      |	2.213767935      |
+| 100.000    | 2.495832136	| 2.456794307	   | 2.199469630      |	2.175282415      |	
+| 1.000.000  | 2.484309472	| 2.295533348	   | 2.279495477      |	2.162291255      |
+| 10.000.000 | 2.223268929	| 2.222091912	   | 1.935232236      |	1.836178065      |
+
+- _Speedup_ obtido com 1024 threads.
+
+| <i>worksize<sub>total</sub></i> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
+| 1.000      | -		| -		   | -		      | -		 |
+| 10.000     | 0.039546174	| 0.242401304	   | 1.127806032      | 1.500626927      |
+| 100.000    | <span style="color: red;">0.233263486</span>	| 1.225786194	   | 2.015346726      |	2.077958935      |
+| 1.000.000  | 1.269384236	| 2.147500573	   | 2.234459827      |	2.155116286      |	
+| 10.000.000 | 2.097539424	| 2.276914724	   | 2.082949374      |	1.898447181      |
+
+Destacados com as cores vermelho e azul, estã marcados, respectivamente, o pior e melhor _speedup_ encontrados durante os testes.
 
 ### Questão 5
 - Explique as diferenças entre [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) e [pthreads_dotprod2.c](pthreads_dotprod/pthreads_dotprod2.c). Com as linhas removidas, o programa está correto?
@@ -184,14 +295,14 @@ Mesmo que _user space threads_ sejam _lightweight_, esperava-se que o _overhead_
 A única diferença entre os programas é que [pthreads_dotprod2.c](pthreads_dotprod/pthreads_dotprod2.c) faz uso de _locks_ (_mutexes_), para controle de concorrência (prevenir _race conditions_) envolvendo a varíavel da estrutura compartilhada (_dotdata_) que recebe os resultados das somas parciais do cálculo do produto escalar realizadas pelas _threads_.
 
 ```
-   pthread\_mutex\_lock (&mutexsum);
+   pthread_mutex_lock (&mutexsum);
    dotdata.c += mysum;
-   pthread\_mutex\_unlock (&mutexsum);
+   pthread_mutex_unlock (&mutexsum);
 ```
 
-Neste caso, o uso de _mutexsem_ irá garantir um acesso serializado para a atualização de valores em _dotdata.c_. Ou seja, se uma _thread_ _t1_ estiver nesta seção crítica, a entrada de outras _threads_ só será permitada após _t1_ liberar o acesso. Como a acesso a varíavel da _struct_ _dotdata_ é compartilhada entre todas as _threads_, o uso do _mutex_ evita _race conditions_. 
+Neste caso, o uso de _mutexsum_ irá garantir um acesso serializado para a atualização de valores em _dotdata.c_. Ou seja, se uma _thread_ _t1_ estiver nesta seção crítica, a entrada de outras _threads_ só será permitada após _t1_ liberar o acesso. Como o acesso a varíavel da _struct_ _dotdata_ é compartilhada entre todas as _threads_, o uso do _mutex_ evita _race conditions_. 
 
-Tendo em vista que na maioria das CPUs modernas a operação de leitura e escrita em objetos alinhados seja atômica, é interessante ressaltar que dificilmente a instrução _dotdata.c += mysum_ causaria algum problema de sincronização. De todo modo, arquiteturas diferentes têm regras diferentes, logo é mais seguro incluir o _mutex_ para garantir a correteza do programa independente da ordem de escalonamento/intercalação das _threads_.
+Tendo em vista que na maioria das CPUs modernas a operação de leitura e escrita em objetos alinhados seja atômica, é interessante ressaltar que dificilmente a instrução '_dotdata.c += mysum_' causaria algum problema de sincronização. De todo modo, arquiteturas diferentes têm regras diferentes, logo é mais seguro incluir o _mutex_ para garantir a correteza do programa independente da ordem de escalonamento/intercalação das _threads_.
  
 <!-- OpenMP -->
 ## OpenMP
