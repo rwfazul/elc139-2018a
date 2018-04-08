@@ -289,7 +289,7 @@ A partir dos _speedups_ apresentados com as diferentes configurações dos parâ
 
 <p align="center"><img src="https://latex.codecogs.com/svg.latex?E%3D%5Cfrac%7BS(p)%7D%7Bp%7D" alt="efficiency formula" /></p>
 
-A eficiência é uma métrica que fornece uma noção da utilização dos recursos do sistema. Seu valor é tipicamente entre 0 e 1, onde programas com aceleração linear e programas executados em um único processador têm uma eficiência de 1. Como no cenário de testes realizado obteve-se diversos _speedups_ superlineares, o valor de eficiência encontrado nesses casos seria superior aos valores comuns.
+A eficiência é uma métrica que fornece uma noção básica da utilização dos recursos do sistema. Seu valor varia tipicamente entre 0 e 1, onde programas com aceleração linear e programas executados em um único processador têm uma eficiência de 1. Como no cenário de testes realizado obteve-se diversos _speedups_ superlineares, o valor de eficiência encontrado nesses casos seria superior aos valores comuns.
 
 ### Questão 5
 - Explique as diferenças entre [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) e [pthreads_dotprod2.c](pthreads_dotprod/pthreads_dotprod2.c). Com as linhas removidas, o programa está correto?
@@ -311,9 +311,31 @@ Tendo em vista que na maioria das CPUs modernas a operação de leitura e escrit
 openmp 4.0
 
 ### Implementação
+- 1. Implemente um programa equivalente a [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) usando OpenMP. 
 
+O programa [openmp_dotprod.c](openmp/openmo_dotprod.c) foi paralelizado com OpenMP. Ele pode ser compilado utilizando o arquivo [Makefile](openmp/Makefile.sh) com:
+
+```
+	$ make
+```
+
+Ou utilizando diretamente o comando:
+
+```
+	$ gcc -fopenmp -o openmp_dotprod openmp_dotprod.c
+```
+
+Os argumentos para execução do programa são os mesmos utilizados em [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c). Logo:
+
+
+```
+	$ ./openmp_dotprod <nthreads> <worksize> <repetitions>
+```
+
+Como a cláusula _num\_threads_ foi definida no próprio programa, não é necessário setar a variável ambiente _OMP\_NUM\_THREADS_ para a execução.
 
 ### Desempenho
+- 2. Avalie o desempenho do programa em OpenMP, usando os mesmos dados/argumentos do programa com threads POSIX. 
 
 <!-- REFERÊNCIAS -->
 <a name="referencias"></a>
