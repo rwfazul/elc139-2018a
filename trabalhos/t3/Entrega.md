@@ -7,19 +7,19 @@ Aluno: Rhauani Weber Aita Fazul
 
 ## Sumário
 
-- [Pthreads](#pthreads)
+- [_Pthreads_](#pthreads)
 	- [Questão 1](#questão-1)
 	- [Questão 2](#questão-2)
 	- [Questão 3](#questão-3)
 	- [Questão 4](#questão-4)
 	- [Questão 5](#questão-5)
-- [OpenMP](#openmp)
+- [_OpenMP_](#openmp)
 	- [Implementação](#implementação)
 	- [Desempenho](#desempenho)
 - [Referências](#referencias)
 
 <!-- Pthreads -->
-## Pthreads
+## _Pthreads_
 
 ### Questão 1
 - Explique como se encontram implementadas as 4 etapas de projeto: particionamento, comunicação, aglomeração, mapeamento (use trechos de código para ilustrar a explicação).
@@ -96,9 +96,9 @@ Sendo assim, _worksize_(_thread_<sub><i>i</i></sub>) = <i>worksize</i><sub>total
 
 Abaixo estão ilustrando os valores médios (em segundos) de cada execução, para obtenção desses valores foram realizadas 30 execuções de cada  configuração de teste, onde foi realizada uma média aritimética simples dos tempos de execução individual, em que: _T(s)_ = (&Sigma;<sub><i>n</i>=1..30</sub> T<sub>n</sub>) &divide; 30. 
 
-O _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/pthreads_dotprod/calc_time.sh">calc_time.sh</a> foi utilizado para realizar as execuções e calcular as médias de tempo apresentadas a seguir.
+O _script_ [calc_time.sh](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/pthreads_dotprod/calc_time.sh) foi utilizado para realizar as execuções e calcular as médias de tempo apresentadas a seguir.
 
-- Tempos de execução em segundos com 1 _thread_:
+- (_Pthreads_) Tempos de execução em segundos com 1 _thread_:
 
 | <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
@@ -108,7 +108,7 @@ O _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalho
 | 1.000.000  |	0.051537	| 0.449532         | 4.439322         |	8.848498	 |
 | 10.000.000 |	0.448649	| 4.424125         | 44.10462	      |	88.10289         |
 
-- Tempos de execução em segundos com 2 _threads_:
+- (_Pthreads_) Tempos de execução em segundos com 2 _threads_:
 
 | <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
@@ -118,7 +118,7 @@ O _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalho
 | 1.000.000  | 0.032828		| 0.232192         | 2.266735	      | 4.456499	 |
 | 10.000.000 | 0.222738		| 2.282915         | 23.45902         |	49.11765	 |
 
-- Tempos de execução em segundos com 4 _threads_:
+- (_Pthreads_) Tempos de execução em segundos com 4 _threads_:
 
 | <i>worksize</i><sub>total</sub> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
@@ -128,7 +128,7 @@ O _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalho
 | 1.000.000  | 0.020849		| 0.201132	   | 1.985106	      | 4.153111	 |
 | 10.000.000 | 0.199382		| 2.056176	   | 22.08599	      |	47.47029	 |
 
--Tempos de execução em segundos com 8 _threads_:
+-(_Pthreads_) Tempos de execução em segundos com 8 _threads_:
 
 | <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
@@ -138,7 +138,7 @@ O _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalho
 | 1.000.000  | 0.020576		| 0.201583         | 1.990362	      | 4.245865	 |
 | 10.000.000 | 0.204278		| 1.997682	   | 21.58099	      |	47.04251	 |
 
-- Tempos de execução em segundos com 16 _threads_:
+- (_Pthreads_) Tempos de execução em segundos com 16 _threads_:
 
 | <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
@@ -148,7 +148,7 @@ O _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalho
 | 1.000.000  | 0.021161		| 0.199856	   | 1.972717	      | 3.948927	 |
 | 10.000.000 | 0.201536		| 1.990246	   | 24.31045	      |	47.22075	 |
 
-- Tempos de execução em segundos com 32 _threads_:
+- (_Pthreads_) Tempos de execução em segundos com 32 _threads_:
 
 | <i>worksize</i><sub>total</sub> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
@@ -158,7 +158,7 @@ O _script_ <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalho
 | 1.000.000  | 0.020745		| 0.195829	   | 1.947502         |	4.092186	 |
 | 10.000.000 | 0.201797		| 1.990973	   | 22.79035	      |	47.98167	 |
 
-- Tempos de execução em segundos com 1024 _threads_:
+- (_Pthreads_) Tempos de execução em segundos com 1024 _threads_:
 
 | <i>worksize</i><sub>total</sub> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
@@ -174,50 +174,50 @@ Isso se comprova pois, mesmo utilizando um valor de _threads_ muito mais alto qu
 
 Neste sentido, observou-se alguns resultados que não eram esperados. Tendo em vista que o computador onde os testes foram realizados possui um processador _Dual-core_ (ou seja, dois núcleos), acreditava-se que o maior desempenho seria obtido nos cenários onde foram utilizadas 2 _threads_ ou, no máximo, 4 _threads_ (devido a tecnologia _Hyper-Threading_, que faz com que cada núcleo do processador execute mais de uma _thread_ "simultaneamente"). Porém, houve testes em que obteve-se um maior desempenho mesmo com _nthreads_ > 4.
 
-Ainda que _user space threads_ sejam _lightweight_, esperava-se que o _overhead_ gerado em alguns casos (ex. _nthreads_ = 32 ou 1024) fosse prejudicar o desempenho do programa. Acredita-se que [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) implemente uma lógica que, indiretamente, tenha favorecido a parelização com um número de _threads_ maior, em outras palavras, o cálculo realizado pelo programa faz com que o _overhead_ gerado (ex. o número maior de trocas de contexto/estado gerado pelo uso de mais _threads_), não seja significativo a ponto de afetar os tempos obtidos.
+Ainda que _user space threads_ sejam _lightweight_, esperava-se que o _overhead_ gerado em alguns casos (ex. _nthreads_ = 32 ou 1024) fosse prejudicar o desempenho do programa. Acredita-se que [_pthreads_dotprod.c_](pthreads_dotprod/pthreads_dotprod.c) implemente uma lógica que, indiretamente, tenha favorecido a parelização com um número de _threads_ maior, em outras palavras, o cálculo realizado pelo programa faz com que o _overhead_ gerado (ex. o número maior de trocas de contexto/estado gerado pelo uso de mais _threads_), não seja significativo a ponto de afetar os tempos obtidos.
 
 Com base nesses resultados, os seguintes gráficos podem ser gerados para facilitar a visualização:
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 1.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize1000.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod-worksize1000.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize10000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize10000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize10000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize10000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 100.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize100000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize100000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize100000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize100000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes <i>worksize</i><sub>total</sub> de 1.000.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize1000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize1000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize1000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize1000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize10000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize10000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/imagens/pthreads/pthreads_dotprod-worksize10000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize10000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 ### Questão 4
@@ -225,7 +225,7 @@ Com base nesses resultados, os seguintes gráficos podem ser gerados para facili
 
 As tabelas a seguir representam o _speedup_ alcançado com a parelização. Para cada um dos cenários, utilizou-se as médias de tempo apresentadas anteriormente. Todos os cálculos utilizam como base os tempos da execução sequencial (<i>t<sub>s</sub></i>) já apresentados nas tabelas anteriores.
 
-- _Speedup_ obtido com 2 _threads_.
+- (_Pthreads_) _Speedup_ obtido com 2 _threads_.
 
 | <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
@@ -235,7 +235,7 @@ As tabelas a seguir representam o _speedup_ alcançado com a parelização. Para
 | 1.000.000  | 1.569909833	| 1.936035695	   | 1.958465370      |	1.985526755      |
 | 10.000.000 | 2.014245436	| 1.937928044	   | 1.880070864      |	1.793711426      |
 
-- _Speedup_ obtido com 4 _threads_.
+- (_Pthreads_) _Speedup_ obtido com 4 _threads_.
 
 | <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
@@ -245,7 +245,7 @@ As tabelas a seguir representam o _speedup_ alcançado com a parelização. Para
 | 1.000.000  | 2.471917118	| 2.235009844	   | 2.236314837      |	2.130571035      |	
 | 10.000.000 | 2.250198112	| 2.151627584	   | 1.996950103      |	1.855958537      |
 
-- _Speedup_ obtido com 8 _threads_.
+- (_Pthreads_) _Speedup_ obtido com 8 _threads_.
 
 | <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
@@ -255,7 +255,7 @@ As tabelas a seguir representam o _speedup_ alcançado com a parelização. Para
 | 1.000.000  | 2.504714230	| 2.230009475	   | 2.230409343      |	2.084027165	 |
 | 10.000.000 | 2.196266852	| 2.214629255	   | 2.043679182      |	1.872835654	 |
 
-- _Speedup_ obtido com 16 _threads_.
+- (_Pthreads_) _Speedup_ obtido com 16 _threads_.
 
 | <i>worksize</i><sub>total</sub> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
@@ -265,7 +265,7 @@ As tabelas a seguir representam o _speedup_ alcançado com a parelização. Para
 | 1.000.000  | 2.435470913	| 2.249279481	   | 2.250359276      |	2.240734762	 |
 | 10.000.000 | 2.226148182	| 2.222903489	   | 1.814224747      |	1.865766427	 |
 
-- _Speedup_ obtido com 32 _threads_.
+- (_Pthreads_) _Speedup_ obtido com 32 _threads_.
 
 | <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
@@ -275,7 +275,7 @@ As tabelas a seguir representam o _speedup_ alcançado com a parelização. Para
 | 1.000.000  | 2.484309472	| 2.295533348	   | 2.279495477      |	2.162291255      |
 | 10.000.000 | 2.223268929	| 2.222091912	   | 1.935232236      |	1.836178065      |
 
-- _Speedup_ obtido com 1024 _threads_.
+- (_Pthreads_) _Speedup_ obtido com 1024 _threads_.
 
 | <i>worksize</i><sub>total</sub> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
@@ -307,13 +307,12 @@ Neste caso, o uso de _mutexsum_ irá garantir um acesso serializado para a atual
 Tendo em vista que na maioria das CPUs modernas a operação de leitura e escrita em objetos alinhados seja atômica, é interessante ressaltar que dificilmente a instrução '_dotdata.c += mysum_' causaria algum problema de sincronização. De todo modo, arquiteturas diferentes têm regras diferentes, logo é mais seguro incluir o _mutex_ para garantir a correteza do programa, independente da ordem de escalonamento/intercalação das _threads_.
  
 <!-- OpenMP -->
-## OpenMP
-openmp 4.0
+## _OpenMP_
 
 ### Implementação
-- 1. Implemente um programa equivalente a [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) usando OpenMP. 
+- Implemente um programa equivalente a [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) usando _OpenMP_. 
 
-O programa [openmp_dotprod.c](openmp/openmo_dotprod.c) foi paralelizado com OpenMP. Ele pode ser compilado utilizando o arquivo [Makefile](openmp/Makefile.sh) com:
+O programa [openmp_dotprod.c](openmp/openmp_dotprod.c) foi paralelizado com _OpenMP_. Ele pode ser compilado utilizando o arquivo [_Makefile_](openmp/Makefile.sh) com:
 
 ```
 	$ make
@@ -325,7 +324,7 @@ Ou utilizando diretamente o comando:
 	$ gcc -fopenmp -o openmp_dotprod openmp_dotprod.c
 ```
 
-Os argumentos para execução do programa são os mesmos utilizados em [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c). Logo:
+Os argumentos para execução do programa são os mesmos utilizados na versão com _Pthreads_. Logo:
 
 
 ```
@@ -335,16 +334,104 @@ Os argumentos para execução do programa são os mesmos utilizados em [pthreads
 Como a cláusula _num\_threads_ foi definida no próprio programa, não é necessário setar a variável ambiente _OMP\_NUM\_THREADS_ para a execução.
 
 ### Desempenho
-- 2. Avalie o desempenho do programa em OpenMP, usando os mesmos dados/argumentos do programa com threads POSIX. 
+- Avalie o desempenho do programa em OpenMP, usando os mesmos dados/argumentos do programa com threads POSIX. 
+
+Os testes foram realizados com _GNU Compiler Collection_ (GCC) versão 5.4.0, que possui a versão 4.0 da API _OpenMp_. O _script_ [calc_time.sh](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/openmp/calc_time.sh) foi utilizado para realizar as execuções e calcular as médias de tempo apresentadas a seguir.
+
+- (_OpenMP_) Tempos de execução em segundos com 1 _thread_:
+
+| <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 	0.000000	| 0.000000	   | 0.000000	      | 0.000000	 |
+| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
+| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+
+- (_OpenMP_) Tempos de execução em segundos com 2 _threads_:
+
+| <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 	0.000000	| 0.000000	   | 0.000000	      | 0.000000	 |
+| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
+| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+
+- (_OpenMP_) Tempos de execução em segundos com 4 _threads_:
+
+| <i>worksize</i><sub>total</sub> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 	0.000000	| 0.000000	   | 0.000000	      | 0.000000	 |
+| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
+| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+
+- (_OpenMP_) Tempos de execução em segundos com 8 _threads_:
+
+| <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 	0.000000	| 0.000000	   | 0.000000	      | 0.000000	 |
+| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
+| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+
+- (_OpenMP_) Tempos de execução em segundos com 16 _threads_:
+
+| <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 	0.000000	| 0.000000	   | 0.000000	      | 0.000000	 |
+| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
+| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+
+- (_OpenMP_) Tempos de execução em segundos com 32 _threads_:
+
+| <i>worksize</i><sub>total</sub> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
+| 1.000      | 	0.000000	| 0.000000	   | 0.000000	      | 0.000000	 |
+| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
+| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+
+- (_OpenMP_) Tempos de execução em segundos com 1024 _threads_:
+
+| <i>worksize</i><sub>total</sub> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
+| 1.000      | 	-		| -		   | -		      | -		 |
+| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
+| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
+| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+
+Com base nos resultados apresentados podemos realizar uma comparação entre as execuções utilizando _Pthreads_ e as execuções usando _OpenMP_. Sendo assim, os seguintes gráficos foram gerados:
 
 <!-- REFERÊNCIAS -->
 <a name="referencias"></a>
 ## Referências 
-- **_ _**
-	-
-	-
-	-
-- **_ _**
-	-
-	-
-	-
+- Cenapad. <i>Introdução ao OpenMP</i>. https://goo.gl/cC4nCm
+- CSE Department. <i>Parallel Programming with OpenMP</i>. https://goo.gl/zeyntk
+- FCUP. <i>Introdução ao OpenMP</i>. https://goo.gl/E3N6m4
+- GCC. <i>GNU libgomp</i>. https://goo.gl/HPTK4q
+- GCC. <i>OpenMP</i>. https://goo.gl/YHjuhM
+- GCC. <i>Runtime Library Routines</i>. https://goo.gl/NjUn8Y
+- IBM. <i>Learning the OpenMP framework with GCC</i>. https://goo.gl/vSXAX9
+- IBM. <i>#pragma omp critical</i>. https://goo.gl/cJtH68
+- IBM. <i>Using OpenMP directives</i>. https://goo.gl/pt8d9p
+- Intel. <i>Getting Started with OpenMP*</i>. https://goo.gl/Eb83FP
+- Intek. <i>Threading Models for High-Performance Computing: Pthreads or OpenMP?</i>. https://goo.gl/8H8KKN
+- LLNL. <i>OpenMP</i>. https://goo.gl/Euq38F
+- LLNL. <i>POSIX Threads Programming</i>. https://goo.gl/AAWKW4
+- OpenMP. <i>A "Hands-on" Introduction to OpenMP*</i>. https://goo.gl/55LPSF
+- OpenMP. <i>OpenMP Application Program Interface</i>. https://goo.gl/8M7uD4
+- TACC. <i>Introduction to Parallel Computing</i>. https://goo.gl/6iGQhX
+- TACC. <i>OpenMP topic: Loop parallelism</i>. https://goo.gl/VKxEH9
+- TACC. <i>OpenMP topic: Reductions</i>. https://goo.gl/8X5pdH
+- UMW. <i>OpenMP Scheduling</i>. https://goo.gl/qhiRDD
+- Wikipédia. <i>Lock (computer science)</i>. https://goo.gl/aq94RA
+- Wikipédia. <i>Mutual exclusion</i>. https://goo.gl/7ZR6hs
+- Wikipédia. <i>Speedup</i>. https://goo.gl/V18LPb
