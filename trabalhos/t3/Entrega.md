@@ -75,7 +75,7 @@ Sendo _S(2)_ &cong; 2, obteve-se um _speedup_ próximo ao ideal (_speedup_ linea
 
 Sendo _S(2)_ > 2, obteve-se um _superlinear speedup_. Uma possível explicação para isso é o efeito da memória cache resultante das diferentes hierarquias de memória do computador.
 
-Portando, neste cenário, em ambos os casos apresentados, conclui-se que o algorítimo de cálculo de produto escalar paralelizado em  [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) teve um ganho de desempenho substâncial quando comparado a sua execução puramente sequencial.
+Portando, neste cenário, em ambos os casos apresentados, conclui-se que o algorítimo de cálculo de produto escalar paralelizado em  [_pthreads_dotprod.c_](pthreads_dotprod/pthreads_dotprod.c) teve um ganho de desempenho substâncial quando comparado a sua execução puramente sequencial.
 
 ### Questão 3
 - A aceleração (_speedup_) se sustenta para outros tamanhos de vetores, números de _threads_ e repetições? Para responder a essa questão, você terá que realizar diversas execuções, variando o tamanho do problema (tamanho dos vetores e número de repetições) e o número de _threads_ (1, 2, 4, 8..., dependendo do número de núcleos). Cada caso deve ser executado várias vezes, para depois calcular-se um tempo de processamento médio para cada caso. Atenção aos fatores que podem interferir na confiabilidade da medição: uso compartilhado do computador, tempos muito pequenos, etc.
@@ -96,7 +96,7 @@ Sendo assim, _worksize_(_thread_<sub><i>i</i></sub>) = <i>worksize</i><sub>total
 
 Abaixo estão ilustrando os valores médios (em segundos) de cada execução, para obtenção desses valores foram realizadas 30 execuções de cada  configuração de teste, onde foi realizada uma média aritimética simples dos tempos de execução individual, em que: _T(s)_ = (&Sigma;<sub><i>n</i>=1..30</sub> T<sub>n</sub>) &divide; 30. 
 
-O _script_ [calc_time.sh](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/pthreads_dotprod/calc_time.sh) foi utilizado para realizar as execuções e calcular as médias de tempo apresentadas a seguir.
+O _script_ [_calc_time.sh_](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/pthreads_dotprod/calc_time.sh) foi utilizado para realizar as execuções e calcular as médias de tempo apresentadas a seguir.
 
 - (_Pthreads_) Tempos de execução em segundos com 1 _thread_:
 
@@ -181,43 +181,43 @@ Com base nesses resultados, os seguintes gráficos podem ser gerados para facili
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 1.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod-worksize1000.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize10000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize10000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize10000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize10000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 100.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize100000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize100000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize100000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize100000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes <i>worksize</i><sub>total</sub> de 1.000.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize1000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize1000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize1000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize1000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize10000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize10000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads/pthreads_dotprod-worksize10000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize10000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 ### Questão 4
@@ -292,9 +292,9 @@ A partir dos _speedups_ apresentados com as diferentes configurações dos parâ
 A eficiência é uma métrica que fornece uma noção básica da utilização dos recursos do sistema. Seu valor varia tipicamente entre 0 e 1, onde programas com aceleração linear e programas executados em um único processador têm uma eficiência de 1. Como no cenário de testes realizado obteve-se diversos _speedups_ superlineares, o valor de eficiência encontrado nesses casos seria superior aos valores comuns.
 
 ### Questão 5
-- Explique as diferenças entre [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) e [pthreads_dotprod2.c](pthreads_dotprod/pthreads_dotprod2.c). Com as linhas removidas, o programa está correto?
+- Explique as diferenças entre [_pthreads_dotprod.c_](pthreads_dotprod/pthreads_dotprod.c) e [_pthreads_dotprod2.c_](pthreads_dotprod/pthreads_dotprod2.c). Com as linhas removidas, o programa está correto?
 
-A única diferença entre os programas é que [pthreads_dotprod2.c](pthreads_dotprod/pthreads_dotprod2.c) faz uso de _locks_ (_mutexes_), para controle de concorrência (prevenir _race conditions_) envolvendo a varíavel da estrutura compartilhada _dotdata_, que recebe os resultados das somas parciais do cálculo do produto escalar realizadas pelas _threads_.
+A única diferença entre os programas é que [_pthreads_dotprod2.c_](pthreads_dotprod/pthreads_dotprod2.c) faz uso de _locks_ (_mutexes_), para controle de concorrência (prevenir _race conditions_) envolvendo a varíavel da estrutura compartilhada _dotdata_, que recebe os resultados das somas parciais do cálculo do produto escalar realizadas pelas _threads_.
 
 ```
    pthread_mutex_lock (&mutexsum);
@@ -310,9 +310,9 @@ Tendo em vista que na maioria das CPUs modernas a operação de leitura e escrit
 ## _OpenMP_
 
 ### Implementação
-- Implemente um programa equivalente a [pthreads_dotprod.c](pthreads_dotprod/pthreads_dotprod.c) usando _OpenMP_. 
+- Implemente um programa equivalente a [_pthreads_dotprod.c_](pthreads_dotprod/pthreads_dotprod.c) usando _OpenMP_. 
 
-O programa [openmp_dotprod.c](openmp/openmp_dotprod.c) foi paralelizado com _OpenMP_. Ele pode ser compilado utilizando o arquivo [_Makefile_](openmp/Makefile.sh) com:
+O programa [_openmp_dotprod.c_](openmp/openmp_dotprod.c) foi paralelizado com _OpenMP_. Ele pode ser compilado utilizando o arquivo [_Makefile_](openmp/Makefile.sh) com:
 
 ```
 	$ make
@@ -336,7 +336,7 @@ Como a cláusula _num\_threads_ foi definida no próprio programa, não é neces
 ### Desempenho
 - Avalie o desempenho do programa em OpenMP, usando os mesmos dados/argumentos do programa com threads POSIX. 
 
-Os testes foram realizados com _GNU Compiler Collection_ (GCC) versão 5.4.0, que possui a versão 4.0 da API _OpenMp_. O _script_ [calc_time.sh](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/openmp/calc_time.sh) foi utilizado para realizar as execuções e calcular as médias de tempo apresentadas a seguir.
+Os testes foram realizados com _GNU Compiler Collection_ (GCC) versão 5.4.0, que possui a versão 4.0 da API _OpenMp_. O _script_ [_calc_time.sh_](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/openmp/calc_time.sh) foi utilizado para realizar as execuções e calcular as médias de tempo apresentadas a seguir.
 
 - (_OpenMP_) Tempos de execução em segundos com 1 _thread_:
 
