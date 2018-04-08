@@ -3,7 +3,7 @@
 CC = gcc 
 # CFLAGS = -Wall
 CFLAGS = -Wall -fopenmp
-TARGET = ompsimple
+TARGET = ompsimple openmp_dotprod
 
 all: $(TARGET)
 
