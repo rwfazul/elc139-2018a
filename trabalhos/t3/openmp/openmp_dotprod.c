@@ -1,5 +1,5 @@
 /*
- *  Exemplo de programa para calculo de produto escalar em paralelo, usando OpenMP
+ *  Exemplo de programa para calculo de produto escalar em paralelo, usando OpenMP.
  *  professora: andrea@inf.ufsm.br
  *  aluno: rwfazul@inf.ufsm.br
  */
@@ -41,7 +41,8 @@ void dotprod_omp(int nthreads)
       for (k = 0; k < repetitions; k++) {
          mysum = 0.0;
          /* - divide iterações ( por default: schedule(static) ) deste loop entre os segmentos gerados anteriormente.
-            - reduction faz com que uma cópia local da variável de redução seja criada em cada thread. no final da construção paralela do loop, todas threads adicionam o valor local calculado para thread mestre com a variável "global" 'mysum'. */
+            - reduction faz com que uma cópia local da variável de redução seja criada em cada thread. no final da construção 
+              paralela do loop, todas threads adicionam o valor local calculado para thread mestre com a variável "global" 'mysum'. */
          #pragma omp for private(i) reduction(+:mysum)
          for (i = 0; i < wsize_total ; i++) {
 	    // printf("Thread %d, i=%d\n", omp_get_thread_num(), i); // printa TID, worksize(pos) 
