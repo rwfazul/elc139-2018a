@@ -35,7 +35,8 @@ void dotprod_omp(int nthreads)
    double mysum;
 
    /* - gera um grupo de nthreads.
-      - loop counter (k) nao esta sujeito a uma worksharing directive, logo privado. */ 
+      - loop counter (k) nao esta sujeito a uma worksharing directive, logo privado. 
+      - demais variaveis default(shared). */ 
    #pragma omp parallel private(k) num_threads(nthreads)
    {
       for (k = 0; k < repetitions; k++) {
