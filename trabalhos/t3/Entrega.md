@@ -26,11 +26,11 @@ Aluno: Rhauani Weber Aita Fazul
 ### Questão 1
 - Explique como se encontram implementadas as 4 etapas de projeto: particionamento, comunicação, aglomeração, mapeamento (use trechos de código para ilustrar a explicação).
 
-- Particionamento
+- **Particionamento**
 
-A divisão do problema em tarefas menores é realizada para aumentar a possibilidade de concorrência. Este particionamento ocorrer pela decomposição do domínio do problema (em função dos dados) ou pela decomposição funcional (em função da computação). No caso específico do programa  [_pthreads_dotprod.c_](pthreads_dotprod/pthreads_dotprod.c), foi realizado um particionamento estrutural, ou seja, em função dos dados. 
+A divisão do problema em tarefas menores é realizada para aumentar a possibilidade de concorrência. Este particionamento ocorre pela decomposição do domínio do problema (em função dos dados) ou pela decomposição funcional (em função da computação). No caso específico do programa  [_pthreads_dotprod.c_](pthreads_dotprod/pthreads_dotprod.c), foi realizado um particionamento estrutural, ou seja, em função dos dados. 
 
-A lógica da definição do _range_ de atuação de cada _thread_, realizado pela rotina _dotprod\_worker_, é a seguinte: 
+A lógica da definição do _range_ de atuação de cada _thread_, realizado pela rotina [_dotprod\_worker_](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/pthreads_dotprod/pthreads_dotprod.c#L27), é a seguinte: 
 
 ``` c
 	   long offset = (long) arg; 	
@@ -39,38 +39,38 @@ A lógica da definição do _range_ de atuação de cada _thread_, realizado pel
 	   int end = start + wsize;
 ```
 
-Sendo _offset_ equivalente a um contador crescente e único, que funciona como identificador de cada _thread_, e _wsize_ equivalente a porção de trabalho de cada _thread_, é definido o limite inferior e superior do cálculo a ser realizado por cada uma das _threads_ criadas.
+Sendo _offset_ um contador crescente e único, que funciona como identificador de cada _thread_, e _wsize_ equivalente a porção de trabalho de cada _thread_, é definido o limite inferior e superior do cálculo a ser realizado por cada uma das _threads_ criadas.
 
 Supondo _nthreads_ = 4 e _wsize_ total de 2.500, o particionamento ocorre da seguinte forma:
 
-	+ Primeira _thread_:
+- Primeira _thread_:
 	
 ``` c
-	- i = 0
+	- offset = 0
 	- start = 0 * 2.500 = 0
-	- end = 0 + 2.500 = 0
+	- end = 0 + 2.500 = 2.500
 ``` 
 
-	+ Segunda _thread_:
+- Segunda _thread_:
 	
 ``` c
-	- i = 1
+	- offset = 1
 	- start = 1 * 2.500 = 2.500
 	- end = 2.500 + 2.500 = 5.000
 ``` 			
 
-	+ Terceira _thread_:
+- Terceira _thread_:
 	
 ``` c
-	- i = 2;
+	- offset = 2
 	- start = 2 * 2.500 = 5.000
 	- end = 5.000 + 2.500 = 7.500	
 ``` 		
 
-	+ Quarta _thread_:
+- Quarta _thread_:
 	
 ``` c
-	- i = 3
+	- offset = 3
 	- start = 3 * 2.500 = 7.500
 	- end = 7.500 + 2.500 = 10.000
 ``` 		
@@ -87,22 +87,22 @@ A comunicação é necessária para coordenar a execução das tarefas. É nesta
 	   pthread_mutex_unlock (&mutexsum);
 ```
 
-O uso deste _mutex_ foi discutido na <a href="seção-5">Seção 5</a>.
+O uso deste _mutex_ foi discutido na <a href="#seção-5">Seção 5</a>.
 
 - Aglomeração
 
 A ideia central da etapa de aglomeração é o agrupamento de tarefas para diminuição do custo de implementação e de comunicação. A aglomeração busca, na medida do possível, garantir escalabilidade e aumentar a granularidade da computação. 
 
 ``` c
-	   for (k = 0; k < \dotdata.repeat; k++) {
+	   for (k = 0; k < dotdata.repeat; k++) {
 	      mysum = 0.0;
-	      for (i = start; i < \end ; i++)  {
+	      for (i = start; i < end ; i++)  {
 		 mysum += (a[i] * b[i]);
 	      }
 	   }
 ```
 
-O trecho de código acima, definido na função _dotprod\_worker_ realiza o cálculo do produto escalar. A partir do agrupamento dos resultados de várias multiplicações sobre os vetores, somas parciais são armazenadas na variável '_mysum_'.
+<p>O trecho de código acima, definido na função [_dotprod\_worker_](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/pthreads_dotprod/pthreads_dotprod.c#L27) realiza o cálculo do produto escalar. A partir do agrupamento dos resultados de várias multiplicações sobre os vetores, somas parciais são armazenadas na variável '_mysum_'.</p>
 
 
 - Mapeamento
@@ -533,7 +533,7 @@ Com base nesses resultados, os seguintes gráficos podem ser gerados para facili
 </p>
 
 
-Ao contrário das execuções utilizando _Pthreads_, percebe-se que o _overhead_ resultante da utilização de um número de _threads_ maior (ex. _nthreads_ = 32 ou 1024) foi um grande gargalo de desempenho ao utilizar _OpenMp_, principalmente utilizando _worksizes_ e números de repetições menores. Como pode-se observar acima, em alguns dos gráficos os valores referentes ao uso de 1024 _threads_ tiveram de ser omitidos para manter a porporção do gráfico, tendo em vista que estes valores possuiam uma discrepância muito maior quando comparados aos mesmos casos de testes de execução utilizando _Pthreads_.
+Ao contrário das execuções utilizando _Pthreads_, percebe-se que o _overhead_ resultante da utilização de um número de _threads_ maior (ex. _nthreads_ = 32 ou 1024) foi um grande gargalo de desempenho ao utilizar _OpenMP_, principalmente utilizando _worksizes_ e números de repetições menores. Como pode-se observar acima, em alguns dos gráficos os valores referentes ao uso de 1024 _threads_ tiveram de ser omitidos para manter a porporção do gráfico, tendo em vista que estes valores possuiam uma discrepância muito maior quando comparados aos mesmos casos de testes de execução utilizando _Pthreads_.
 
 Como esperado, com _OpenMP_ o uso de um número de _threads_ similar a quantidade de unidades de processamentos/_cores_ do computador apresentou um desempenho satisfatório em todos os cenários. 
 
@@ -688,7 +688,7 @@ Concluindo a análise, percebe-se que o uso de _Pthreads_, salvo algumas poucas 
 - IBM. <i>#pragma omp critical</i>. https://goo.gl/cJtH68
 - IBM. <i>Using OpenMP directives</i>. https://goo.gl/pt8d9p
 - Intel. <i>Getting Started with OpenMP*</i>. https://goo.gl/Eb83FP
-- Intek. <i>Threading Models for High-Performance Computing: Pthreads or OpenMP?</i>. https://goo.gl/8H8KKN
+- Intel. <i>Threading Models for High-Performance Computing: Pthreads or OpenMP?</i>. https://goo.gl/8H8KKN
 - LLNL. <i>OpenMP</i>. https://goo.gl/Euq38F
 - LLNL. <i>POSIX Threads Programming</i>. https://goo.gl/AAWKW4
 - MCS Argonne. <i>Methodical Design</i>. https://goo.gl/E6uxSW
