@@ -87,7 +87,7 @@ A comunicação é necessária para coordenar a execução das tarefas. É nesta
 	   pthread_mutex_unlock (&mutexsum);
 ```
 
-O uso deste _mutex_ foi discutido na <a href="#Questão-5">Questão 5</a>.
+O uso deste _mutex_ foi discutido na <a href="#questão-5">Questão 5</a>.
 
 - **Aglomeração**
 
@@ -96,13 +96,13 @@ A ideia central da etapa de aglomeração é o agrupamento de tarefas para dimin
 ``` c
 	   for (k = 0; k < dotdata.repeat; k++) {
 	      mysum = 0.0;
-	      for (i = start; i < end ; i++)  {
+	      for (i = start; i < end; i++)  {
 		 mysum += (a[i] * b[i]);
 	      }
 	   }
 ```
 
-<p>O trecho de código acima, definido na função <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/pthreads_dotprod/pthreads_dotprod.c#L27"><i>dotprod_worker</i></a> realiza o cálculo do produto escalar. A partir do agrupamento dos resultados de várias multiplicações sobre os vetores, somas parciais são armazenadas na variável '_mysum_'.</p>
+<p>O trecho de código acima, definido na função <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/pthreads_dotprod/pthreads_dotprod.c#L27"><i>dotprod_worker</i></a> realiza o cálculo do produto escalar. A partir do agrupamento dos resultados de várias multiplicações sobre os vetores, somas parciais são armazenadas na variável '<i>mysum</i>'.</p>
 
 
 - **Mapeamento**
