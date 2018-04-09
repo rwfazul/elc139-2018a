@@ -31,7 +31,7 @@ A divisão do problema em tarefas menores é realizada para aumentar a possibili
 
 A lógica da definição do _range_ de atuação de cada _thread_, realizado pela rotina _dotprod\_worker_, é a seguinte: 
 
-```
+``` c
 	   long offset = (long) arg; 	
 	   int wsize = dotdata.wsize;
 	   int start = offset * wsize;
@@ -43,32 +43,36 @@ Sendo _offset_ equivalente a um contador crescente e único, que funciona como i
 Supondo _nthreads_ = 4 e _wsize_ total de 2.500, o particionamento ocorre da seguinte forma:
 
 	+ Primeira _thread_:
-		- i = 0;
+	``` c
+		- i = 0
 		- start = 0 * 2.500 = 0
 		- end = 0 + 2.500 = 0
-	
+	``` 
 	+ Segunda _thread_:
+	``` c
 		- i = 1
 		- start = 1 * 2.500 = 2.500
 		- end = 2.500 + 2.500 = 5.000
-			
+	``` 			
 	+ Terceira _thread_:
+	``` c
 		- i = 2;
 		- start = 2 * 2.500 = 5.000
 		- end = 5.000 + 2.500 = 7.500	
-		
+	``` 		
 	+ Quarta _thread_:
+	``` c
 		- i = 3
 		- start = 3 * 2.500 = 7.500
 		- end = 7.500 + 2.500 = 10.000
-		
+	``` 		
 
 Com estes valores estabelicidos, cada _thread_ consegue realizar o cálculo do produto escalar a partir dos vetores, iniciando em vetor[_start_] e finalizando em vetor[_end_ - 1].
 
 - Comunicação
 A comunicação é necessária para coordenar a execução das tarefas. É nesta etapa em que estruturas de comunicação e algoritmos de sincronização apropriados e necessários ao bom funcionamento e correteza do programa são definidos.
 
-```
+``` c
 	   pthread_mutex_lock (&mutexsum);
 	   dotdata.c += mysum;
 	   pthread_mutex_unlock (&mutexsum);
@@ -79,7 +83,7 @@ A comunicação é necessária para coordenar a execução das tarefas. É nesta
 
 A ideia central da etapa de aglomeração é o agrupamento de tarefas para diminuição do custo de implementação e de comunicação. A aglomeração busca, na medida do possível, garantir escalabilidade e aumentar a granularidade da computação. 
 
-```
+``` c
 	   for (k = 0; k < \dotdata.repeat; k++) {
 	      mysum = 0.0;
 	      for (i = start; i < \end ; i++)  {
@@ -96,7 +100,7 @@ A atribução de tarefas aos processadores é feita nesta etapa. Com um mapeamen
 
 A distribuição de carga pode ser estática (em tempo de compilação) ou dinâmica (em tempo de execução). No contexto do programa em análise, apenas a inicialização criação das _threads_ foi realizada.
 
-```
+``` c
       pthread_create(&threads[i], &attr, dotprod_worker, (void *) i);
 ```
 
@@ -110,7 +114,7 @@ Tomando como base os seguintes resultados:
 
 - Execução sequencial:
 
-```
+``` bash
 ./pthreads_dotprod 1 1000000 2000
 10000.000000
 1 thread(s), 8837103 usec
@@ -118,7 +122,7 @@ Tomando como base os seguintes resultados:
 
 - Execução com _threads_:
 
-```
+``` bash
 ./pthreads_dotprod2 1 500000 2000
 5000.000000
 1 thread(s), 4420286 usec
@@ -161,13 +165,13 @@ Portando, neste cenário, em ambos os casos apresentados, conclui-se que o algor
 
 Para realizar a análise, o parâmetro referente ao tamanho dos vetores foi utilizado com base no número de _threads_. Para exemplificar, tomando como exemplo a seguinte execução:
 
-```
+``` bash
 	$ ./pthreads_dotprod 1 10000 10
 ```
 
 Os argumentos são, respectivamente, <_nthreads_>, <_worksize_> e <_repetitions_>. Se, por exemplo, fosse utilizado 4 _threads_, o _worksize_ precisaria ser recalculado:
  
-```
+``` bash
 	$ ./pthreads_dotprod 4 2500 10
 ```
 
@@ -368,10 +372,10 @@ A eficiência é uma métrica que fornece uma noção básica da utilização do
 
 A única diferença entre os programas é que [_pthreads_dotprod2.c_](pthreads_dotprod/pthreads_dotprod2.c) faz uso de _locks_ (_mutexes_), para controle de concorrência (prevenir _race conditions_) envolvendo a varíavel da estrutura compartilhada _dotdata_, que recebe os resultados das somas parciais do cálculo do produto escalar realizadas pelas _threads_.
 
-```
-   pthread_mutex_lock (&mutexsum);
-   dotdata.c += mysum;
-   pthread_mutex_unlock (&mutexsum);
+``` c
+	   pthread_mutex_lock (&mutexsum);
+	   dotdata.c += mysum;
+	   pthread_mutex_unlock (&mutexsum);
 ```
 
 Neste caso, o uso de _mutexsum_ irá garantir um acesso serializado para a atualização de valores em _dotdata.c_. Ou seja, se uma _thread_ _t1_ estiver nesta seção crítica, a entrada de outras _threads_ só será permitada após _t1_ liberar o acesso. Como o acesso a varíavel da _struct_ _dotdata_ é compartilhada entre todas as _threads_, o uso do _mutex_ evita _race conditions_. 
@@ -386,20 +390,20 @@ Tendo em vista que na maioria das CPUs modernas a operação de leitura e escrit
 
 O programa [_openmp_dotprod.c_](openmp/openmp_dotprod.c) foi paralelizado com _OpenMP_. Ele pode ser compilado utilizando o arquivo [_Makefile_](openmp/Makefile) com:
 
-```
+``` make
 	$ make
 ```
 
 Ou utilizando diretamente o comando:
 
-```
+``` bash
 	$ gcc -fopenmp -o openmp_dotprod openmp_dotprod.c
 ```
 
 Os argumentos para execução do programa são os mesmos utilizados na versão com _Pthreads_. Logo:
 
 
-```
+``` bash
 	$ ./openmp_dotprod <nthreads> <worksize> <repetitions>
 ```
 
