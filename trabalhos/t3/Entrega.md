@@ -16,6 +16,8 @@ Aluno: Rhauani Weber Aita Fazul
 - [_OpenMP_](#openmp)
 	- [Implementação](#implementação)
 	- [Desempenho](#desempenho)
+	- [_Speedup_](#speedup)
+- [Comparação: _Pthreads_ vs. _OpenMp_](#comparacao)
 - [Referências](#referencias)
 
 <!-- Pthreads -->
@@ -181,43 +183,47 @@ Com base nesses resultados, os seguintes gráficos podem ser gerados para facili
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 1.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize10000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize10000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize10000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize10000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 100.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize100000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize100000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize100000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize100000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes <i>worksize</i><sub>total</sub> de 1.000.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize1000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize1000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize10000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize10000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads/charts/pthreads_dotprod/pthreads_dotprod-worksize10000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize10000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
 </p>
 
 ### Questão 4
@@ -312,7 +318,7 @@ Tendo em vista que na maioria das CPUs modernas a operação de leitura e escrit
 ### Implementação
 - Implemente um programa equivalente a [_pthreads_dotprod.c_](pthreads_dotprod/pthreads_dotprod.c) usando _OpenMP_. 
 
-O programa [_openmp_dotprod.c_](openmp/openmp_dotprod.c) foi paralelizado com _OpenMP_. Ele pode ser compilado utilizando o arquivo [_Makefile_](openmp/Makefile.sh) com:
+O programa [_openmp_dotprod.c_](openmp/openmp_dotprod.c) foi paralelizado com _OpenMP_. Ele pode ser compilado utilizando o arquivo [_Makefile_](openmp/Makefile) com:
 
 ```
 	$ make
@@ -334,7 +340,7 @@ Os argumentos para execução do programa são os mesmos utilizados na versão c
 Como a cláusula _num\_threads_ foi definida no próprio programa, não é necessário setar a variável ambiente _OMP\_NUM\_THREADS_ para a execução.
 
 ### Desempenho
-- Avalie o desempenho do programa em OpenMP, usando os mesmos dados/argumentos do programa com threads POSIX. 
+- Avalie o desempenho do programa em _OpenMP_, usando os mesmos dados/argumentos do programa com _threads_ _POSIX_. 
 
 Os testes foram realizados com _GNU Compiler Collection_ (GCC) versão 5.4.0, que possui a versão 4.0 da API _OpenMp_. O _script_ [_calc_time.sh_](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/openmp/calc_time.sh) foi utilizado para realizar as execuções e calcular as médias de tempo apresentadas a seguir.
 
@@ -342,73 +348,188 @@ Os testes foram realizados com _GNU Compiler Collection_ (GCC) versão 5.4.0, qu
 
 | <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
-| 1.000      | 	0.000000	| 0.000000	   | 0.000000	      | 0.000000	 |
-| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
-| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+| 1.000      | 	0.000122	| 0.000959	   | 0.008186	      | 0.013544	 |
+| 10.000     |	0.000769	| 0.007317	   | 0.045776	      | 0.087692         |
+| 100.000    |	0.006531	| 0.049564	   | 0.425038	      | 0.847909         |
+| 1.000.000  |	0.045047	| 0.445112	   | 4.519422	      | 8.914235	 |
+| 10.000.000 |	0.447798	| 4.450476	   | 44.53239	      | 89.94512         |
 
 - (_OpenMP_) Tempos de execução em segundos com 2 _threads_:
 
 | <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
-| 1.000      | 	0.000000	| 0.000000	   | 0.000000	      | 0.000000	 |
-| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
-| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+| 1.000      | 	0.000262	| 0.000665	   | 0.004168	      | 0.007937	 |
+| 10.000     |	0.000532	| 0.003364	   | 0.023149	      | 0.049578         |
+| 100.000    |	0.003315	| 0.023548	   | 0.231833	      | 0.446366         |
+| 1.000.000  |	0.022675	| 0.224466	   | 2.753349	      | 4.739061	 |
+| 10.000.000 |	0.223219	| 2.765050	   | 26.24066	      | 54.63937         |
 
 - (_OpenMP_) Tempos de execução em segundos com 4 _threads_:
 
 | <i>worksize</i><sub>total</sub> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
-| 1.000      | 	0.000000	| 0.000000	   | 0.000000	      | 0.000000	 |
-| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
-| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+| 1.000      | 	0.000809	| 0.000755	   | 0.003788	      | 0.006716	 |
+| 10.000     |	0.001007	| 0.003224	   | 0.022425	      | 0.050366         |
+| 100.000    |	0.003186	| 0.021825	   | 0.208508	      | 0.446149         |
+| 1.000.000  |	0.021941	| 0.215653	   | 2.541769	      | 5.348510	 |
+| 10.000.000 |	0.215282	| 2.246862	   | 24.21224	      | 54.35619         |
 
 - (_OpenMP_) Tempos de execução em segundos com 8 _threads_:
 
 | <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
-| 1.000      | 	0.000000	| 0.000000	   | 0.000000	      | 0.000000	 |
-| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
-| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+| 1.000      | 	0.000918	| 0.003304	   | 0.020423	      | 0.042431 	 |
+| 10.000     |	0.001492	| 0.008515	   | 0.052475	      | 0.111153         |
+| 100.000    |	0.005868	| 0.039628	   | 0.350602	      | 0.690622    	 |
+| 1.000.000  |	0.026241	| 0.245235	   | 2.743147	      | 5.546560	 |
+| 10.000.000 |	0.218298	| 2.418148	   | 27.20163	      | 56.63672         |
 
 - (_OpenMP_) Tempos de execução em segundos com 16 _threads_:
 
 | <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
-| 1.000      | 	0.000000	| 0.000000	   | 0.000000	      | 0.000000	 |
-| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
-| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+| 1.000      | 	0.001388	| 0.004779	   | 0.041157	      | 0.082143	 |
+| 10.000     |	0.002455	| 0.011326	   | 0.086929	      | 0.158263         |
+| 100.000    |	0.006404	| 0.050825	   | 0.462404	      | 0.914384         |
+| 1.000.000  |	0.027310	| 0.253792	   | 2.757569	      | 5.692758 	 |
+| 10.000.000 |	0.220277	| 2.396803	   | 27.10762	      | 55.87212         |
 
 - (_OpenMP_) Tempos de execução em segundos com 32 _threads_:
 
 | <i>worksize</i><sub>total</sub> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
-| 1.000      | 	0.000000	| 0.000000	   | 0.000000	      | 0.000000	 |
-| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
-| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+| 1.000      | 	0.002328	| 0.011013	   | 0.085145	      | 0.166537	 |
+| 10.000     |  0.003091	| 0.016512	   | 0.130399	      | 0.253769         |
+| 100.000    |	0.008752	| 0.042762	   | 0.504861	      | 1.001106         | 
+| 1.000.000  |	0.027960	| 0.258059	   | 2.841562	      | 5.757267	 |
+| 10.000.000 |	0.219630	| 2.450717	   | 26.88962	      | 55.03776         |
 
 - (_OpenMP_) Tempos de execução em segundos com 1024 _threads_:
 
 | <i>worksize</i><sub>total</sub> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
 | 1.000      | 	-		| -		   | -		      | -		 |
-| 10.000     |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 100.000    |	0.000000	| 0.000000	   | 0.000000	      |	0.000000         |
-| 1.000.000  |	0.000000	| 0.000000         | 0.000000         |	0.000000	 |
-| 10.000.000 |	0.000000	| 0.000000         | 0.000000	      |	0.000000         |
+| 10.000     |	0.053111	| 0.353278	   | 3.482085	      | 7.000235	 |
+| 100.000    |	0.054155	| 0.399237	   | 3.745568	      | 7.146395     	 |
+| 1.000.000  |	0.074481	| 0.551204	   | 4.832769	      | 11.70987 	 |
+| 10.000.000 |	0.271765	| 2.864079	   | 30.31870	      | 63.15961         |
 
-Com base nos resultados apresentados podemos realizar uma comparação entre as execuções utilizando _Pthreads_ e as execuções usando _OpenMP_. Sendo assim, os seguintes gráficos foram gerados:
+Com base nesses resultados, os seguintes gráficos podem ser gerados para facilitar a visualização:
+
+- Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 1.000 (os valores referentes a execução com 1024 _threads_ foram omitidos para manter a porporção do gráfico):
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize1000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize1000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+
+- Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000 (os valores referentes a execução com 1024 _threads_ foram omitidos para manter a porporção do gráfico)::
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize10000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize10000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+
+- Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 100.000 (os valores referentes a execução com 1024 _threads_ foram omitidos para manter a porporção do gráfico)::
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize100000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize100000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+
+- Desempenho do programa variando o número de _threads_ e repetiçoes <i>worksize</i><sub>total</sub> de 1.000.000:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize1000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize1000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+
+- Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000.000:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize10000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize10000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+</p>
+
+### _Speedup_
+
+As tabelas a seguir representam o _speedup_ alcançado com a parelização. Para cada um dos cenários, utilizou-se as médias de tempo apresentadas anteriormente. Todos os cálculos utilizam como base os tempos da execução sequencial (<i>t<sub>s</sub></i>) já apresentados nas tabelas anteriores.
+
+- (_OpenMP_) _Speedup_ obtido com 2 _threads_.
+
+| <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 0.465648855	| 1.442105263	   | 1.964011516      | 1.706438201	 |
+| 10.000     | 1.445488722	| 2.175089180	   | 1.977450430      |	1.768768405      |
+| 100.000    | 1.970135747	| 2.104807202	   | 1.833380062      |	1.899582405	 |
+| 1.000.000  | 1.986637266	| 1.982981832	   | 1.641427222      |	1.881012926      |
+| 10.000.000 | 2.006092671	| 1.609546301	   | 1.697075939      |	1.646159609      |
+
+- (_OpenMP_) _Speedup_ obtido com 4 _threads_.
+
+| <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
+| 1.000      | 0.150803461	| 1.270198675	   | 2.161034847      |	2.016676593      |
+| 10.000     | 0.763654419	| 2.269540943	   | 2.041293200      |	1.741095183      |	
+| 100.000    | 2.049905838	| 2.270973654	   | 2.038473344      |	1.900506333      |	
+| 1.000.000  | 2.053096942	| 2.064019513	   | 1.778061657      |	1.666676327      |	
+| 10.000.000 | 2.080053140	| 1.980751822	   | 1.839251028      |	1.654735319      |
+
+- (_OpenMP_) _Speedup_ obtido com 8 _threads_.
+
+| <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 0.132897604	| 0.290254237	   | 0.400822602      | 0.319200584	 |
+| 10.000     | 0.515415549	| 0.859307105	   | 0.872339209      | 0.788930573 	 |	
+| 100.000    | 1.112985685	| 1.250731806	   | 1.212309114      | 1.227746872	 |
+| 1.000.000  | 1.716664761	| 1.815042714	   | 1.647531831      | 1.607164621	 |
+| 10.000.000 | 2.051315175	| 1.840448145	   | 1.637122331      | 1.588106045	 |
+
+- (_OpenMP_) _Speedup_ obtido com 16 _threads_.
+
+| <i>worksize</i><sub>total</sub> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 0.087896254	| 0.200669596	   | 0.198896907      | 0.1648831915     |
+| 10.000     | 0.313238289	| 0.646035670	   | 0.526590666      | 0.5540903433     |
+| 100.000    | 1.019831355	| 0.975189375	   | 0.919191876      | 0.9273007839     |
+| 1.000.000  | 1.649469059	| 1.753845669	   | 1.638915291      | 1.5658903820     |
+| 10.000.000 | 2.032885866	| 1.856838464	   | 1.642799434      | 1.6098389060     |
+
+- (_OpenMP_) _Speedup_ obtido com 32 _threads_.
+
+| <i>worksize</i><sub>total</sub>  |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- | 
+| 1.000      | 0.052405498	| 0.087078907	   | 0.096141876      | 0.0813272726     |
+| 10.000     | 0.248786800	| 0.443132267	   | 0.351045637      |	0.3455583621     |
+| 100.000    | 0.746229433	| 1.159066461	   | 0.841891134      |	0.8469722487     |	
+| 1.000.000  | 1.611123033	| 1.724845869	   | 1.590471016      |	1.5483449000     |
+| 10.000.000 | 2.038874471	| 1.815989361	   | 1.656118333      |	1.6342436690     |
+
+- (_OpenMP_) _Speedup_ obtido com 1024 _threads_.
+
+| <i>worksize</i><sub>total</sub> |  10 repetições   |  100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- | ---------------- |  
+| 1.000      | -		| -		   | -		      | -		 |
+| 10.000     | 0.014479110	| 0.0207117341	   | 0.013146147      |	0.0125270080     |
+| 100.000    | 0.120598283	| 0.1241468100	   | 0.113477582      |	0.1186484934     |
+| 1.000.000  | 0.604811966	| 0.8075267959	   | 0.935162016      |	0.7612581727     |	
+| 10.000.000 | 1.647739775	| 1.5538942890	   | 1.468809236      |	1.4240923970     | 
+
+<a name="comparacao"></a>
+## Comparação: _Pthreads_ vs. _OpenMp_
+
+Com base nos resultados apresentados, podemos realizar uma comparação entre as execuções utilizando _Pthreads_ e as execuções usando _OpenMP_. Sendo assim, os seguintes gráficos foram gerados:
 
 <!-- REFERÊNCIAS -->
 <a name="referencias"></a>
@@ -420,6 +541,7 @@ Com base nos resultados apresentados podemos realizar uma comparação entre as 
 - GCC. <i>OpenMP</i>. https://goo.gl/YHjuhM
 - GCC. <i>Runtime Library Routines</i>. https://goo.gl/NjUn8Y
 - IBM. <i>Learning the OpenMP framework with GCC</i>. https://goo.gl/vSXAX9
+- IBM. <i>Pragma directives for parallel processing</i>. https://goo.gl/A2V1a2
 - IBM. <i>#pragma omp critical</i>. https://goo.gl/cJtH68
 - IBM. <i>Using OpenMP directives</i>. https://goo.gl/pt8d9p
 - Intel. <i>Getting Started with OpenMP*</i>. https://goo.gl/Eb83FP
