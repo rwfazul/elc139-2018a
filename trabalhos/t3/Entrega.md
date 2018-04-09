@@ -27,6 +27,7 @@ Aluno: Rhauani Weber Aita Fazul
 - Explique como se encontram implementadas as 4 etapas de projeto: particionamento, comunicação, aglomeração, mapeamento (use trechos de código para ilustrar a explicação).
 
 - Particionamento
+
 A divisão do problema em tarefas menores é realizada para aumentar a possibilidade de concorrência. Este particionamento ocorrer pela decomposição do domínio do problema (em função dos dados) ou pela decomposição funcional (em função da computação). No caso específico do programa  [_pthreads_dotprod.c_](pthreads_dotprod/pthreads_dotprod.c), foi realizado um particionamento estrutural, ou seja, em função dos dados. 
 
 A lógica da definição do _range_ de atuação de cada _thread_, realizado pela rotina _dotprod\_worker_, é a seguinte: 
@@ -43,33 +44,41 @@ Sendo _offset_ equivalente a um contador crescente e único, que funciona como i
 Supondo _nthreads_ = 4 e _wsize_ total de 2.500, o particionamento ocorre da seguinte forma:
 
 	+ Primeira _thread_:
-	``` c
-		- i = 0
-		- start = 0 * 2.500 = 0
-		- end = 0 + 2.500 = 0
-	``` 
+	
+``` c
+	- i = 0
+	- start = 0 * 2.500 = 0
+	- end = 0 + 2.500 = 0
+``` 
+
 	+ Segunda _thread_:
-	``` c
-		- i = 1
-		- start = 1 * 2.500 = 2.500
-		- end = 2.500 + 2.500 = 5.000
-	``` 			
+	
+``` c
+	- i = 1
+	- start = 1 * 2.500 = 2.500
+	- end = 2.500 + 2.500 = 5.000
+``` 			
+
 	+ Terceira _thread_:
-	``` c
-		- i = 2;
-		- start = 2 * 2.500 = 5.000
-		- end = 5.000 + 2.500 = 7.500	
-	``` 		
+	
+``` c
+	- i = 2;
+	- start = 2 * 2.500 = 5.000
+	- end = 5.000 + 2.500 = 7.500	
+``` 		
+
 	+ Quarta _thread_:
-	``` c
-		- i = 3
-		- start = 3 * 2.500 = 7.500
-		- end = 7.500 + 2.500 = 10.000
-	``` 		
+	
+``` c
+	- i = 3
+	- start = 3 * 2.500 = 7.500
+	- end = 7.500 + 2.500 = 10.000
+``` 		
 
 Com estes valores estabelicidos, cada _thread_ consegue realizar o cálculo do produto escalar a partir dos vetores, iniciando em vetor[_start_] e finalizando em vetor[_end_ - 1].
 
 - Comunicação
+
 A comunicação é necessária para coordenar a execução das tarefas. É nesta etapa em que estruturas de comunicação e algoritmos de sincronização apropriados e necessários ao bom funcionamento e correteza do programa são definidos.
 
 ``` c
@@ -78,6 +87,7 @@ A comunicação é necessária para coordenar a execução das tarefas. É nesta
 	   pthread_mutex_unlock (&mutexsum);
 ```
 
+O uso deste _mutex_ foi discutido na <a href="seção-5">Seção 5</a>.
 
 - Aglomeração
 
@@ -96,6 +106,7 @@ O trecho de código acima, definido na função _dotprod\_worker_ realiza o cál
 
 
 - Mapeamento
+
 A atribução de tarefas aos processadores é feita nesta etapa. Com um mapeamento efetivo, é possível maximizar a ocupação dos processadores e diminuir custos resultantes da comunicação. A porcentagem de ocupação dos processadores está relacionada ao balanceamento de carga e a diminuição dos custos de comunicação com a atribuição de tarefas relacionadas para um mesmo processador.
 
 A distribuição de carga pode ser estática (em tempo de compilação) ou dinâmica (em tempo de execução). No contexto do programa em análise, apenas a inicialização criação das _threads_ foi realizada.
