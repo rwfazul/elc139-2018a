@@ -183,47 +183,36 @@ Com base nesses resultados, os seguintes gráficos podem ser gerados para facili
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 1.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
-</p>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize10000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
-</p>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize10000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize10000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize10000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 100.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize100000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
-</p>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize100000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize100000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize100000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes <i>worksize</i><sub>total</sub> de 1.000.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
-</p>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize1000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize10000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
-</p>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize10000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize10000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/pthreads_dotprod/charts/pthreads_dotprod-worksize10000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
 </p>
 
 ### Questão 4
@@ -419,47 +408,36 @@ Com base nesses resultados, os seguintes gráficos podem ser gerados para facili
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 1.000 (os valores referentes a execução com 1024 _threads_ foram omitidos para manter a porporção do gráfico):
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize1000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
-</p>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize1000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize1000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize1000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000 (os valores referentes a execução com 1024 _threads_ foram omitidos para manter a porporção do gráfico)::
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize10000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
-</p>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize10000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize10000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize10000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 100.000 (os valores referentes a execução com 1024 _threads_ foram omitidos para manter a porporção do gráfico)::
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize100000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
-</p>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize100000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize100000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize100000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes <i>worksize</i><sub>total</sub> de 1.000.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize1000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
-</p>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize1000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize1000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize1000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
 </p>
 
 - Desempenho do programa variando o número de _threads_ e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000.000:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize10000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
-</p>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize10000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="60%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize10000000-1.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/openmp_dotprod-worksize10000000-2.png" alt="Tempo gasto pelo programa com diferentes configurações." width="40%"/>
 </p>
 
 ### _Speedup_
@@ -529,7 +507,7 @@ As tabelas a seguir representam o _speedup_ alcançado com a parelização. Para
 <a name="comparacao"></a>
 ## Comparação: _Pthreads_ vs. _OpenMp_
 
-Com base nos resultados apresentados, podemos realizar uma comparação entre as execuções utilizando _Pthreads_ e as execuções usando _OpenMP_. Sendo assim, os seguintes gráficos foram gerados a partir dos _speedups_ encontrados:
+Com base nos resultados apresentados, podemos realizar uma comparação entre as execuções utilizando _Pthreads_ e as execuções usando _OpenMP_. Os gráficos abaixo foram gerados a partir dos _speedups_ encontrados.
 
 - Aceleração utilizando 2 _threads_:
 
