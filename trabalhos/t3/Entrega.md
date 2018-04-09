@@ -1,6 +1,6 @@
 [Programação Paralela](https://github.com/AndreaInfUFSM/elc139-2018a) > Trabalhos
 
-# T3: Programação paralela multithread
+# T3: Programação Paralela Multithread
 
 Disciplina: ELC139 - Programação Paralela <br/>
 Aluno: Rhauani Weber Aita Fazul
@@ -529,7 +529,73 @@ As tabelas a seguir representam o _speedup_ alcançado com a parelização. Para
 <a name="comparacao"></a>
 ## Comparação: _Pthreads_ vs. _OpenMp_
 
-Com base nos resultados apresentados, podemos realizar uma comparação entre as execuções utilizando _Pthreads_ e as execuções usando _OpenMP_. Sendo assim, os seguintes gráficos foram gerados:
+Com base nos resultados apresentados, podemos realizar uma comparação entre as execuções utilizando _Pthreads_ e as execuções usando _OpenMP_. Sendo assim, os seguintes gráficos foram gerados a partir dos _speedups_ encontrados:
+
+- Aceleração utilizando 2 _threads_:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-2-10" alt="Speedup do programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-2-100" alt="Speedup do programa com diferentes configurações." width="40%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-2-1000" alt="Speedup do programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-2-2000" alt="Speedup do programa com diferentes configurações." width="40%"/>
+</p>
+
+- Aceleração utilizando 4 _threads_:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-4-10" alt="Speedup do programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-4-100" alt="Speedup do programa com diferentes configurações." width="40%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-4-1000" alt="Speedup do programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-4-2000" alt="Speedup do programa com diferentes configurações." width="40%"/>
+</p>
+
+- Aceleração utilizando 8 _threads_:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-8-10" alt="Speedup do programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-8-100" alt="Speedup do programa com diferentes configurações." width="40%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-8-1000" alt="Speedup do programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-8-2000" alt="Speedup do programa com diferentes configurações." width="40%"/>
+</p>
+
+- Aceleração utilizando 16 _threads_:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-16-10" alt="Speedup do programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-16-100" alt="Speedup do programa com diferentes configurações." width="40%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-16-1000" alt="Speedup do programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-16-2000" alt="Speedup do programa com diferentes configurações." width="40%"/>
+</p>
+
+- Aceleração utilizando 32 _threads_:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-32-10" alt="Speedup do programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-32-100" alt="Speedup do programa com diferentes configurações." width="40%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-32-1000" alt="Speedup do programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-32-2000" alt="Speedup do programa com diferentes configurações." width="40%"/>
+</p>
+
+- Aceleração utilizando 1024 _threads_:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-1024-10" alt="Speedup do programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-1024-100" alt="Speedup do programa com diferentes configurações." width="40%"/>
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-1024-1000" alt="Speedup do programa com diferentes configurações." width="40%"/>
+  <img src="https://raw.githubusercontent.com/rwfazul/elc139-2018a/master/trabalhos/t3/openmp/charts/comparison/pthreads-vs-openmp-1024-2000" alt="Speedup do programa com diferentes configurações." width="40%"/>
+</p>
 
 <!-- REFERÊNCIAS -->
 <a name="referencias"></a>
