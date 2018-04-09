@@ -77,7 +77,7 @@ Supondo _nthreads_ = 4 e _wsize_ total de 2.500, o particionamento ocorre da seg
 
 Com estes valores estabelicidos, cada _thread_ consegue realizar o cálculo do produto escalar a partir dos vetores, iniciando em vetor[_start_] e finalizando em vetor[_end_ - 1].
 
-- Comunicação
+- **Comunicação**
 
 A comunicação é necessária para coordenar a execução das tarefas. É nesta etapa em que estruturas de comunicação e algoritmos de sincronização apropriados e necessários ao bom funcionamento e correteza do programa são definidos.
 
@@ -87,9 +87,9 @@ A comunicação é necessária para coordenar a execução das tarefas. É nesta
 	   pthread_mutex_unlock (&mutexsum);
 ```
 
-O uso deste _mutex_ foi discutido na <a href="#seção-5">Seção 5</a>.
+O uso deste _mutex_ foi discutido na <a href="#Questão-5">Questão 5</a>.
 
-- Aglomeração
+- **Aglomeração**
 
 A ideia central da etapa de aglomeração é o agrupamento de tarefas para diminuição do custo de implementação e de comunicação. A aglomeração busca, na medida do possível, garantir escalabilidade e aumentar a granularidade da computação. 
 
@@ -102,10 +102,10 @@ A ideia central da etapa de aglomeração é o agrupamento de tarefas para dimin
 	   }
 ```
 
-<p>O trecho de código acima, definido na função [_dotprod\_worker_](https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/pthreads_dotprod/pthreads_dotprod.c#L27) realiza o cálculo do produto escalar. A partir do agrupamento dos resultados de várias multiplicações sobre os vetores, somas parciais são armazenadas na variável '_mysum_'.</p>
+<p>O trecho de código acima, definido na função <a href="https://github.com/rwfazul/elc139-2018a/blob/master/trabalhos/t3/pthreads_dotprod/pthreads_dotprod.c#L27"><i>dotprod_worker</i></a> realiza o cálculo do produto escalar. A partir do agrupamento dos resultados de várias multiplicações sobre os vetores, somas parciais são armazenadas na variável '_mysum_'.</p>
 
 
-- Mapeamento
+- **Mapeamento**
 
 A atribução de tarefas aos processadores é feita nesta etapa. Com um mapeamento efetivo, é possível maximizar a ocupação dos processadores e diminuir custos resultantes da comunicação. A porcentagem de ocupação dos processadores está relacionada ao balanceamento de carga e a diminuição dos custos de comunicação com a atribuição de tarefas relacionadas para um mesmo processador.
 
