@@ -134,8 +134,8 @@ Tomando como base os seguintes resultados:
 - Execução com _threads_:
 
 ``` bash
-./pthreads_dotprod2 1 500000 2000
-5000.000000
+./pthreads_dotprod 2 500000 2000
+10000.000000
 1 thread(s), 4420286 usec
 ```
 O fator de aceleração (_speedup_) pode ser calculado da seguinte maneira:
@@ -160,12 +160,12 @@ Sendo _S(2)_ &cong; 2, obteve-se um _speedup_ próximo ao ideal (_speedup_ linea
 - Execução com _threads_:
 
 ```
-./pthreads_dotprod2 1 500000 2000
-5000.000000
-1 thread(s), 4421713 usec
+./pthreads_dotprod 2 500000 2000
+10000.000000
+2 thread(s), 4444791 usec
 ```
 
-<p align="center"><img src="https://latex.codecogs.com/svg.latex?S(2)%3D%5Cfrac%7B8989450%7D%7B4421713%7D%3D%7B2.033024305%7D" alt="speedup superlinear"></p>
+<p align="center"><img src="https://latex.codecogs.com/svg.latex?S(2)%3D%5Cfrac%7B8989450%7D%7B4444791%7D%3D%7B2.022468548%7D" alt="speedup superlinear"></p>
 
 Sendo _S(2)_ > 2, obteve-se um _superlinear speedup_. Uma possível explicação para isso é o efeito da memória cache resultante das diferentes hierarquias de memória do computador.
 
