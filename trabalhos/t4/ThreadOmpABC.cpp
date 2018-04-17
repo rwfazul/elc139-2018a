@@ -119,7 +119,8 @@ int main() {
    /* Case 1 and 2: Static schedule: iterations are divided into chunks of size 
       chunk_size, and the chunks are assigned to the threads in the team in a
       round-robin fashion in the order of the thread number. if chunk is not specified, 
-      the iterations are evenly (if possible) divided contiguously among the threads. */
+      the iterations are evenly (if possible) divided contiguously among the threads. 
+      So the default value generally will be equal to chunk used in Case 2. */
    std::cout << "* Case 1: no omp critical (expecting wrong results)" << std::endl;
    ArrayFiller m1(false, omp_sched_static);
    m1.fillArrayConcurrently();
