@@ -1,0 +1,52 @@
+Each thread should add its char to the array n times (n=20)
+Correct results should total exactly nThreads*nTimes chars
+------------------------------------
+* Case 1: no omp critical (expecting wrong results)
+	schedule_type: omp_sched_static, chunk_size: 20
+BACBACBACBAACBACBACBACABACBACBACBAACBACBACBACBAABC-BCBCBCBC-
+A=19 B=20 C=19 
+------------------------------------
+* Case 2: using omp critical (expecting correct results)
+	schedule_type: omp_sched_static, chunk_size: 20
+CAAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBB
+A=20 B=20 C=20 
+------------------------------------
+* Case 3: no omp critical (expecting wrong results)
+	schedule_type: omp_sched_dynamic, chunk_size: 20
+CBCABCABCABCABCACBABCABCABCABCABCABCABCABCABCABCABCABCABCA--
+A=19 B=19 C=20 
+------------------------------------
+* Case 4: using omp critical (expecting correct results)
+	schedule_type: omp_sched_dynamic, chunk_size: 20
+BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
+A=20 B=20 C=20 
+------------------------------------
+* Case 4b: using omp critical but chunk_size is the default value used by OpenMP
+	schedule_type: omp_sched_static, chunk_size: 1
+ABBBBBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCCCCCCCCC
+A=20 B=20 C=20 
+------------------------------------
+* Case 5: no omp critical (expecting wrong results)
+	schedule_type: omp_sched_guided, chunk_size: 20
+BCBACBABCABCABCACBABCACBABCABCACBABCABCACBABCABCABCABCABCA--
+A=19 B=20 C=19 
+------------------------------------
+* Case 6: using omp critical (expecting correct results)
+	schedule_type: omp_sched_guided, chunk_size: 20
+BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
+A=20 B=20 C=20 
+------------------------------------
+* Case 6b: using omp critical but chunk_size is the default value used by OpenMP
+	schedule_type: omp_sched_static, chunk_size: 1
+BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
+A=20 B=20 C=20 
+------------------------------------
+* Case 7: no omp critical (expecting wrong results)
+	schedule_type: omp_sched_auto, chunk_size:  - 
+BBACBCABCABCABCABCABCABCABCABCABCACBABCABCABCABCABCABCABCA--
+A=19 B=20 C=19 
+------------------------------------
+* Case 8: using omp critical (expecting correct results)
+	schedule_type: omp_sched_auto, chunk_size:  - 
+ABBBBBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCCCCCCCCC
+A=20 B=20 C=20 
