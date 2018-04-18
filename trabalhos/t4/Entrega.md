@@ -29,11 +29,16 @@ Aluno: Rhauani Weber Aita Fazul
 
 <!-- Implementacao -->
 ## Implementação
-Ideia... 
-O programa pode ser visto em...
 
-<a name="#critical">
+O programa [ThreadOmpABC.cpp](ThreadABC/ThreadOmpABC.cpp) utiliza _OpenMP_ para testar os diferentes tipos de escalonamento disponíveis. Os casos de testes realizados foram desenvolvidos para ilustrar diferentes cenários, dentre estess:
+	- Problemas de sincronização decorrentes do não uso de exclusão mútua entre as _threads_;
+	- Particionamento de carga entre as _threads_ com valores pré-definidos levando em consideração o contexto do programa;
+	- Particionamento de carga entre as _therads_ utilizando os valores _default_ do próprio _OpenMP_.
+
+<a name="#critical"></a>
 ### Seção crítica
+
+Para a computação ser realizada de uma maneira correta, é necessário realizar o controle de concorrência envolvendo as variáveis compartilhadas entre as _threads_, o que diz respeito a um vetor e seu contador, respectivamente. Com isso, cada caso de teste define a varíavel booleana '_usecritical_' para escolha de uso da diretiva _omp critical_, que identifica e demarca uma seção crítica do código, conforme observado abaixo.
 
 ``` cpp
    void addChar(char c) {
@@ -48,7 +53,7 @@ O programa pode ser visto em...
    }
 ```
 
-Onde:
+Onde as operações que devem ser executadas de maneira serializada estão definidas no método _do\_operations_. 
 
 ``` cpp 
    void do_operations(char c) {
@@ -58,15 +63,17 @@ Onde:
    }
 ```
 
+Com isso, caso _usecritical_ seja verdadeira, e uma _thread_ t1 estiver nesta seção crítica, a entrada de outras threads só será permitada após t1 liberar o acesso. Como o acesso do _array_ e o incremento do _index_ é compartilhado entre todas as threads, o uso da diretiva evita _race conditions_.
+
 <!-- Outputs -->
 ## _Outputs_
 
-A saída pode ser obervada em...
+O arquivo [_out.txt_](ThreadABC/out.txt) exemplifica a saída do programa. Abaixo estão descritos os casos de testes realizados.
 
 <!-- Runtime -->
 ### _Runtime Schedule_
 
-O tipo de escalonamento (_static_, _dynamic_ ou _guided_) e o _chunk size_ são definidos em tempo de execução com base em uma varíavel de controle interno (_run-sched-var_), que foi setada anteriormente no programa com a rotina _omp\_set\_schedule_. A figura abaixo ilustra o uso do _runtime schedule_ no programa (é ilegal definir _chunk size_ para este tipo de escalonamento).
+O tipo de escalonamento (_static_, _dynamic_ ou _guided_) e o _chunk size_ são definidos em tempo de execução com base em uma varíavel de controle interno (_run-sched-var_), que foi setada anteriormente no programa com a rotina _omp\_set\_schedule_. O trecho de código abaixo ilustra o uso do _runtime schedule_ no programa (é ilegal definir _chunk size_ para este tipo de escalonamento).
 
 ``` cpp
       #pragma omp for schedule(runtime)  
@@ -95,8 +102,10 @@ Neste caso de teste não foi feito uso de exclusão mútua (via _omp critical_, 
                        A=19 B=20 C=19 
 ````
 
+Como visto, o resultado obtido sem exclusão mútia é incorreto, mesmo com _chunk size_ = _nTimes_. 
+
 #### Caso de teste 2
-Em contraponto, para obtenção de resultado correto com _static schedule_, utilizou-se exclusão mútua:
+Em contraponto, para obtenção de resultado correto com o _static schedule_, utilizou-se exclusão mútua:
 
 ```
 * Case 2: using omp critical (expecting correct results)
@@ -119,6 +128,8 @@ Este caso utiliza o escalonamento dinâmico, sem exclusão mútua e com um _chun
                        A=20 B=19 C=19 
 ```
 
+O resultado obtido, como esperado, foi incorreto.
+
 #### Caso de teste 4
 Para ilustar o resultado correto com o _chunk size_ pré-definido realizou-se o Caso 4:
 
@@ -130,17 +141,19 @@ Para ilustar o resultado correto com o _chunk size_ pré-definido realizou-se o 
                        A=20 B=20 C=20 
 ```
 
+Como observado cada _thread_ inseriu exatamente 20 caracteres. Mesmo que estes estejam em posições diferentes do Caso 2, o resultado continua correto, já que o posicionamento depende do escalonamento das _threads_.
+
 #### Caso de teste 4b
-Para fins de estudo do comportamento do programa, foi realizado um caso de teste em que o tamanho do _chunk_ não foi previamente definido. Deste modo, o valor _default_ do OpenMP é utilizado, o que equivale a 1.
+Para fins de estudo do comportamento do programa, foi realizado um caso de teste em que o tamanho do _chunk_ não foi previamente definido. Deste modo, o valor _default_ do OpenMP para o escalonamento estático é utilizado, o que equivale a 1.
 
 ```
 * Case 4b: using omp critical but chunk_size is the default value used by OpenMP
-	schedule_type: omp_sched_static, chunk_size: 1 (default)
+	schedule_type: omp_sched_static, chunk_size: 1 (default) ???????
    BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
                        A=20 B=20 C=20 
 ```
 
-Observou-se que o resultado gerado foi correto.
+Como neste caso de teste foi mantido o uso da exclusão mútua, o resultado continua correto.
 
 <!-- Guided -->
 ### _Guided Schedule_
@@ -171,7 +184,7 @@ Tendo em vista que no _guided schedule_ o tamanho do _chunk_ delimita o mínimo 
 
 ```
 * Case 6b: using omp critical but chunk_size is the default value used by OpenMP
-	schedule_type: omp_sched_static, chunk_size: 1 (default)
+	schedule_type: omp_sched_static, chunk_size: 1 (default) ??????
    CBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCAAAAAAAAAAAAAAAAAAAA
                        A=20 B=20 C=20 
 ```
@@ -199,6 +212,8 @@ Conforme observado abaixo, fazendo uso da diretiva _omp critical_ para definiç�
    CAAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBB
                        A=20 B=20 C=20 
 ```
+
+Como o tipo de escalonamento _auto_ ignora o argumento _chunk size_, não é necessário realizar um caso de teste com valor o _default_.
 
 <!-- REFERÊNCIAS -->
 <a name="referencias"></a>
