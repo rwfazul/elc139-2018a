@@ -31,7 +31,7 @@ Aluno: Rhauani Weber Aita Fazul
 <!-- Implementacao -->
 ## Implementação
 
-O programa [ThreadOmpABC.cpp](ThreadABC/ThreadOmpABC.cpp) utiliza _OpenMP_ para testar os diferentes tipos de escalonamento disponíveis. Os casos de testes realizados foram desenvolvidos para ilustrar diferentes cenários, dentre estes:
+O programa [ThreadOmpABC.cpp](ThreadABC/ThreadOmpABC.cpp) utiliza _OpenMP_ para testar os diferentes tipos de escalonamento disponíveis. Os casos de teste realizados foram desenvolvidos para ilustrar diferentes cenários, dentre estes:
 
 - Problemas de sincronização, decorrentes do não uso de exclusão mútua entre as _threads_;
 - Particionamento de carga entre as _threads_ com valores pré-definidos, levando em consideração o contexto do programa;
@@ -40,7 +40,7 @@ O programa [ThreadOmpABC.cpp](ThreadABC/ThreadOmpABC.cpp) utiliza _OpenMP_ para 
 <a name="critical"></a>
 ### Seção crítica
 
-Para a computação ser realizada de uma maneira correta, é necessário realizar o controle de concorrência envolvendo as variáveis compartilhadas entre as _threads_, o que diz respeito a um vetor e seu respectivo contador. Com isso, cada caso de teste define a variável booleana '_usecritical_' para escolha de uso da diretiva _omp critical_, que identifica e demarca uma seção crítica do código, conforme observado abaixo.
+Para a computação ser realizada de uma maneira correta, é necessário realizar o controle de concorrência envolvendo as variáveis compartilhadas entre as _threads_, o que diz respeito a um vetor e seu respectivo contador. Com isso, cada caso de teste define a variável booleana '_usecritical_' para escolha de uso da diretiva '_omp critical_', que identifica e demarca uma seção crítica do código, conforme observado abaixo.
 
 ``` cpp
    void addChar(char c) {
@@ -55,7 +55,7 @@ Para a computação ser realizada de uma maneira correta, é necessário realiza
    }
 ```
 
-Onde as operações que devem ser executadas de maneira serializada estão definidas no método _do\_operations()_. 
+Onde as operações que devem ser executadas de maneira serializada estão definidas no método '_do\_operations()_'. 
 
 ``` cpp 
    void do_operations(char c) {
@@ -65,16 +65,16 @@ Onde as operações que devem ser executadas de maneira serializada estão defin
    }
 ```
 
-Com isso, caso a variável _usecritical_ seja verdadeira, e uma _thread_ t1 estiver nesta seção crítica, a entrada de outras threads só será permitada após t1 liberar o acesso. Como o acesso do _array_ e o incremento do _index_ é compartilhado entre todas as threads, o uso da diretiva evita possíveis _race conditions_.
+Com isso, caso a variável '_usecritical_' seja verdadeira, e uma _thread_ t1 estiver nesta seção crítica, a entrada de outras threads só será permitada após t1 liberar o acesso. Como o acesso do _array_ e o incremento do _index_ é compartilhado entre todas as threads, o uso da diretiva evita possíveis _race conditions_.
 
 <!-- Outputs -->
 ## _Outputs_
 
-O arquivo [_out.txt_](ThreadABC/out.txt) exemplifica a saída do programa. Abaixo estão descritos os casos de testes realizados.
+O arquivo [_out.txt_](ThreadABC/out.txt) exemplifica a saída do programa. Abaixo estão descritos os casos de teste realizados.
 
 <!-- Runtime -->
 ### _Runtime Schedule_
-O tipo de escalonamento (_static_, _dynamic_ ou _guided_) e o _chunk size_ são definidos em tempo de execução com base em uma varíavel de controle interno (_run-sched-var_), que foi setada anteriormente no programa com a rotina _omp\_set\_schedule()_. O trecho de código abaixo ilustra o uso do _runtime schedule_ no programa (é ilegal definir _chunk size_ para este tipo de escalonamento).
+O tipo de escalonamento (_static_, _dynamic_ ou _guided_) e o _chunk size_ são definidos em tempo de execução com base em uma varíavel de controle interno ('_run-sched-var_'), que foi setada anteriormente no programa com a rotina '_omp\_set\_schedule()_'. O trecho de código abaixo ilustra o uso do _runtime schedule_ no programa (é ilegal definir _chunk size_ para este tipo de escalonamento).
 
 ``` cpp
       #pragma omp for schedule(runtime)  
@@ -94,7 +94,7 @@ O tipo de escalonamento (_static_, _dynamic_ ou _guided_) e o _chunk size_ são 
 As iterações do _loop_ são divididas em janelas com tamanhos definido pelo _chunk size_ e, após, são atribuídas estaticamente para as _threads_ que fazem parte do time (similar a um _round-robin_ baseado no _TID_). Quando o _chunk size_ não é definido, as iterações são, na medida do possível, divididas em _chunks_ do mesmo tamanho (iterações &divide; _nThreads_) de maneira contígua entre as _threads_. <!-- Deste modo, um _chunk_ de tamanho 1 faria as iterações serem intercaladas. --> 
  
 #### Caso de teste 1
-Neste caso de teste não foi feito uso de exclusão mútua (via _omp critical_, conforme apresentado anteriormente). Foi definido um _chunk_ size equivalente a _nTimes_ (quantidade de inserções a serem realizadas por cada _thread_). O resultado obtido, disponível em [out.txt](ThreadABC/out.txt), é apresentado a seguir:
+Neste caso de teste não foi feito uso de exclusão mútua (via '_omp critical_', conforme apresentado anteriormente). Foi definido um _chunk_ size equivalente a _nTimes_ (quantidade de inserções a serem realizadas por cada _thread_). O resultado obtido, disponível em [out.txt](ThreadABC/out.txt), é apresentado a seguir:
 
 ```              
 * Case 1: no omp critical (expecting wrong results)
@@ -156,7 +156,7 @@ Para ilustar o resultado correto com o _chunk size_ pré-definido realizou-se o 
 Como observado cada _thread_ inseriu exatamente 20 caracteres. Mesmo que estes estejam em posições diferentes do Caso 2, o resultado continua correto, já que o posicionamento depende do escalonamento das _threads_.
 
 #### Caso de teste 4b
-Para fins de estudo do comportamento do programa, foi realizado um caso de teste em que o tamanho do _chunk_ não foi previamente definido. Deste modo, o valor _default_ do OpenMP para o escalonamento estático é utilizado, o que equivale a 1.
+Para fins de estudo do comportamento do programa, foi realizado um caso de teste em que o tamanho do _chunk_ não foi previamente definido. Deste modo, o valor _default_ do _OpenMP_ para o escalonamento dinâmico é utilizado, o que equivale a 1.
 
 ```
 * Case 4b: using omp critical but chunk_size is the default value used by OpenMP
@@ -182,7 +182,7 @@ Conforme resultado em [out.txt](ThreadABC/out.txt), o Caso 5 fez uso do _guided 
 ```
 
 #### Caso de teste 6
-Para constatar a obtenção do resultado correto utilizando _omp critical_, realizou-se o Caso 6.
+Para constatar a obtenção do resultado correto utilizando '_omp critical_', realizou-se o Caso 6.
 
 ```
 * Case 6: using omp critical (expecting correct results)
@@ -208,7 +208,7 @@ Aqui o _chunk size_ diz respeito ao tamanho mínimo do _chunk_ a ser criado. Sim
 Em geral, a decisão sobre o tipo de escalonamento será feita pelo compilador. Utilizando o _auto schedule_ o compilador fica livre para escolher qualquer mapeamento de iterações possível para as _threads_ que fazem parte do time. O argumento de _chunk size_ é ignorado com este tipo de escalonamento.
 
 #### Caso de teste 7
-O Caso 7 utiliza _auto schedule_ sem exclusão mútua, note que para esse tipo de escalonamento a definição prévia de _chunk size_, passada por parâmetro para a rotina _omp\_set\_schedule()_, não é utilizada.
+O Caso 7 utiliza _auto schedule_ sem exclusão mútua, note que para esse tipo de escalonamento a definição prévia de _chunk size_, passada por parâmetro para a rotina '_omp\_set\_schedule()_', não é utilizada.
 
 ```
 * Case 7: no omp critical (expecting wrong results)
@@ -218,7 +218,7 @@ O Caso 7 utiliza _auto schedule_ sem exclusão mútua, note que para esse tipo d
 ```
 
 #### Caso de teste 8
-Conforme observado abaixo, fazendo uso da diretiva _omp critical_ para definição da região que deve ser executada de maneira serializada, obteve-se um resultado correto.
+Conforme observado abaixo, fazendo uso da diretiva '_omp critical_' para definição da região que deve ser executada de maneira serializada, obteve-se um resultado correto.
 
 ```
 * Case 8: using omp critical (expecting correct results)
