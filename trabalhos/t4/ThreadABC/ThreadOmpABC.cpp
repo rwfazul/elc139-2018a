@@ -86,7 +86,9 @@ public:
       omp_get_schedule(&schedule_kind, &chunk_size); // obtain the runtime scheduling method 
       std::cout << "\tschedule_type: "<< schedule_types_strings[schedule_kind - 1] << ", chunk_size: ";
       // for omp_sched_auto the chunk_size argument is ignored.
-      (schedule_kind == omp_sched_auto) ? std::cout << " - " << std::endl : std::cout << chunk_size << std::endl; 
+      (schedule_kind == omp_sched_auto) ? std::cout << " - " << std::endl : std::cout << chunk_size;
+      // print when the chunk_size is the default value used by openmp
+      (!use_defined_chunk) ? std::cout << " (default)" << std::endl : std::cout << std::endl;
    }
    void printStats() {
       std::cout << array->toString() << std::endl; // print array positions
