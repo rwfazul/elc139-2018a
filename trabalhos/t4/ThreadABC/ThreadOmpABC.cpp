@@ -88,7 +88,7 @@ public:
       // for omp_sched_auto the chunk_size argument is ignored.
       (schedule_kind == omp_sched_auto) ? std::cout << " - " : std::cout << chunk_size;
       // print when the chunk_size is the default value used by openmp
-      (!use_defined_chunk) ? std::cout << " (default)" << std::endl : std::cout << std::endl;
+      (!use_defined_chunk && schedule_kind != omp_sched_static) ? std::cout << " (default)" << std::endl : std::cout << std::endl;
    }
    void printStats() {
       std::cout << array->toString() << std::endl; // print array positions
@@ -121,8 +121,7 @@ int main() {
    /* Case 1 and 2: Static schedule: iterations are divided into chunks of size 
       chunk_size, and the chunks are assigned to the threads in the team in a
       round-robin fashion in the order of the thread number. if chunk is not specified, 
-      the iterations are evenly (if possible) divided contiguously among the threads. 
-      So the default value generally will be equal to chunk used in Case 2. */
+      the iterations are evenly (if possible) divided contiguously among the threads. */
    std::cout << "* Case 1: no omp critical (expecting wrong results)" << std::endl;
    ArrayFiller m1(false, omp_sched_static);
    m1.fillArrayConcurrently();
@@ -132,6 +131,11 @@ int main() {
    ArrayFiller m2(true, omp_sched_static);
    m2.fillArrayConcurrently();
    m2.printStats();
+   std::cout << "------------------------------------" << std::endl;
+   std::cout << "* Case 2b: using omp critical with chunk size = 1" << std::endl;
+   ArrayFiller m2b(true, omp_sched_static, false);
+   m2b.fillArrayConcurrently();
+   m2b.printStats();
    std::cout << "------------------------------------" << std::endl;
    /* Case 3 and 4: Dynamic schedule: Each thread executes a chunk of iterations, 
       then requests another chunk, until no chunks remain to be distributed. */
@@ -147,7 +151,7 @@ int main() {
    std::cout << "------------------------------------" << std::endl;
    /* The default chunk size of dynamic schedule is 1. */
    std::cout << "* Case 4b: using omp critical but chunk_size is the default value used by OpenMP" << std::endl;
-   ArrayFiller m4b(true, omp_sched_static, false);
+   ArrayFiller m4b(true, omp_sched_dynamic, false);
    m4b.fillArrayConcurrently();
    m4b.printStats();
    std::cout << "------------------------------------" << std::endl;
@@ -169,7 +173,7 @@ int main() {
    std::cout << "------------------------------------" << std::endl;
    /* The chunk parameter defines the minimum block size. The default chunk size of guided schedule is 1. */
    std::cout << "* Case 6b: using omp critical but chunk_size is the default value used by OpenMP" << std::endl;
-   ArrayFiller m6b(true, omp_sched_static, false); 
+   ArrayFiller m6b(true, omp_sched_guided, false); 
    m6b.fillArrayConcurrently();
    m6b.printStats();
    std::cout << "------------------------------------" << std::endl;
