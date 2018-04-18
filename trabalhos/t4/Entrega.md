@@ -14,6 +14,7 @@ Aluno: Rhauani Weber Aita Fazul
 	- [_Static Schedule_](#static-schedule)
 		- [Caso de teste 1](#caso-de-teste-1)
 		- [Caso de teste 2](#caso-de-teste-2)
+		- [Caso de teste 2b](#caso-de-teste-2b)
 	- [_Dynamic Schedule_](#dynamic-schedule)
 		- [Caso de teste 3](#caso-de-teste-3)
 		- [Caso de teste 4](#caso-de-teste-4)
@@ -95,10 +96,10 @@ As iterações do _loop_ são divididas em janelas com tamanhos definido pelo _c
 #### Caso de teste 1
 Neste caso de teste não foi feito uso de exclusão mútua (via _omp critical_, conforme apresentado anteriormente). Foi definido um _chunk_ size equivalente a _nTimes_ (quantidade de inserções a serem realizadas por cada _thread_). O resultado obtido, disponível em [out.txt](ThreadABC/out.txt) é apresentado a seguir:
 
-```
+```              
 * Case 1: no omp critical (expecting wrong results)
 	schedule_type: omp_sched_static, chunk_size: 20
-   BABCABCABCAABCABCABCABCAABCABCABCABACABCABCABCABAC-BCBCBCBC-
+   BACBACBACBAACBACBACBACBAACBACBACBACABACBACBACABCAB-CBCBCBCB-
                        A=19 B=20 C=19 
 ````
 
@@ -110,9 +111,21 @@ Em contraponto, para obtenção de resultado correto com o _static schedule_, ut
 ```
 * Case 2: using omp critical (expecting correct results)
 	schedule_type: omp_sched_static, chunk_size: 20
-   CCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAAA
+   CBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCAAAAAAAAAAAAAAAAAAAA
                        A=20 B=20 C=20 
 ```
+
+### Caso de teste 2b
+O Caso 2b é particularmente interessante. Perceba que mesmo com _chunk size_ em 1, que faz as atribuições dos blocos serem intercaladas, o resultado se mantém correto. 
+
+```
+* Case 2b: using omp critical with chunk size = 1
+	schedule_type: omp_sched_static, chunk_size: 1
+   CAAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBB
+                       A=20 B=20 C=20 
+```
+
+Isto se dá pelo fato de que, com o escalonamento estático, cada _thread_ recebe o mesmo número de _chunks_, logo, cria-se _nTimes_ * _nThreads_ _chunks_ de tamanho 1 e cada _thread_ recebe _nTimes_ _chunks_.
 
 <!-- Dynamic -->
 ### _Dynamic Schedule_
@@ -124,7 +137,7 @@ Este caso utiliza o escalonamento dinâmico, sem exclusão mútua e com um _chun
 ```
 * Case 3: no omp critical (expecting wrong results)
 	schedule_type: omp_sched_dynamic, chunk_size: 20
-   ABACBCABCABBCABCABCABCABBCABCABCABCABBCABCABCABCAB-CACACACA-
+ABCABCABCABCABCACBACBACBACBACBACABCABCABCABCABCABCABCABCAB--
                        A=20 B=19 C=19 
 ```
 
@@ -133,11 +146,10 @@ O resultado obtido, como esperado, foi incorreto.
 #### Caso de teste 4
 Para ilustar o resultado correto com o _chunk size_ pré-definido realizou-se o Caso 4:
 
-
 ```
 * Case 4: using omp critical (expecting correct results)
 	schedule_type: omp_sched_dynamic, chunk_size: 20
-   ACCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAA
+   CAAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBB
                        A=20 B=20 C=20 
 ```
 
@@ -148,12 +160,12 @@ Para fins de estudo do comportamento do programa, foi realizado um caso de teste
 
 ```
 * Case 4b: using omp critical but chunk_size is the default value used by OpenMP
-	schedule_type: omp_sched_static, chunk_size: 1 (default) ???????
-   BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
-                       A=20 B=20 C=20 
+	schedule_type: omp_sched_dynamic, chunk_size: 1 (default)
+   BCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBA
+                       A=1 B=2 C=57  
 ```
 
-Como neste caso de teste foi mantido o uso da exclusão mútua, o resultado continua correto.
+Perceba que, ao contário do Caso 2b, o resultado foi incorreto, mesmo utilizando exclusão mútua. Isso acontece porque, ao utilizar o mapeamento dinâmico com _chunks_ de tamanho _default_ (1), as _threads_ acabam por não serem designadas a atuar sobre a mesma quantidade de _chunks_, já que isto é feito de maneira dinâmica, ou seja, quando uma _thread_ completar as iterações, esta já requisita um novo _chunk_.
 
 <!-- Guided -->
 ### _Guided Schedule_
@@ -165,7 +177,7 @@ Conforme resultado em [out.txt](ThreadABC/out.txt), o Caso 5 fez uso do _guided 
 ```
 * Case 5: no omp critical (expecting wrong results)
 	schedule_type: omp_sched_guided, chunk_size: 20
-   ACBACBACBACCBACBACBACABCCABCBACBACBACCBACBACBACCBA-BABABABA-
+   ABCABCABCABCABCABCABCABCABCABCABCABCACBACABCABCABCABCABCAB--
                        A=20 B=19 C=19 
 ```
 
@@ -175,7 +187,7 @@ Este caso foi utilizado para constatar a obtenção do resultado correto utiliza
 ```
 * Case 6: using omp critical (expecting correct results)
 	schedule_type: omp_sched_guided, chunk_size: 20
-   BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
+   CAAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBB
                        A=20 B=20 C=20 
 ```
 
@@ -184,10 +196,12 @@ Tendo em vista que no _guided schedule_ o tamanho do _chunk_ delimita o mínimo 
 
 ```
 * Case 6b: using omp critical but chunk_size is the default value used by OpenMP
-	schedule_type: omp_sched_static, chunk_size: 1 (default) ??????
-   CBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCAAAAAAAAAAAAAAAAAAAA
-                       A=20 B=20 C=20 
+	schedule_type: omp_sched_guided, chunk_size: 1 (default)
+   CAAAAAAAAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBB
+                       A=26 B=14 C=20 
 ```
+
+Aqui o _chunk size_ diz respeito ao tamanho mínimo do _chunk_ a ser criado. Similar ao Caso 4b, ao utilizar o valor _default_, o resultado obtido é incorreto.
 
 <!-- Auto -->
 ### _Auto Schedule_
@@ -199,7 +213,7 @@ O Caso 7 utiliza _auto schedule_ sem exclusão mútua, note que para esse tipo d
 ```
 * Case 7: no omp critical (expecting wrong results)
 	schedule_type: omp_sched_auto, chunk_size:  - 
-   ABCABCABCABBCABCABCABCABBCABCABCABCABBCABCABCABCAB-CACACACA-
+   ACBABCABCABCABCABCABCACBABCABCACBACBACBACBACBACBACBACBACBA--
                        A=20 B=19 C=19 
 ```
 
