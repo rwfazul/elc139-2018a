@@ -29,13 +29,39 @@ Aluno: Rhauani Weber Aita Fazul
 
 <!-- Implementacao -->
 ## Implementação
+Ideia... 
+O programa pode ser visto em...
 
 <a name="#critical">
 ### Seção crítica
 
+``` cpp
+   void addChar(char c) {
+      if (usecritical) { 
+         #pragma omp critical 
+         {
+            do_operations(c); 
+         } 
+      } else {
+         do_operations(c);
+      }
+   }
+```
+
+Onde:
+
+``` cpp 
+   void do_operations(char c) {
+      array[index] = c; 
+      spendSomeTime();
+      index++;
+   }
+```
 
 <!-- Outputs -->
 ## _Outputs_
+
+A saída pode ser obervada em...
 
 <!-- Runtime -->
 ### _Runtime Schedule_
@@ -57,7 +83,7 @@ O tipo de escalonamento (_static_, _dynamic_ ou _guided_) e o _chunk size_ são 
 
 <!-- Static -->
 ### _Static Schedule_
-As iterações do _loop_ são divididas em janelas com tamanhos definido pelo _chunk size_ e, após, são atribuídas estaticamente para as _threads_ que fazem parte do time (similar a um _round-robin_ baseado no _TID_). Quando o _chunk size_ não é definido, as iterações são, na medida do possível, divididas em _chunks_ do mesmo tamanho (iterações &divide; _nThreads_) de maneira contígua entre as _threads_.
+As iterações do _loop_ são divididas em janelas com tamanhos definido pelo _chunk size_ e, após, são atribuídas estaticamente para as _threads_ que fazem parte do time (similar a um _round-robin_ baseado no _TID_). Quando o _chunk size_ não é definido, as iterações são, na medida do possível, divididas em _chunks_ do mesmo tamanho (iterações &divide; _nThreads_) de maneira contígua entre as _threads_. <!-- Deste modo, um _chunk_ de tamanho 1 faria as iterações serem intercaladas. --> 
  
 #### Caso de teste 1
 Neste caso de teste não foi feito uso de exclusão mútua (via _omp critical_, conforme apresentado anteriormente). Foi definido um _chunk_ size equivalente a _nTimes_ (quantidade de inserções a serem realizadas por cada _thread_). O resultado obtido, disponível em [out.txt](ThreadABC/out.txt) é apresentado a seguir:
@@ -65,7 +91,7 @@ Neste caso de teste não foi feito uso de exclusão mútua (via _omp critical_, 
 ```
 * Case 1: no omp critical (expecting wrong results)
 	schedule_type: omp_sched_static, chunk_size: 20
-   BBACBACBACBACBACBACBACABCABCABCABCABCABCABCABCABCABCABCABC--
+   BABCABCABCAABCABCABCABCAABCABCABCABACABCABCABCABAC-BCBCBCBC-
                        A=19 B=20 C=19 
 ````
 
@@ -75,11 +101,9 @@ Em contraponto, para obtenção de resultado correto com _static schedule_, util
 ```
 * Case 2: using omp critical (expecting correct results)
 	schedule_type: omp_sched_static, chunk_size: 20
-   CAAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBB
+   CCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAAA
                        A=20 B=20 C=20 
 ```
-
-TODO: Set chunk to 1 to interleave the iterations.
 
 <!-- Dynamic -->
 ### _Dynamic Schedule_
@@ -91,8 +115,8 @@ Este caso utiliza o escalonamento dinâmico, sem exclusão mútua e com um _chun
 ```
 * Case 3: no omp critical (expecting wrong results)
 	schedule_type: omp_sched_dynamic, chunk_size: 20
-   CABCABCABCAACBACBACBACBAACBACBACBACBAACBACBABCABCA-BCBCBCBC-
-                       A=19 B=19 C=20 
+   ABACBCABCABBCABCABCABCABBCABCABCABCABBCABCABCABCAB-CACACACA-
+                       A=20 B=19 C=19 
 ```
 
 #### Caso de teste 4
@@ -102,7 +126,7 @@ Para ilustar o resultado correto com o _chunk size_ pré-definido realizou-se o 
 ```
 * Case 4: using omp critical (expecting correct results)
 	schedule_type: omp_sched_dynamic, chunk_size: 20
-   BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
+   ACCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAA
                        A=20 B=20 C=20 
 ```
 
@@ -112,7 +136,7 @@ Para fins de estudo do comportamento do programa, foi realizado um caso de teste
 ```
 * Case 4b: using omp critical but chunk_size is the default value used by OpenMP
 	schedule_type: omp_sched_static, chunk_size: 1 (default)
-   CBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCAAAAAAAAAAAAAAAAAAAA
+   BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
                        A=20 B=20 C=20 
 ```
 
@@ -128,7 +152,7 @@ Conforme resultado em [out.txt](ThreadABC/out.txt), o Caso 5 fez uso do _guided 
 ```
 * Case 5: no omp critical (expecting wrong results)
 	schedule_type: omp_sched_guided, chunk_size: 20
-   ABACABCABCABCABCABCBACABCABCABCABCABCABCABCABCABCABCABCABC--
+   ACBACBACBACCBACBACBACABCCABCBACBACBACCBACBACBACCBA-BABABABA-
                        A=20 B=19 C=19 
 ```
 
@@ -138,18 +162,17 @@ Este caso foi utilizado para constatar a obtenção do resultado correto utiliza
 ```
 * Case 6: using omp critical (expecting correct results)
 	schedule_type: omp_sched_guided, chunk_size: 20
-   CAAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBB
+   BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
                        A=20 B=20 C=20 
 ```
 
 #### Caso de teste 6b
 Tendo em vista que no _guided schedule_ o tamanho do _chunk_ delimita o mínimo tamanho do bloco de iterações a ser delegado para as _threads_, desejou-se observar o comportamento do programa utilizando o valor de _chunk size default_, o que equivale a 1.
-The chunk parameter defines the minimum block size. The default chunk size of guided schedule is 1. 
 
 ```
 * Case 6b: using omp critical but chunk_size is the default value used by OpenMP
 	schedule_type: omp_sched_static, chunk_size: 1 (default)
-   CBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCAAAAAAAAAAAAAAAAAAAACCCCCCCCC
+   CBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCAAAAAAAAAAAAAAAAAAAA
                        A=20 B=20 C=20 
 ```
 
@@ -158,22 +181,22 @@ The chunk parameter defines the minimum block size. The default chunk size of gu
 Em geral, a decisão sobre o tipo de escalonamento será feita pelo compilador. Utilizando o _auto schedule_ o compilador fica livre para escolher qualquer mapeamento de iterações possível para as _threads_ que fazem parte do time. O argumento de _chunk size_ é ignorado.
 
 #### Caso de teste 7
-O Caso 7 utiliza _auto schedule_ sem exclusão mútua, note que para esse tipo de escalonamento a definição prévia de _chunk size_, passada por parâmetro para a rotina _omp\_set\_schedule_ não é utilizada.
+O Caso 7 utiliza _auto schedule_ sem exclusão mútua, note que para esse tipo de escalonamento a definição prévia de _chunk size_, passada por parâmetro para a rotina _omp\_set\_schedule_, não é utilizada.
 
 ```
 * Case 7: no omp critical (expecting wrong results)
 	schedule_type: omp_sched_auto, chunk_size:  - 
-   BACBACBACBAACBACBACBACBAACBACBABCAABCABCABCABCAABC-BCBCBCBC-
-                       A=19 B=20 C=19 
+   ABCABCABCABBCABCABCABCABBCABCABCABCABBCABCABCABCAB-CACACACA-
+                       A=20 B=19 C=19 
 ```
 
 #### Caso de teste 8
-Utilizando _omp critical_:
+Conforme observado abaixo, fazendo uso da diretiva _omp critical_ para definição da região que deve ser executada de maneira serializada, obteve-se um resultado correto.
 
 ```
 * Case 8: using omp critical (expecting correct results)
 	schedule_type: omp_sched_auto, chunk_size:  - 
-   CBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCAAAAAAAAAAAAAAAAAAAACCCCC
+   CAAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBB
                        A=20 B=20 C=20 
 ```
 
@@ -193,5 +216,6 @@ Utilizando _omp critical_:
 - Mark Bull. <i>OpenMP Tips, Tricks and Gotchas</i>. https://goo.gl/L9Xhyp
 - OpenMP. <i>OpenMP C and C++ Application Program Interface</i>. https://goo.gl/wPbQCn
 - OpenMP. <i>Summary of OpenMP 3.0 C/C++ Syntax</i>. https://goo.gl/VdvSpi
+- OpenMP Forum. <i>Schedule and Chunk Size</i>. https://goo.gl/wHz3Sp
 - The Ultimate Computer Technology Blog. <i>Simple Tutorial with OpenMP: How to Use Parallel Block in C/C++ using OpenMP?</i>. https://goo.glmDnE5H
 - UFSC Departamento de Informática e Estatística. <i>OpenMP Scheduling</i>. https://goo.gl/dB2Hcd
