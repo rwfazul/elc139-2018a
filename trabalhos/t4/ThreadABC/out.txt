@@ -3,50 +3,52 @@ Correct results should total exactly nThreads*nTimes chars
 ------------------------------------
 * Case 1: no omp critical (expecting wrong results)
 	schedule_type: omp_sched_static, chunk_size: 20
-CACBACBACBAACBACBACBACBAACBACBACBACABACBACBACBACAB-CBCBCBCB-
-A=19 B=19 C=20 
+BACBACBACBACBACBACBACBACBACBABCABCABCABCABCABCABCABCABCABC--
+A=19 B=20 C=19 
 ------------------------------------
 * Case 2: using omp critical (expecting correct results)
 	schedule_type: omp_sched_static, chunk_size: 20
-BCAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCC
+ACCCCCCCCCCCCCCCCCCCCAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBB
 A=20 B=20 C=20 
 ------------------------------------
 * Case 3: no omp critical (expecting wrong results)
 	schedule_type: omp_sched_dynamic, chunk_size: 20
-ACBABCABCABCABCABCABCACBACBACBACBACBACBACABCABCABCABCABCAB--
-A=20 B=19 C=19 
+BACBACBACBAACBACBACBACBAACBACBACBACBAACBACBACBAACB-CBCBCBCB-
+A=19 B=20 C=19 
 ------------------------------------
 * Case 4: using omp critical (expecting correct results)
 	schedule_type: omp_sched_dynamic, chunk_size: 20
-CAAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBB
+BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
 A=20 B=20 C=20 
 ------------------------------------
 * Case 4b: using omp critical but chunk_size is the default value used by OpenMP
-	schedule_type: omp_sched_static, chunk_size: 1
-BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
+	schedule_type: omp_sched_static, chunk_size: 1 (default)
+BCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAAA
 A=20 B=20 C=20 
 ------------------------------------
 * Case 5: no omp critical (expecting wrong results)
 	schedule_type: omp_sched_guided, chunk_size: 20
-CACBACBACBAACBACBABCABCAABCACBACBACBAACBACBACBAACB-CBCBCBCB-
-A=19 B=19 C=20 
+ACABCABABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC--
+A=20 B=19 C=19 
 ------------------------------------
 * Case 6: using omp critical (expecting correct results)
 	schedule_type: omp_sched_guided, chunk_size: 20
-BCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAAA
+BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
 A=20 B=20 C=20 
 ------------------------------------
 * Case 6b: using omp critical but chunk_size is the default value used by OpenMP
-	schedule_type: omp_sched_static, chunk_size: 1
-BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
+	schedule_type: omp_sched_static, chunk_size: 1 (default)
+BCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAAA
 A=20 B=20 C=20 
 ------------------------------------
 * Case 7: no omp critical (expecting wrong results)
 	schedule_type: omp_sched_auto, chunk_size:  - 
-CACBACBACBAACBACBACBACBAACBACBACBACBAACBACBACBACBA-CBBCCBCB-
+
+CABCACBACBACBACBACBACBACBACBACBACBACBACBACBACBACBABCABCABC--
 A=19 B=19 C=20 
 ------------------------------------
 * Case 8: using omp critical (expecting correct results)
 	schedule_type: omp_sched_auto, chunk_size:  - 
-CAAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBB
+
+BAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCC
 A=20 B=20 C=20 
