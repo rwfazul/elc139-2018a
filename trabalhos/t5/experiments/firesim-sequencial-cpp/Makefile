@@ -17,3 +17,4 @@ $(PROGRAM): $(OBJS)
 
 clean:
 	/bin/rm -f $(OBJS) $(PROGRAM)
+	
