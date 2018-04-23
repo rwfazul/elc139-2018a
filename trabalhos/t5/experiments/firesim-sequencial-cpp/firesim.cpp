@@ -58,7 +58,6 @@ main(int argc, char* argv[])
       auto t_start = Clock::now();
       // para cada probabilidade, calcula o percentual de árvores queimadas
       for (int ip = 0; ip < n_probs; ip++) {
-
          prob_spread[ip] = prob_min + (double) ip * prob_step;
          percent_burned[ip] = 0.0;
          rand.setSeed(base_seed+ip); // nova seqüência de números aleatórios
