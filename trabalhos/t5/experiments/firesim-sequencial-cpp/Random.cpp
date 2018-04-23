@@ -8,7 +8,6 @@ Random::Random()
    srand(seed);
 }
 
-
 void
 Random::setSeed(unsigned int s)
 {

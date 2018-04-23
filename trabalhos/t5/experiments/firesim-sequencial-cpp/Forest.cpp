@@ -63,8 +63,8 @@ Forest::burn(double prob_spread, Random& r)
 {
    for (int i = 0; i < size; i++) {
       for (int j = 0; j < size; j++) {
-         if (t[i][j] == Burning) // árvores pegando fogo
-            t[i][j] = Burnt;     // ficam completamente queimadas
+         if (t[i][j] == Burning)    // árvores pegando fogo
+            t[i][j] = Burnt;        // ficam completamente queimadas
          if (t[i][j] == Smoldering) // árvores começando a pegar fogo
             t[i][j] = Burning;      // ficam queimando
       }

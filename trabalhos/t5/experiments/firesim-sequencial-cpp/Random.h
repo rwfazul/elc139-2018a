@@ -18,8 +18,7 @@ class Random
       void setSeedByTime();
 
    private:
-      unsigned int seed;
-      
+      unsigned int seed; 
 };
 
 #endif
