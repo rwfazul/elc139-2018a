@@ -1,9 +1,9 @@
-CXX       = g++
-CXXFLAGS  = -Wall -std=c++11 -fopenmp
+CXX      = g++
+CXXFLAGS = -Wall -std=c++11 -fopenmp
 
-PROGRAM   = firesim
-SRCS      = firesim.cpp Random.cpp Forest.cpp
-OBJS      = $(SRCS:.cpp=.o)
+PROGRAM  = firesim
+SRCS     = firesim.cpp Random.cpp Forest.cpp
+OBJS     = $(SRCS:.cpp=.o)
 
 .SUFFIXES: .cpp .o
 
