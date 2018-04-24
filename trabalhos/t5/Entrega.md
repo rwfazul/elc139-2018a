@@ -9,26 +9,25 @@ Aluno: Rhauani Weber Aita Fazul e Roger Eduardo Couto
 
 - Primeira solução
 
-Esta solução é baseada no programa [firesim-sequencial-cpp](experiments/firesim-sequencial-cpp). Os arquivos de código fonte estão disponíveis em [firesim-openmp-cpp](experiments/firesim-openmp-cpp),
+	+ Esta solução é baseada no programa [firesim-sequencial-cpp](experiments/firesim-sequencial-cpp). Os arquivos de código fonte da versão paralelizada estão disponíveis em [firesim-openmp-cpp](experiments/firesim-openmp-cpp).
 
 - Segunda solução
 
-Esta solução varia o tipo de escalonamento adotado pelo programa anterior. Para utilizá-la, basta comentar a [linha 60](experiments/firesim-openmp-cpp/firesim.cpp#L60) do arquivo principal e descomentar a [linha 59](experiments/firesim-openmp-cpp/firesim.cpp#L59).
+	+ Esta solução varia o tipo de escalonamento adotado pelo programa anterior. Para utilizá-la, basta comentar a [linha 60](experiments/firesim-openmp-cpp/firesim.cpp#L60) do arquivo principal e descomentar a [linha 59](experiments/firesim-openmp-cpp/firesim.cpp#L59).
 
 ### Versão em C
 
 - Primeira solução
 
-Os arquivos de código fonte estão disponíveis em [firesim-openmp-c](experiments/firesim-openmp-c), a primeira versão (recursiva) faz uso do arquivo [burn_rec](experiments/firesim-openmp-c/burn_rec.c).
+	+ Os arquivos de código fonte estão disponíveis em [firesim-openmp-c](experiments/firesim-openmp-c), a primeira versão (recursiva) faz uso do arquivo [burn_rec](experiments/firesim-openmp-c/burn_rec.c).
 
 - Segunda solução
 
-Esta solução utiliza matrizes esparsas, [burn_me](experiments/firesim-openmp-c/burn_me.c) é o arquivo principal.
-
+	+ Esta solução utiliza matrizes esparsas, [burn_me](experiments/firesim-openmp-c/burn_me.c) é o arquivo principal.
 
 ### Apresentação
 
-Acesse em: [apresentacao.pdf](apresentacao.pdf).
+Os _slides_ podem ser encontrados no arquivo [apresentacao](apresentacao.pdf).
 
 ### Referências
 - FSU Department of Science Computing. <i>C++ Examples of Parallel Programming with OpenMP</i>. https://goo.gl/sqmujr
