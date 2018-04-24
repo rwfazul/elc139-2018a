@@ -67,7 +67,7 @@ list_t* list_rem(list_t* l, position_t pos){
             position_t lpos = cpy->data;
             if (lpos.i == pos.i && lpos.j == pos.j){
                 if (last != NULL){
-                    last->next == cpy->next;
+                    last->next = cpy->next;
                 }else{
                     l = cpy->next;
                 }
