@@ -2,7 +2,7 @@
 // Simulação de incêndio em uma floresta.
 // Baseada no código proposto por David Joiner.
 //
-// Uso: firesim <tamanho-do-problema> <nro. experimentos> <probab. maxima> 
+// Uso: firesim <nro. threads> <tamanho-do-problema> <nro. experimentos> <probab. maxima> 
 
 #include <cstdio>
 #include <cstdlib>
@@ -15,10 +15,10 @@
 void
 checkCommandLine(int argc, char** argv, int& threads, int& size, int& trials, int& probs)
 {
-   if (argc > 1) threads = atoi(argv[4]);
-   if (argc > 2) size = atoi(argv[1]);
-   if (argc > 3) trials = atoi(argv[2]);
-   if (argc > 4) probs = atoi(argv[3]);
+   if (argc > 1) threads = atoi(argv[1]);
+   if (argc > 2) size = atoi(argv[2]);
+   if (argc > 3) trials = atoi(argv[3]);
+   if (argc > 4) probs = atoi(argv[4]);
 }
 
 int 
@@ -56,6 +56,7 @@ main(int argc, char* argv[])
       #pragma omp parallel private(ip, it, rand) num_threads(n_threads)
       {
          Forest* forest = new Forest(forest_size);
+         // #pragma omp for schedule(dynamic)
          #pragma omp for schedule(static, chunk_size)
          for (ip = 0; ip < n_probs; ip++) {
             prob_spread[ip] = prob_min + (double) ip * prob_step;
@@ -76,7 +77,7 @@ main(int argc, char* argv[])
          }
       }
       auto t_end = Clock::now();
-      std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(t_end - t_start).count() 
+      std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(t_end - t_start).count()
                 << " nanoseconds" << std::endl;
       
       delete[] prob_spread;

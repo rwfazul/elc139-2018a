@@ -76,7 +76,8 @@ main(int argc, char* argv[])
          printf("%lf, %lf\n", prob_spread[ip], percent_burned[ip]);
       }
       auto t_end = Clock::now();
-      std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(t_end - t_start).count() << " nanoseconds" << std::endl;
+      std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(t_end - t_start).count() 
+                << " nanoseconds" << std::endl;
       
       delete[] prob_spread;
       delete[] percent_burned;
@@ -89,4 +90,3 @@ main(int argc, char* argv[])
 
    return 0;
 }
-
