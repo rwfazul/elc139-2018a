@@ -12,11 +12,11 @@ Aluno: Rhauani Weber Aita Fazul e Roger Eduardo Couto
 
 ### Segunda solução
 
-- Esta solução varia o tipo de escalonamento adotado pelo programa anterior. Para utilizá-la, basta descomentar a [linha 70](experiments/nqueens-openmp/main.c#L70) do arquivo principal e comentar a [linha 71](experiments/nqueens-openmp/main.c#L71).
+- Esta solução varia o tipo de escalonamento adotado pelo programa anterior. Para utilizá-la, basta descomentar a [linha 70](experiments/nqueens-openmp/nqueens.c#L70) do arquivo principal e comentar a [linha 71](experiments/nqueens-openmp/nqueens.c#L71).
 
 ### Terceira solução
 	
-- A solução disponível em [nqueens-openmp-alt](experiments/nqueens-openmp-alt) varia algumas das estratégias para paralelização utilizadas nas soluções anteriores.
+- A solução, disponível em [nqueens-openmp-alt](experiments/nqueens-openmp-alt), varia algumas das estratégias para paralelização utilizadas nas soluções anteriores.
 
 ### Quarta solução
 
