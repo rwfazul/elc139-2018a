@@ -67,6 +67,7 @@ void nqueens(int size, int *solutions, int qtd_threads) {
 	{
 		int *position = (int*) malloc(sizeof(int) * size);
 
+		// #pragma omp for schedule(dynamic) reduction(+:count)
 		#pragma omp for schedule(static, size/qtd_threads) reduction(+:count)
 		for (i = 0; i < size; i++) {
 			int j;
