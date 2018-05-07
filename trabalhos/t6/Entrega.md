@@ -8,12 +8,19 @@ Aluno: Rhauani Weber Aita Fazul e Roger Eduardo Couto
 
 ### Primeira solução
 
-	+ Esta solução é baseada no programa [nqueens-sequencial](experiments/nqueens-sequencial). Os arquivos de código fonte da versão paralelizada estão disponíveis em [nqueens-openmp](experiments/nqueens-openmp).
+	+ Esta solução é baseada no programa [nqueens-sequential-base](experiments/nqueens-sequential-base). Os arquivos de código fonte da versão paralelizada estão disponíveis em [nqueens-openmp](experiments/nqueens-openmp).
 
 ### Segunda solução
 
-	+ Esta solução varia o tipo de escalonamento adotado pelo programa anterior. Para utilizá-la, basta comentar a [linha XX](experiments/nqueens-openmp/main.c#LXX) do arquivo principal e descomentar a [linha XX-1](experiments/nqueens-openmp/main.c#LXX-1).
+	+ Esta solução varia o tipo de escalonamento adotado pelo programa anterior. Para utilizá-la, basta descomentar a [linha 70](experiments/nqueens-openmp/main.c#L70) do arquivo principal e comentar a [linha 71](experiments/nqueens-openmp/main.c#L71).
 
+### Terceira solução
+	
+	+ A solução disponível em [nqueens-openmp-alt](experiments/nqueens-openmp-alt) varia algumas das estratégias para paralelização utilizadas nas soluções anteriores.
+
+### Quarta solução
+
+	+ Em contraste com o programa base, está solução faz uso de uma implementação própria, que pode ser encontrada em [nqueens-sequential-and-openmp-opt](experiments/nqueens-sequential-and-openmp-opt).
 
 ### Apresentação
 
