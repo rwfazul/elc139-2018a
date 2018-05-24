@@ -24,10 +24,9 @@ Para começar, exercite compilação e execução de programas MPI:
 
 ## Parte 1
 
-+ Implemente uma versão em MPI do programa do trabalho [T3](../t3), que calcula repetidas vezes o produto escalar entre 2 vetores. Os argumentos do programa devem ser: o número de elementos para cada processo e o número de repetições.
++ Implemente uma versão em MPI do programa do trabalho [t3](../t3), que calcula repetidas vezes o produto escalar entre 2 vetores. Os argumentos do programa devem ser: o número de elementos para cada processo e o número de repetições.
 
-+ Avalie o desempenho do programa conforme as instruções do trabalho [T3](../t3), mas usando processos ao invés de threads.
-
++ Avalie o desempenho do programa conforme as instruções do trabalho [t3](../t3), mas usando processos ao invés de threads.
 
 ## Parte 2
 
