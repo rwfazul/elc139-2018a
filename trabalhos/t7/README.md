@@ -9,7 +9,7 @@ Para este trabalho, você vai precisar instalar OpenMPI, que é uma implementaç
 
 Para começar, exercite compilação e execução de programas MPI:
 
-- Baixe o arquivo [hello_mpi.c](hello_mpi.c).
+- Baixe o arquivo [hello_mpi.c](examples/hello_mpi.c).
 
 - Compile o programa:
   ```
@@ -36,9 +36,9 @@ Implemente um programa MPI que transporte uma mensagem em um pipeline formado po
 ## Parte 3
 
 
-+ O programa [mpi_errado1.c](mpi_errado1.c) deveria realizar a troca de mensagens entre 2 processos, mas ele não funciona como esperado. Identifique o erro e corrija-o.
++ O programa [mpi_errado1.c](examples/mpi_errado1.c) deveria realizar a troca de mensagens entre 2 processos, mas ele não funciona como esperado. Identifique o erro e corrija-o.
 
-+ O programa [mpi_errado2.c](mpi_errado2.c) deveria realizar a troca de mensagens entre 2 processos, mas também não funciona como esperado. Identifique o erro e corrija-o.
++ O programa [mpi_errado2.c](examples/mpi_errado2.c) deveria realizar a troca de mensagens entre 2 processos, mas também não funciona como esperado. Identifique o erro e corrija-o.
 
 
 
