@@ -1,7 +1,7 @@
 # GNU Makefile
 CC = mpicc
 CFLAGS = -Wall
-TARGET = mpi_dotprod
+TARGET = mpi_dotprod mpi_pipeline mpi_certo1 mpi_certo2
 
 all: $(TARGET)
 	@echo "Compiled!"
