@@ -200,19 +200,19 @@ As tabelas a seguir representam o _speedup_ alcançado com MPI. Para cada um dos
 | 1.000.000  |	2.2631  	| 2.3117 	   | 2.2579           |
 | 10.000.000 |	2.1968  	| 1.9674 	   | 1.8040           |
 
-- Aceleração obtida nos testes considerando 100 repetições do cálculo:
+- Aceleração obtida nos testes considerando 100 repetições do cálculo do produto escalar:
 
 <p align="center">
   <img src="mpi/mpi_dotprod_analysis/charts/mpi_speedup_100rep.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
 </p>
 
-- Aceleração obtida nos testes considerando 1000 repetições do cálculo:
+- Aceleração obtida nos testes considerando 1000 repetições do cálculo do produto escalar:
 
 <p align="center">
   <img src="mpi/mpi_dotprod_analysis/charts/mpi_speedup_1000rep.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
 </p>
 
-- Aceleração obtida nos testes considerando 2000 repetições do cálculo:
+- Aceleração obtida nos testes considerando 2000 repetições do cálculo do produto escalar:
 
 <p align="center">
   <img src="mpi/mpi_dotprod_analysis/charts/mpi_speedup_2000rep.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
@@ -269,7 +269,7 @@ Isto não ocorre por erros na comunicação entre os processos e sim pelo fato d
 ### Primeiro programa
 + O programa [mpi_errado1.c](examples/mpi_errado1.c) deveria realizar a troca de mensagens entre 2 processos, mas ele não funciona como esperado. Identifique o erro e corrija-o.
 
-O erro está relacionado aos identificadores das menssagens (conhecidos como _tags_) utilizados nas chamadas das rotinas _MPI\_Send()_ e _MPI\_Recv()_ que servem para distinguir as mensagens de um mesmo processo. A correção pode ser vista no programa [mpi_certo1.c](mpi/mpi_certo1.c). 
+O erro está relacionado aos identificadores das mensagens - conhecidos como _tags_ - utilizados nas chamadas das rotinas _MPI\_Send()_ e _MPI\_Recv()_ que servem para distinguir as mensagens de um mesmo processo. A correção pode ser vista no programa [mpi_certo1.c](mpi/mpi_certo1.c). 
 
 ### Segundo programa
 + O programa [mpi_errado2.c](examples/mpi_errado2.c) deveria realizar a troca de mensagens entre 2 processos, mas também não funciona como esperado. Identifique o erro e corrija-o.
@@ -278,3 +278,16 @@ A rotina _MPI\_Finalize()_ deve ser chamada em todo programa MPI, ou seja, todos
 
 <!-- REFERÊNCIAS -->
 ## Referências 
+- Andrew Lumsdaine, et. al. <i>Open MPI Tutorial</i>. https://goo.gl/uvoVtZ
+- Carsten Kutzner. <i>Getting started with MPI</i>. https://goo.gl/uQytho
+- FSU - Department of Scientific Computing. <i>MPI: C Examples</i>. https://goo.gl/5KsMJB
+- Lawrence Livermore National Laboratory. <i>Message Passing Interface (MPI)</i>. https://goo.gl/ArAH3v
+- MPICH. <i>MPI_Wtime</i>. https://goo.gl/uhGx9N
+- MPI Forum. <i>MPI: A Message-Passing Interface Standard</i>. https://goo.gl/Q1LR4s
+- MPI Forum. <i>Startup</i>. https://goo.gl/qKepZn
+- MPI Tutorial. <i>MPI Send and Receive</i>. https://goo.gl/bCbXY2
+- Open MPI. <i>Open MPI Documentation</i>. https://goo.gl/WLCJ7M
+- Peter S. Pacheco. <i>A User's Guide to MPI</i>. https://goo.gl/A1KDz7 
+- University of Kansas. <i>An introduction to the Message Passing Interface (MPI) using C</i>. https://goo.gl/mA1NuV
+- Wikipedia. <i>Message Passing Interface</i>. https://goo.gl/RZz9hA
+- Willam Gropp. <i>Tutorial on MPI: The Message-Passing Interface</i>. https://goo.gl/C2LYNc
