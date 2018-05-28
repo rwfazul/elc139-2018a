@@ -151,9 +151,9 @@ Com base nesses resultados, os seguintes gráficos podem ser gerados para facili
   <img src="mpi/mpi_dotprod_analysis/charts/mpi_10000000wsize.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
 </p>
 
-Percebe-se que o uso do MPI trouxe um aumento de desempenho significável. Ao contrário do que esperava-se, mesmo utilizando um número de processos maior que o número de processadores/núcleos da máquina onde os testes foram realizados, houve aumento de desempenho em alguns casos.
+Conforme observado nos gráficos, percebe-se que o uso do MPI trouxe um aumento de desempenho significável. Ao contrário do que esperava-se, houve casos em que execuções com um número de processos maior que o número de processadores/núcleos da máquina onde os testes foram realizados proporcionaram maior desempenho que as execuções que faziam uso do número de processos inicialmente considerado como ideial. 
 
-Acredita-se que o _overhead_ gerado na criação e na gerência dos procesos seja diluído por outros fatores do programa. Como exemplo, os vetores 'a' e 'b' utilizados para o cálculo do produto escalar que, conforme apresentado anteriormente, são alocados de acordo com o tamanho do _worksize_. Desta forma, ao utilizar um número maior de processos (_worksize_(processo<sub><i>i</i></sub>) = <i>worksize</i><sub>total</sub> &divide; _np_), realizam-se alocações menores, que podem vir a trazer alguma otimização no uso da memória, seja na _heap_ de cada processo ou, até mesmo, na cache.
+Acredita-se que o _overhead_ gerado na criação e na gerência dos procesos seja diluído por outros fatores do programa. Um exemplo disto são os vetores 'a' e 'b' utilizados para o cálculo do produto escalar que, conforme apresentado anteriormente, são alocados de acordo com o tamanho do _worksize_. Desta forma, ao utilizar um número maior de processos (_worksize_(processo<sub><i>i</i></sub>) = <i>worksize</i><sub>total</sub> &divide; _np_), realizam-se alocações menores, que podem vir a trazer alguma otimização no uso da memória, seja na _heap_ de cada processo ou, até mesmo, na cache.
 
 ### _Speedup_
 
@@ -226,7 +226,7 @@ Com estes resultados pode-se gerar os seguintes gráficos:
 
 O MPI apresentou um _Speedup_ maior que o esperado. Até mesmo quando comparado aos valores de aceleração obtidos em [t3](../t3/Entrega.md) (com _Pthreads_ e com OpenMP), percebe-se situações em que seu desempenho foi superior. 
 
-Conforme citado anteriormente, isto pode estar relacionado ao contexto específico do programa _mpi\_dotprod_ e a forma como este foi implementado. Algumas questões ficam em aberto para estudos futuros, como por exemplo, formas de visualizar a fundo como o MPI realiza a criação dos processos, levando em consideração as ténicas de otimização realizadas, tais como CoW (_Copy-on-write_).
+Conforme citado anteriormente, isto pode estar relacionado ao contexto específico do programa _mpi\_dotprod_ e a forma como este foi implementado. Algumas questões ficam em aberto para estudos futuros, como por exemplo, formas de visualizar a fundo como o MPI realiza a criação dos processos, levando em consideração as ténicas de otimização empregadas, tais como CoW (_Copy-on-Write_).
 
 <!-- PARTE 2 -->
 ## Parte 2
