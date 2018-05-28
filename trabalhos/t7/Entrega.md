@@ -83,11 +83,10 @@ Para realizar a análise, tomou-se como base os seguintes resultados, obtidos de
 
 | <i>worksize</i><sub>total</sub>  | 100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- |
-| 10.000     |			|		   |		      |
-| 100.000    |			|		   |		      |	
-| 1.000.000  |			|		   |		      |
-| 10.000.000 |			|		   |		      |
-
+| 10.000     | 0.0045891000	| 0.045054700	   | 0.089399700      |
+| 100.000    | 0.0482262667	| 0.423254800	   | 0.839144000      |
+| 1.000.000  | 0.4483052330	| 4.425085300	   | 8.836428200      |
+| 10.000.000 | 4.4157576670	| 44.09700233	   | 88.13792133      |
 
 Com MPI, o parâmetro referente ao tamanho dos vetores foi utilizado com base no número de processos. Para exemplificar, a execução com único processo e _worksize_ = 1.000.000 equivale a seguinte execução com dois processos:
 
@@ -105,7 +104,7 @@ Sendo assim, _worksize_(processo<sub><i>i</i></sub>) = <i>worksize</i><sub>total
 
 Abaixo estão ilustrando os valores médios (em segundos) de cada execução, para obtenção desses valores foram realizadas 30 execuções de cada  configuração de teste, onde foi realizada uma média aritimética simples dos tempos de execução individual, em que: _T(s)_ = (&Sigma;<sub><i>n</i>=1..30</sub> T<sub>n</sub>) &divide; 30. 
 
-O _script_ [_calc_time.sh_](mpi/dot_prod_calcTime.sh) foi utilizado para realizar as execuções e calcular as médias de tempo apresentadas a seguir.
+O _script_ [_mpi_dotprod_calcTime.sh_](mpi/mpi_dotprod_analysis/mpi_dotprod_calcTime.sh) foi utilizado para realizar as execuções e calcular as médias de tempo apresentadas a seguir.
 
 
 - (MPI) Tempos de execução em segundos com 2 processos:
@@ -131,7 +130,7 @@ O _script_ [_calc_time.sh_](mpi/dot_prod_calcTime.sh) foi utilizado para realiza
 
 | <i>worksize</i><sub>total</sub>  | 100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- |
-| 10.000     | 0.0024171591	| 0.0145581166     | 0.0351903041     |
+| 10.000     | 0.0024171591	| 0.0165581166     | 0.0351903041     |
 | 100.000    | 0.0175017676	| 0.1885229905     | 0.3634130955     |	
 | 1.000.000  | 0.1980914672	| 1.9141737143     | 3.9135585427     |
 | 10.000.000 | 2.0100605090	| 22.413953114	   | 48.856362343     |
@@ -142,47 +141,85 @@ Com base nesses resultados, os seguintes gráficos podem ser gerados para facili
 
 - Desempenho do programa variando o número de processos e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000:
 
+<p align="center">
+  <img src="mpi/mpi_dotprod_analysis/charts/mpi_10000wsize.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
+</p>
+
 - Desempenho do programa variando o número de processos e repetiçoes com <i>worksize</i><sub>total</sub> de 100.000:
+
+<p align="center">
+  <img src="mpi/mpi_dotprod_analysis/charts/mpi_100000wsize.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
+</p>
+
 
 - Desempenho do programa variando o número de processos e repetiçoes com <i>worksize</i><sub>total</sub> de 1.000.000:
 
+<p align="center">
+  <img src="mpi/mpi_dotprod_analysis/charts/mpi_100000wsize.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
+</p>
+
 - Desempenho do programa variando o número de processos e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000.000:
+
+<p align="center">
+  <img src="mpi/mpi_dotprod_analysis/charts/mpi_100000wsize.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
+</p>
 
 ### _Speedup_
 
-As tabelas a seguir representam o _speedup_ alcançado com MPI. Para cada um dos cenários, utilizou-se as médias de tempo apresentadas anteriormente. Todos os cálculos utilizam como base os tempos da execução sequencial (<i>t<sub>s</sub></i>) apresentados anteriormente.
+As tabelas a seguir representam o _speedup_ alcançado com MPI. Para cada um dos cenários, utilizou-se as médias de tempo apresentadas anteriormente. Todos os cálculos utilizam como base os tempos da execução sequencial (<i>t<sub>s</sub></i>) apresentados anteriormente
+.
+O fator de aceleração (_speedup_) pode ser calculado da seguinte maneira:
+<p align="center"><img src="https://latex.codecogs.com/svg.latex?S(p)%3D%5Cfrac%7Bt_s%7D%7Bt_p%7D" alt="speedup formula" /></p>
+
+Onde _p_ equivale a quantidade de processadores, <i>t<sub>s</sub></i> equivale ao tempo de execução serial e <i>t<sub>p</sub></i> ao tempo de execução paralelo.
 
 - (MPI) _Speedup_ obtido com 2 processos:
 
 | <i>worksize</i><sub>total</sub>  | 100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- |
-| 10.000     |			|		   |		      |
-| 100.000    |			|		   |		      |	
-| 1.000.000  |			|		   |		      |
-| 10.000.000 |			|		   |		      |
+| 10.000     | 2.0425 		| 2.1355	   | 2.1301 	      |
+| 100.000    | 2.2093 		| 1.9833 	   | 1.9917           |	
+| 1.000.000  | 1.8876 		| 1.8957 	   | 1.8892           |
+| 10.000.000 | 1.7160 		| 1.8305	   | 1.6729 	      |
 
 - (MPI) _Speedup_ obtido com 4 processos:
 
 | <i>worksize</i><sub>total</sub>  | 100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- |
-| 10.000     |			|		   |		      |
-| 100.000    |			|		   |		      |	
-| 1.000.000  |			|		   |		      |
-| 10.000.000 |			|		   |		      |
+| 10.000     | 2.3934 		| 2.5019	   | 2.5097 	      |
+| 100.000    | 2.6312 		| 2.3612	   | 2.3563           |	
+| 1.000.000  | 2.3415 		| 2.3352	   | 2.2817           |
+| 10.000.000 | 2.1466 		| 2.0456 	   | 1.8288           |
 
 
 - (MPI) _Speedup_ obtido com 8 processos:
 
 | <i>worksize</i><sub>total</sub>  | 100 repetições  | 1.000 repetições | 2.000 repetições |
 | ---------- | ---------------- | ---------------- | ---------------- |
-| 10.000     |			|		   |		      |
-| 100.000    |			|		   |		      |	
-| 1.000.000  |			|		   |		      |
-| 10.000.000 |			|		   |		      |
+| 10.000     |	1.8986   	| 2.7210 	   | 2.5405	      |
+| 100.000    |	2.7555  	| 2.2451	   | 2.3091	      |	
+| 1.000.000  |	2.2631  	| 2.3117 	   | 2.2579           |
+| 10.000.000 |	2.1968  	| 1.9674 	   | 1.8040           |
 
 *** ANALISE *** 
 
-** GRAFICOS ***
+- Aceleração utilizando 2 processos:
+
+<p align="center">
+  <img src="mpi/mpi_dotprod_analysis/charts/mpi_speedup_100rep.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
+</p>
+
+- Aceleração utilizando 4 processos:
+
+<p align="center">
+  <img src="mpi/mpi_dotprod_analysis/charts/mpi_speedup_1000rep.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
+</p>
+
+- Aceleração utilizando 8 processos:
+
+<p align="center">
+  <img src="mpi/mpi_dotprod_analysis/charts/mpi_speedup_2000rep.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
+</p>
 
 <!-- PARTE 2 -->
 ## Parte 2
