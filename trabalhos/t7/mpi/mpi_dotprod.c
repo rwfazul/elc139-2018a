@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
         // envia mensagem ao processo 0
         MPI_Send(&result, 1, MPI_DOUBLE, dest, tag, MPI_COMM_WORLD); // 1 = qtd elementos
     } else {            /* MASTER */
-        double total_dotprod = 0;
+        double total_dotprod = dotprod_mpi(wsize, repeat); // 'master' tambem realiza o calculo
         for(source = 1; source < p; source++) {
             // recebe P-1 mensagens
             MPI_Recv(&result, 1, MPI_DOUBLE, source, tag, MPI_COMM_WORLD, &status); 
@@ -88,7 +88,7 @@ void check_parameters(int argc, char **argv, int *wsize, int *repeat) {
     }
 }
 
-// Funcao do calculo do produto escalar executada pelos processos 'slaves'
+// Funcao do calculo do produto escalar executada pelos processos 'slaves' e, tambem, pelo 'master' (add no ultimo update)
 double dotprod_mpi(int wsize, int repeat) {
     create_arrays(wsize, repeat);
     double *a = dotdata.a;
@@ -140,8 +140,8 @@ void show_info(double total_dotprod, int wsize, int p, long start_time, long end
 // Confere resultado do produto escalar dado respectivo wsize e qtd de processos
 void check_result(double total_dotprod, int wsize, int qtd_proc) {
     char *awnser[] = { "wrong", "correct" };
-    double expected_result =  VALUE_ARRAY_A * VALUE_ARRAY_B * wsize * (qtd_proc - 1);
-    int awnser_is_ok = ((int) total_dotprod == (int) expected_result);
+    double expected_result =  VALUE_ARRAY_A * VALUE_ARRAY_B * wsize * qtd_proc; // se master nao calcular usar (qtd_proc - 1)
+    int awnser_is_ok = ((float) total_dotprod == (float) expected_result); 
     printf("the result is %s", awnser[awnser_is_ok]);
     (awnser_is_ok) ? printf("\n") : printf(" (espected value is %f)\n", expected_result);
 }
