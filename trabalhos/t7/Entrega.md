@@ -64,7 +64,7 @@ Um exemplo de saída pode ser visto a seguir:
 
 
 ``` 
-	mpiexec -np 4 mpi_dotprod 250000 2000
+	$ mpiexec -np 4 mpi_dotprod 250000 2000
 	dot product: 10000.000000
 	the result is correct
 	number of processes: 4, wall time: 3897591 usec, wall time MPI: 3897588.968277 usec
@@ -72,23 +72,12 @@ Um exemplo de saída pode ser visto a seguir:
 
 A linha que informa a situação do resultado é apenas uma verificação extra feita pela função _check\_result()_. As duas informações relacionadas ao tempo são, respectivamente, obtidas por meio das funções _gettimeofday()_, pertencente a biblioteca _sys/time.h_, e _MPI\_Wtime()_,  que foi projetada para ser um _elapsed/wall clock_ de alta resolução, pertencente as rotinas de gerenciamento de ambiente do MPI. Perceba que seus resultados são similares.
 
-Note que neste programa o processo 'master' (_rank_ = 0) também executa o cálculo do produto escalar.
+**Importante:** Note que neste programa o processo 'master' (_rank_ = 0) também executa o cálculo do produto escalar.
 
 ### Desempenho
 + Avalie o desempenho do programa conforme as instruções do trabalho [t3](../t3), mas usando processos ao invés de threads.
 
-Para realizar a análise, tomou-se como base os seguintes resultados, obtidos de uma execução sequencial e com um único processo do programa de cálculo do produto escalar:
-
-- Tempos de execução em segundos com 1 único processo:
-
-| <i>worksize</i><sub>total</sub>  | 100 repetições  | 1.000 repetições | 2.000 repetições |
-| ---------- | ---------------- | ---------------- | ---------------- |
-| 10.000     | 0.0045891000	| 0.045054700	   | 0.089399700      |
-| 100.000    | 0.0482262667	| 0.423254800	   | 0.839144000      |
-| 1.000.000  | 0.4483052330	| 4.425085300	   | 8.836428200      |
-| 10.000.000 | 4.4157576670	| 44.09700233	   | 88.13792133      |
-
-Com MPI, o parâmetro referente ao tamanho dos vetores foi utilizado com base no número de processos. Para exemplificar, a execução com único processo e _worksize_ = 1.000.000 equivale a seguinte execução com dois processos:
+Primeiramente é importante ressaltar que, com MPI, o parâmetro referente ao tamanho dos vetores foi utilizado com base no número de processos. Para exemplificar, a execução com único processo e _worksize_ = 1.000.000 equivale a seguinte execução com dois processos:
 
 ``` bash
 	$ mpiexec -np 2 mpi_dotprod 500000 100
@@ -135,8 +124,6 @@ O _script_ [_mpi_dotprod_calcTime.sh_](mpi/mpi_dotprod_analysis/mpi_dotprod_calc
 | 1.000.000  | 0.1980914672	| 1.9141737143     | 3.9135585427     |
 | 10.000.000 | 2.0100605090	| 22.413953114	   | 48.856362343     |
 
-*** ANALISE ***
-
 Com base nesses resultados, os seguintes gráficos podem ser gerados para facilitar a visualização:
 
 - Desempenho do programa variando o número de processos e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000:
@@ -155,23 +142,35 @@ Com base nesses resultados, os seguintes gráficos podem ser gerados para facili
 - Desempenho do programa variando o número de processos e repetiçoes com <i>worksize</i><sub>total</sub> de 1.000.000:
 
 <p align="center">
-  <img src="mpi/mpi_dotprod_analysis/charts/mpi_100000wsize.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
+  <img src="mpi/mpi_dotprod_analysis/charts/mpi_1000000wsize.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
 </p>
 
 - Desempenho do programa variando o número de processos e repetiçoes com <i>worksize</i><sub>total</sub> de 10.000.000:
 
 <p align="center">
-  <img src="mpi/mpi_dotprod_analysis/charts/mpi_100000wsize.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
+  <img src="mpi/mpi_dotprod_analysis/charts/mpi_10000000wsize.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
 </p>
 
 ### _Speedup_
 
-As tabelas a seguir representam o _speedup_ alcançado com MPI. Para cada um dos cenários, utilizou-se as médias de tempo apresentadas anteriormente. Todos os cálculos utilizam como base os tempos da execução sequencial (<i>t<sub>s</sub></i>) apresentados anteriormente
-.
-O fator de aceleração (_speedup_) pode ser calculado da seguinte maneira:
+Para calcular o _Speedup_, utilizou-se como base os tempos de uma execução sequencial de único processo (<i>t<sub>s</sub></i>).
+
+- Tempos de execução em segundos com 1 único processo:
+
+| <i>worksize</i><sub>total</sub>  | 100 repetições  | 1.000 repetições | 2.000 repetições |
+| ---------- | ---------------- | ---------------- | ---------------- |
+| 10.000     | 0.0045891000	| 0.045054700	   | 0.089399700      |
+| 100.000    | 0.0482262667	| 0.423254800	   | 0.839144000      |
+| 1.000.000  | 0.4483052330	| 4.425085300	   | 8.836428200      |
+| 10.000.000 | 4.4157576670	| 44.09700233	   | 88.13792133      |
+
+
+Sendo assim, o fator de aceleração (_speedup_) pode ser calculado da seguinte maneira:
 <p align="center"><img src="https://latex.codecogs.com/svg.latex?S(p)%3D%5Cfrac%7Bt_s%7D%7Bt_p%7D" alt="speedup formula" /></p>
 
 Onde _p_ equivale a quantidade de processadores, <i>t<sub>s</sub></i> equivale ao tempo de execução serial e <i>t<sub>p</sub></i> ao tempo de execução paralelo.
+
+As tabelas a seguir representam o _speedup_ alcançado com MPI. Para cada um dos cenários, utilizou-se as médias de tempo apresentadas na seção de <a href="#desempenho">Desempenho</a>.
 
 - (MPI) _Speedup_ obtido com 2 processos:
 
@@ -201,21 +200,19 @@ Onde _p_ equivale a quantidade de processadores, <i>t<sub>s</sub></i> equivale a
 | 1.000.000  |	2.2631  	| 2.3117 	   | 2.2579           |
 | 10.000.000 |	2.1968  	| 1.9674 	   | 1.8040           |
 
-*** ANALISE *** 
-
-- Aceleração utilizando 2 processos:
+- Aceleração obtida nos testes considerando 100 repetições do cálculo:
 
 <p align="center">
   <img src="mpi/mpi_dotprod_analysis/charts/mpi_speedup_100rep.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
 </p>
 
-- Aceleração utilizando 4 processos:
+- Aceleração obtida nos testes considerando 1000 repetições do cálculo:
 
 <p align="center">
   <img src="mpi/mpi_dotprod_analysis/charts/mpi_speedup_1000rep.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
 </p>
 
-- Aceleração utilizando 8 processos:
+- Aceleração obtida nos testes considerando 2000 repetições do cálculo:
 
 <p align="center">
   <img src="mpi/mpi_dotprod_analysis/charts/mpi_speedup_2000rep.png" alt="Tempo gasto pelo programa com diferentes configurações." width="70%"/>
