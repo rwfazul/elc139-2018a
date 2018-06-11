@@ -4,7 +4,7 @@
 
 Este trabalho foi formulado pelo mestrando Rudieri Colbek, como parte de suas atividades de docência orientada.
 
-É fornecido um arquivo [matrix_mult_sr.c](matrix_mult_sr.c), que contém uma versão paralelizada usando send/receive. O mesmo gera duas matrizes A e B, depois multiplica as mesmas e gera a matriz C. No final são mostradas todas as matrizes.
+É fornecido um arquivo [matrix_mult_sr.c](matrix_mult/matrix_mult_sr.c), que contém uma versão paralelizada usando send/receive. O mesmo gera duas matrizes A e B, depois multiplica as mesmas e gera a matriz C. No final são mostradas todas as matrizes.
 
 ## Trabalho
 
