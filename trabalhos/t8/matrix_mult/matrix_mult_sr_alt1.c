@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     // Broadcast B to other process with MPI_Bcast.
     // Root process (myrank = 0) sends the same data to all processes in the communicator.
     // MPI_Bcast uses a tree-based communication (it's like a pipeline where even the processes that 
-    // aren't root also help out the root process by forwarding the data to remaining processes).
+    // aren't root help out the root process by forwarding the data to remaining processes).
 
     // MPI_Bcast(void* data, int count, MPI_Datatype datatype, int root, MPI_Comm communicator)
     MPI_Bcast(B, SIZE * SIZE, MPI_INT, 0, MPI_COMM_WORLD);
@@ -77,8 +77,7 @@ int main(int argc, char *argv[]) {
 
     // Similar to MPI_Scatter, MPI_Gather takes elements from each process and gathers them to the root process.
     // In MPI_Gather, only the root process needs to have a valid receive buffer.
-    // IMPORTANT: recv_count parameter is the count of elements received per process, not the total summation 
-    // of counts from all processes. 
+    // IMPORTANT: recv_count parameter is the count of elements received per process, not the total count from all processes. 
     // In this example the send buffer isn't setted up based on process rank.
 
     // MPI_Gather(void* send_data, int send_count, MPI_Datatype send_datatype, void* recv_data,
