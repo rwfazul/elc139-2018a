@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
     // In this example the receive buffer is setted up based on the process rank.
     MPI_Scatter(A, SIZE * SIZE / nproc, MPI_INT, &A[from], SIZE * SIZE / nproc, MPI_INT, 0, MPI_COMM_WORLD);
 
-    printf("computing slice %d (from row %d to %d)\n", myrank, from, to);
+    printf("computing slice %d (from row %d to %d)\n", myrank, from, to - 1);
     // Now it's important to init the for loop in the correct position, because the array A began 
     // to be filled up by Mpi_Scatter in a position based on the process Rank.
     for (i = from; i < to; i++) {

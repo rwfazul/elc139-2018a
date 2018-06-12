@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
     //             int recv_count, MPI_Datatype recv_datatype, int root, MPI_Comm communicator)
     MPI_Scatter(A, SIZE * SIZE / nproc, MPI_INT, A, SIZE * SIZE / nproc, MPI_INT, 0, MPI_COMM_WORLD);
 
-    printf("computing slice %d (from row %d to %d)\n", myrank, myrank * SIZE / nproc, (myrank + 1) * SIZE / nproc);
+    printf("computing slice %d (from row %d to %d)\n", myrank, myrank * SIZE / nproc, ((myrank + 1) * SIZE / nproc) - 1);
     // given that the receive/send buffer aren't setted up, the for loop can init at 0
     // (there is no need to start the loop in a Rank-based position that represents the slice of each process)
     for (i = 0; i < SIZE / nproc; i++) {
