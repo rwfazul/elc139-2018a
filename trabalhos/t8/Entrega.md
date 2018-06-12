@@ -11,7 +11,7 @@ Aluno: Rhauani Weber Aita Fazul
 
 ### Primeira Solução
 
-O programa [matrix_mult_sr_alt1.c](matrix_mult/matrix_mult_sr_alt1.c) utiliza as rotinas _MPI\_Bcast_(), _MPI\_Scatter_() e _MPI\_Gather_() para aplicar a lógica do programa.
+O programa [matrix_mult_sr_alt1.c](matrix_mult/matrix_mult_sr_alt1.c) utiliza as rotinas _MPI\_Bcast_(), _MPI\_Scatter_() e _MPI\_Gather_() para aplicar a lógica da multiplicação
 
 Primeiramente, é realizado a difusão da matriz B, seguindo o protótipio:
 
@@ -33,7 +33,7 @@ Em seguida, a matriz A é distribuída seguindo o protótipo:
 	MPI_Scatter(void* send_data, int send_count, MPI_Datatype send_datatype, void* recv_data, int recv_count, MPI_Datatype recv_datatype, int root, MPI_Comm communicator);
 ```
 
-Para esta matriz apenas as linhas atribuídas a cada processo precisam ser enviadas, logo o número de elementos a serem enviados é definido por (número total de elementos &divide; número de processos do grupo). 
+Para esta matriz apenas as linhas atribuídas a cada processo precisam ser enviadas, logo o número de elementos a serem enviados é definido por (número total de elementos &divide; número de processos do grupo), ou seja, (_SIZE_ * _SIZE_ / _nproc_), onde a multiplicao das dimensões da matriz equivalem ao número total de elementos. 
 
 ``` c
 	MPI_Scatter(A, SIZE * SIZE / nproc, MPI_INT, A, SIZE * SIZE / nproc, MPI_INT, 0, MPI_COMM_WORLD);
@@ -54,7 +54,7 @@ Nessa versão do programa o _buffer_ de recebimento não é posicionado de acord
     }
 ```
 
-<p>Pereceba que, com o _buffer_ não posicionado, as linhas da matriz A são preenchidas a partir do índice 0. Como, nessa versão, o número de linhas é proporcional ao número de processos, o laço percorre de 0 ao número de linhas atribuídas a cada processo (fatia) definido pelo (número total de linhas da matriz &divide; número de processos do grupo).</p>
+<p>Pereceba que, com o <i>buffer</i> não posicionado, as linhas da matriz A são preenchidas a partir do índice 0. Como, nessa versão, o número de linhas é proporcional ao número de processos, o laço percorre de 0 ao número de linhas atribuídas a cada processo (fatia) definido pelo (número total de linhas da matriz &divide; número de processos do grupo), ou seja, (<i>SIZE</i> / <i>nproc</i>).</p>
 
 Por fim, a coleta do resultado (matriz C) é realizada:
 
@@ -68,7 +68,7 @@ Similar ao _MPI\_Scatter_, o _MPI\_Gather_ pega os elementos de cada processo e 
     MPI_Gather(C, SIZE * SIZE / nproc, MPI_INT, C, SIZE * SIZE / nproc, MPI_INT, 0, MPI_COMM_WORLD);
 ```
 
-Nesta solução o _buffer_ de envio também não foi posicionado. Note que o parâmetro referente a _recv\_count_ é o contador de elementos recebidos por processo, não o total de todos os processos, logo (número total de elementos &divide; número de processos do grupo). 
+Nesta solução o _buffer_ de envio também não foi posicionado. Note que o parâmetro referente a _recv\_count_ é o contador de elementos recebidos por processo, não o total de todos os processos, logo este valor equivale ao (número total de elementos &divide; número de processos do grupo). 
         
 ### Segunda Solução
 
@@ -79,8 +79,7 @@ O _broadcast_ da matriz B é feito da mesma forma. A diferença está no posicio
 ``` c
 	MPI_Scatter(A, SIZE * SIZE / nproc, MPI_INT, &A[from], SIZE * SIZE / nproc, MPI_INT, 0, MPI_COMM_WORLD);
 ```
-Note que agora o _buffer_ de recebimento é posicionado de acordo com o _rank_ do processo, onde _from_ = _rank_ do processo * número de linhas da matriz / quantidade de processos no grupo. Logo, p
-ara realizar as multiplicações entre as matrizes utiliza-se a seguinte lógica:
+Note que agora o _buffer_ de recebimento é posicionado de acordo com o _rank_ do processo, onde (_from_ = _rank_ do processo * número de linhas da matriz / quantidade de processos no grupo), ou seja, (_from_ = _myrank_ * _SIZE_ / _nproc_). Logo, para realizar as multiplicações entre as matrizes utiliza-se a seguinte lógica:
 
 ``` c
     for (i = from; i < to; i++) {
@@ -92,7 +91,7 @@ ara realizar as multiplicações entre as matrizes utiliza-se a seguinte lógica
         }
     }
 ```
-<p>Pereceba que, com o _buffer_ posicionado, as linhas da matriz A são preenchidas a partir do índice referente ao calculo baseado no _rank_ do processo. Como, nessa versão, o número de linhas é proporcional ao número de processos, o laço percorre desse valor (_from_) até este valor acrescido do número de linhas atribuídas a cada processo (fatia). Isto também poed ser escrito da forma _to_ = (_rank_ do processo + 1) &plus; número total de linhas da matriz &divide; número de processos do grupo.</p>
+<p>Pereceba que, com o <i>buffer</i> posicionado, as linhas da matriz A são preenchidas a partir do índice referente ao cálculo baseado no <i>rank</i> do processo. Como, nessa versão, o número de linhas é proporcional ao número de processos, o laço percorre desse valor (<i>from</i>) até este valor acrescido do número de linhas atribuídas a cada processo (fatia). Isto também pode ser escrito da forma (<i>to</i> = (<i>rank</i> do processo + 1) &plus; número total de linhas da matriz &divide; número de processos do grupo), ou seja, (<i>to</i> = (<i>myrank</i> + 1) * <i>SIZE</i> / <i>nproc</i>).</p>
 
 Nesta solução, a coleta também é feita com o posicionamento do _buffer_ de envio.
 
