@@ -9,7 +9,7 @@ Aluno: Rhauani Weber Aita Fazul
 
 - [Parte 1](#parte-1)
 	- [Primeira Solução](#parte1-primeira-solucao)
-	- [Segunda Solução](#parte2-segunda-solucao)
+	- [Segunda Solução](#parte1-segunda-solucao)
 - [Parte 2](#parte-2)
 	- [Primeira Solução](#parte2-primeira-solucao)
 	- [Segunda Solução](#parte2-segunda-solucao)
@@ -46,7 +46,7 @@ MPI_Scatter(void* send_data, int send_count, MPI_Datatype send_datatype, void* r
             int recv_count, MPI_Datatype recv_datatype, int root, MPI_Comm communicator);
 ```
 
-Para esta matriz apenas as linhas atribuídas a cada processo precisam ser enviadas, logo o número de elementos a serem enviados é definido por (número total de elementos &divide; número de processos do grupo), ou seja, (_SIZE_ * _SIZE_ / _nproc_), onde a multiplicação das dimensões da matriz equivalem ao número total de elementos. 
+Para esta matriz, apenas as linhas atribuídas a cada processo precisam ser enviadas, logo o número de elementos a serem enviados é definido pelo número total de elementos &divide; número de processos do grupo, ou seja, (_SIZE_ * _SIZE_ / _nproc_), onde a multiplicação das dimensões da matriz equivalem ao número total de elementos. 
 
 ``` c
 MPI_Scatter(A, SIZE * SIZE / nproc, MPI_INT, A, SIZE * SIZE / nproc, MPI_INT, 0, MPI_COMM_WORLD);
@@ -67,7 +67,7 @@ Nessa versão do programa o _buffer_ de recebimento não é posicionado de acord
   }
 ```
 
-<p>Perceba que, com o <em>buffer</em> não posicionado, as linhas da matriz A são preenchidas a partir do índice 0. Como, nessa versão, o número de linhas é proporcional ao número de processos, o laço percorre de 0 ao número de linhas atribuídas a cada processo (fatia) definido pelo (número total de linhas da matriz &divide; número de processos do grupo), ou seja, (<em>SIZE</em> / <em>nproc</em>).</p>
+<p>Perceba que, com o <em>buffer</em> não posicionado, as linhas da matriz A são preenchidas a partir do índice 0. Como, nessa versão, o número de linhas é proporcional ao número de processos, o laço percorre de 0 ao número de linhas atribuídas a cada processo (fatia), definido pelo número total de linhas da matriz &divide; número de processos do grupo, ou seja, (<em>SIZE</em> / <em>nproc</em>).</p>
 
 Por fim, a coleta do resultado (matriz C) é realizada:
 
@@ -82,7 +82,7 @@ Similar ao _MPI\_Scatter_, o _MPI\_Gather_ pega os elementos de cada processo e 
 MPI_Gather(C, SIZE * SIZE / nproc, MPI_INT, C, SIZE * SIZE / nproc, MPI_INT, 0, MPI_COMM_WORLD);
 ```
 
-Nesta solução o _buffer_ de envio também não foi posicionado. Note que o parâmetro referente a _recv\_count_ é o contador de elementos recebidos por processo, não o total de todos os processos, logo este valor equivale ao (número total de elementos &divide; número de processos do grupo). 
+Nesta solução o _buffer_ de envio também não foi posicionado. Note que o parâmetro referente a _recv\_count_ é o contador de elementos recebidos por processo, não o total de todos os processos, logo este valor equivale ao número total de elementos &divide; número de processos do grupo. 
         
 <a name="parte1-segunda-solucao"></a>        
 ### Segunda Solução
@@ -94,7 +94,7 @@ O _broadcast_ da matriz B é feito da mesma forma. A diferença está no posicio
 ``` c
 MPI_Scatter(A, SIZE * SIZE / nproc, MPI_INT, &A[from], SIZE * SIZE / nproc, MPI_INT, 0, MPI_COMM_WORLD);
 ```
-Note que agora o _buffer_ de recebimento é posicionado de acordo com o _rank_ do processo, onde (_from_ = _rank_ do processo * número de linhas da matriz / quantidade de processos no grupo), ou seja, (_from_ = _myrank_ * _SIZE_ / _nproc_). Logo, para realizar as multiplicações entre as matrizes utiliza-se a seguinte lógica:
+Note que agora o _buffer_ de recebimento é posicionado de acordo com o _rank_ do processo, onde _from_ = (_rank_ do processo * número de linhas da matriz / quantidade de processos no grupo), ou seja, _from_ = (_myrank_ * _SIZE_ / _nproc_). Logo, para realizar as multiplicações entre as matrizes utiliza-se a seguinte lógica:
 
 ``` c
   for (i = from; i < to; i++) {
@@ -106,7 +106,7 @@ Note que agora o _buffer_ de recebimento é posicionado de acordo com o _rank_ d
       }
   }
 ```
-<p>Pereceba que, com o <em>buffer</em> posicionado, as linhas da matriz A são preenchidas a partir do índice referente ao cálculo baseado no <em>rank</em> do processo. Como, nessa versão, o número de linhas é proporcional ao número de processos, o laço percorre desse valor (<em>from</em>) até este valor acrescido do número de linhas atribuídas a cada processo (fatia). Isto também pode ser escrito da forma (<em>to</em> = (<em>rank</em> do processo + 1) &plus; número total de linhas da matriz &divide; número de processos do grupo), ou seja, (<em>to</em> = (<em>myrank</em> + 1) * <em>SIZE</em> / <em>nproc</em>).</p>
+<p>Perceba que, com o <em>buffer</em> posicionado, as linhas da matriz A são preenchidas a partir do índice referente ao cálculo baseado no <em>rank</em> do processo. Como, nessa versão, o número de linhas é proporcional ao número de processos, o laço percorre desse valor (<em>from</em>) até este valor acrescido do número de linhas atribuídas a cada processo (fatia). Isto também pode ser escrito da forma <em>to</em> = ((<em>rank</em> do processo + 1) &plus; número total de linhas da matriz &divide; número de processos do grupo), ou seja, <em>to</em> = ((<em>myrank</em> + 1) * <em>SIZE</em> / <em>nproc</em>).</p>
 
 Nesta solução, a coleta também é feita com o posicionamento do _buffer_ de envio.
 
@@ -124,33 +124,33 @@ Sendo assim, o número de elementos definidos em _send\_count_ são enviados a p
 <a name="parte2-primeira-solucao"></a>
 ### Primeira Solução
 
-O programa [matrix_mult_sr_alt3.c](matrix_mult/matrix_mult_sr_alt3.c) utiliza as rotinas _MPI\_Scatterv_ e _MPI\_Gatherv_, que extendem as operações apresentadas anteriormente ao permitir o envio de uma quantidade de dados varíaveis para cada processo. Isso permite que o número de linhas da matriz A não precise necessariamente ser divisível pelo número de processos.
+O programa [matrix_mult_sr_alt3.c](matrix_mult/matrix_mult_sr_alt3.c) utiliza as rotinas _MPI\_Scatterv_() e _MPI\_Gatherv_(), que extendem as operações apresentadas anteriormente ao permitir o envio de uma quantidade de dados varíaveis para cada processo. Isso permite que o número de linhas da matriz A não precise necessariamente ser divisível pelo número de processos.
 
-Para tal, a variavel _sendcounts_ (utilizada nas rotinas anteriores) deve ser tornar um vetor, em que cada posição represente o número de elementos a serem enviados para cada processo (sendo que este número pode ser variável). Além disso, uma outro vetor, _displs_, também é necessário. Esse vetor representa o deslocamento de cada processo em relação ao ínicio do _buffer_ de dados, o que possibilita maior flexibilidade na comunicação.
+Para tal, a variavel _sendcounts_ (utilizada nas rotinas anteriores) deve ser tornar um vetor, em que cada posição representa o número de elementos a serem enviados para cada processo (sendo que este número pode ser variável). Além disso, um outro vetor, chamado _displs_, é necessário. Esse vetor representa o deslocamento de cada processo em relação ao ínicio do _buffer_ de dados, o que possibilita maior flexibilidade na comunicação.
 
 Para a definição destes valores (número de elementos e deslocamento) de cada processo, a seguinte lógica foi empregada:
 
 ``` c
-rows_slice = (int) SIZE / nproc; // "fatia" que representa o número base de linhas que cada processo
+rows_slice = (int) SIZE / nproc; // "fatia" que representa o número base de linhas de cada processo
 rest = SIZE % nproc;             // caso o número de linhas não seja proporcional ao número de processos, haverá resto
 lastrow = 0;                     // auxilía no controle da última linha mapeada (designada a um processo qualquer)
    
 for (i = 0; i < nproc; i++) {   // para cada processo...
-    displs[i] = lastrow;        // deslocamento equivale a última linha mapeada
+    displs[i] = lastrow;        // deslocamento do processo 'i' equivale a última linha mapeada
     lastrow += rows_slice;      // atualiza a última linha mapeada
     sendcounts[i] = rows_slice; // a princípio o processo irá atuar sobre a fatia de linhas base
     if (rest != 0) {            // caso a divisão não seja exata...
         sendcounts[i]++;        // processo 'i' recebe uma linha a mais na sua fatia
         lastrow++;              // atualiza o ponteiro para a ultima linha mapeada
-        rest--;                 // uma linha a menos (do resto) para distribuir
+        rest--;                 // uma linha a menos (do resto) para distribuir entre os processos restantes
     } 
     /* IMPORTANTE: agora é necessário converter o número de linhas do processo 'i' para o número
        de elementos que esse processo irá receber pela rotina MPI_Scatterv. Também é necessário 
        converter o deslocamento (que também está baseado no número de linhas) para o número de
        elementos a serem deslocados a partir do inicio do buffer de envio
     */
-    sendcounts[i] *= SIZE;     // linhas da matriz * número de elementos em cada linha
-    displs[i] *= SIZE;         // linhas da matriz * número de elementos em cada linha
+    sendcounts[i] *= SIZE;     // número de elementos = linhas da matriz * número de elementos em cada linha
+    displs[i] *= SIZE;         // número de elementos = linhas da matriz * número de elementos em cada linha
 }
 ```
 
@@ -169,7 +169,7 @@ MPI_Scatterv(A, sendcounts, displs, MPI_INT, A, sendcounts[myrank], MPI_INT, 0, 
 
 Perceba que, nesta versão do programa, o _buffer_ de recebimento não é posicionado de acordo com o _rank_ de cada processo.
 
-Após o envio, a multiplicação pode ser realizada. Perceba que é necessário transformar os elementos do contator de elementos (_sendcounts_) de cada processo para o número de linhas que este irá atuar. Para isso basta seguir a mesma lógica que já havia sido utilizado anteriormente, onde (número de elementos do processo &divide; número total de linhas da matriz) irá retornar o número de linhas de cada processo. Essa conversão está ilustrada na condição de parada do laço abaixo:
+Após o envio, a multiplicação pode ser realizada. Agora é necessário transformar os elementos do contator de elementos (_sendcounts_) de cada processo para o número de linhas que este irá atuar. Para isso basta seguir a mesma lógica que já havia sido utilizado anteriormente, onde número de linhas de cada processo = número de elementos do processo &divide; número total de linhas da matriz. Essa conversão está ilustrada na condição de parada do laço abaixo:
 
 ``` c
   for (i = 0; i < sendcounts[myrank] / SIZE; i++) {
@@ -182,7 +182,7 @@ Após o envio, a multiplicação pode ser realizada. Perceba que é necessário 
   }
 ```
 
-<p>Analogamente a rotina <em>MPI_Scatterv</em>(), a rotina <em>MPI_Gatherv</em> é utilizada:</p>
+<p>Analogamente a rotina <em>MPI_Scatterv</em>(), a rotina <em>MPI_Gatherv</em>() é utilizada:</p>
 
 ``` c
 MPI_Gatherv(const void *sendbuf, int sendcount, MPI_Datatype sendtype, void *recvbuf, 
@@ -204,7 +204,7 @@ O programa [matrix_mult_sr_alt4.c](matrix_mult/matrix_mult_sr_alt4.c) utiliza as
 MPI_Scatterv(A, sendcounts, displs, MPI_INT, &A[from_row], sendcounts[myrank], MPI_INT, 0, MPI_COMM_WORLD)
 ```
 
-<p>A partir do posicionamento, basta adequar os intervalos de atuação no laço. Para isso utiliza-se as varíaveis <em>from_row</em> e <em>to_row</em> que são calculadas de forma já apresenta na <a name="parte1-segunda-solucao">Segunda Solução da Parte 1</a>.</p>
+<p>A partir do posicionamento, basta adequar os intervalos de atuação no laço. Para isso utiliza-se as varíaveis <em>from_row</em> e <em>to_row</em>, que são calculadas de forma já apresentada na <a href="#parte1-segunda-solucao">Segunda Solução da Parte 1</a>.</p>
 
 ``` c
   for (i = from_row; i < to_row; i++) {
