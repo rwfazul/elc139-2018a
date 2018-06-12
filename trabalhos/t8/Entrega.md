@@ -42,7 +42,8 @@ _MPI\_Bcast_ possui vantagens em relação ao uso de _Send/Recv_. Ao invés de u
 Em seguida, a matriz A é distribuída seguindo o protótipo:
 
 ``` c
-  MPI_Scatter(void* send_data, int send_count, MPI_Datatype send_datatype, void* recv_data, int recv_count, MPI_Datatype recv_datatype, int root, MPI_Comm communicator);
+  MPI_Scatter(void* send_data, int send_count, MPI_Datatype send_datatype, void* recv_data, 
+              int recv_count, MPI_Datatype recv_datatype, int root, MPI_Comm communicator);
 ```
 
 Para esta matriz apenas as linhas atribuídas a cada processo precisam ser enviadas, logo o número de elementos a serem enviados é definido por (número total de elementos &divide; número de processos do grupo), ou seja, (_SIZE_ * _SIZE_ / _nproc_), onde a multiplicação das dimensões da matriz equivalem ao número total de elementos. 
@@ -56,17 +57,17 @@ _MPI\_Scatter_ envia _chuncks_ do _buffer_ de envio (matriz A) para os diferente
 Nessa versão do programa o _buffer_ de recebimento não é posicionado de acordo com o _rank_ de cada processo. Logo, para realizar as multiplicações entre as matrizes utiliza-se a seguinte lógica:
 
 ``` c
-    for (i = 0; i < SIZE / nproc; i++) {
-        for (j = 0; j < SIZE; j++) {
-            C[i][j] = 0;
-            for (k = 0; k < SIZE; k++) {
-                C[i][j] += A[i][k] * B[k][j];
-            }
-        }
-    }
+  for (i = 0; i < SIZE / nproc; i++) {
+      for (j = 0; j < SIZE; j++) {
+          C[i][j] = 0;
+          for (k = 0; k < SIZE; k++) {
+              C[i][j] += A[i][k] * B[k][j];
+          }
+      }
+  }
 ```
 
-<p>Perceba que, com o <i>buffer</i> não posicionado, as linhas da matriz A são preenchidas a partir do índice 0. Como, nessa versão, o número de linhas é proporcional ao número de processos, o laço percorre de 0 ao número de linhas atribuídas a cada processo (fatia) definido pelo (número total de linhas da matriz &divide; número de processos do grupo), ou seja, (<i>SIZE</i> / <i>nproc</i>).</p>
+<p>Perceba que, com o <em>buffer</em> não posicionado, as linhas da matriz A são preenchidas a partir do índice 0. Como, nessa versão, o número de linhas é proporcional ao número de processos, o laço percorre de 0 ao número de linhas atribuídas a cada processo (fatia) definido pelo (número total de linhas da matriz &divide; número de processos do grupo), ou seja, (<em>SIZE</em> / <em>nproc</em>).</p>
 
 Por fim, a coleta do resultado (matriz C) é realizada:
 
@@ -95,16 +96,16 @@ O _broadcast_ da matriz B é feito da mesma forma. A diferença está no posicio
 Note que agora o _buffer_ de recebimento é posicionado de acordo com o _rank_ do processo, onde (_from_ = _rank_ do processo * número de linhas da matriz / quantidade de processos no grupo), ou seja, (_from_ = _myrank_ * _SIZE_ / _nproc_). Logo, para realizar as multiplicações entre as matrizes utiliza-se a seguinte lógica:
 
 ``` c
-    for (i = from; i < to; i++) {
-        for (j = 0; j < SIZE; j++) {
-            C[i][j] = 0;
-            for (k = 0; k < SIZE; k++) {
-                C[i][j] += A[i][k] * B[k][j];
-            }
-        }
-    }
+  for (i = from; i < to; i++) {
+      for (j = 0; j < SIZE; j++) {
+          C[i][j] = 0;
+          for (k = 0; k < SIZE; k++) {
+              C[i][j] += A[i][k] * B[k][j];
+          }
+      }
+  }
 ```
-<p>Pereceba que, com o <i>buffer</i> posicionado, as linhas da matriz A são preenchidas a partir do índice referente ao cálculo baseado no <i>rank</i> do processo. Como, nessa versão, o número de linhas é proporcional ao número de processos, o laço percorre desse valor (<i>from</i>) até este valor acrescido do número de linhas atribuídas a cada processo (fatia). Isto também pode ser escrito da forma (<i>to</i> = (<i>rank</i> do processo + 1) &plus; número total de linhas da matriz &divide; número de processos do grupo), ou seja, (<i>to</i> = (<i>myrank</i> + 1) * <i>SIZE</i> / <i>nproc</i>).</p>
+<p>Pereceba que, com o <em>buffer</em> posicionado, as linhas da matriz A são preenchidas a partir do índice referente ao cálculo baseado no <em>rank</em> do processo. Como, nessa versão, o número de linhas é proporcional ao número de processos, o laço percorre desse valor (<em>from</em>) até este valor acrescido do número de linhas atribuídas a cada processo (fatia). Isto também pode ser escrito da forma (<em>to</em> = (<em>rank</em> do processo + 1) &plus; número total de linhas da matriz &divide; número de processos do grupo), ou seja, (<em>to</em> = (<em>myrank</em> + 1) * <em>SIZE</em> / <em>nproc</em>).</p>
 
 Nesta solução, a coleta também é feita com o posicionamento do _buffer_ de envio.
 
@@ -129,26 +130,27 @@ Para tal, a variavel _sendcounts_ (utilizada nas rotinas anteriores) deve ser to
 Para a definição destes valores (número de elementos e deslocamento) de cada processo, a seguinte lógica foi empregada:
 
 ``` c
-    rows_slice = (int) SIZE / nproc; // "fatia" que representa o número base de linhas que cada processo
-    rest = SIZE % nproc;             // caso o número de linhas não seja proporcional ao número de processos, haverá resto
-    lastrow = 0;                     // auxilía no controle da última linha mapeada (designada a um processo qualquer)
+  rows_slice = (int) SIZE / nproc; // "fatia" que representa o número base de linhas que cada processo
+  rest = SIZE % nproc;             // caso o número de linhas não seja proporcional ao número de processos, haverá resto
+  lastrow = 0;                     // auxilía no controle da última linha mapeada (designada a um processo qualquer)
    
-    for (i = 0; i < nproc; i++) {   // para cada processo...
-        displs[i] = lastrow;        // deslocamento equivale a última linha mapeada
-        lastrow += rows_slice;      // atualiza a última linha mapeada
-        sendcounts[i] = rows_slice; // a princípio o processo irá atuar sobre a fatia de linhas base
-        if (rest != 0) {            // caso a divisão não seja exata...
-            sendcounts[i]++;        // processo 'i' recebe uma linha a mais na sua fatia
-            lastrow++;              // atualiza o ponteiro para a ultima linha mapeada
-            rest--;                 // uma linha a menos (do resto) para distribuir
-        } 
-        /* IMPORTANTE: agora é necessário converter o número de linhas do processo 'i' para o número
-              de elementos que esse processo irá receber pela rotina MPI_Scatterv. Também é necessário 
-              converter o deslocamento (que também está baseado no número de linhas) para o número de
-              elementos a serem deslocados a partir do inicio do buffer de envio
-        sendcounts[i] *= SIZE;     // linhas da matriz * número de elementos em cada linha
-    	displs[i] *= SIZE;         // linhas da matriz * número de elementos em cada linha
-    }
+  for (i = 0; i < nproc; i++) {   // para cada processo...
+      displs[i] = lastrow;        // deslocamento equivale a última linha mapeada
+      lastrow += rows_slice;      // atualiza a última linha mapeada
+      sendcounts[i] = rows_slice; // a princípio o processo irá atuar sobre a fatia de linhas base
+      if (rest != 0) {            // caso a divisão não seja exata...
+          sendcounts[i]++;        // processo 'i' recebe uma linha a mais na sua fatia
+          lastrow++;              // atualiza o ponteiro para a ultima linha mapeada
+          rest--;                 // uma linha a menos (do resto) para distribuir
+      } 
+      /* IMPORTANTE: agora é necessário converter o número de linhas do processo 'i' para o número
+         de elementos que esse processo irá receber pela rotina MPI_Scatterv. Também é necessário 
+         converter o deslocamento (que também está baseado no número de linhas) para o número de
+         elementos a serem deslocados a partir do inicio do buffer de envio
+      */
+      sendcounts[i] *= SIZE;     // linhas da matriz * número de elementos em cada linha
+      displs[i] *= SIZE;         // linhas da matriz * número de elementos em cada linha
+  }
 ```
 
 <p>Agora é possível realizar a distribuição de cada processo seguindo o protótipo:</p>
@@ -168,23 +170,22 @@ Perceba que, nesta versão do programa, o _buffer_ de recebimento não é posici
 
 Após o envio, a multiplicação pode ser realizada. Perceba que é necessário transformar os elementos do contator de elementos (_sendcounts_) de cada processo para o número de linhas que este irá atuar. Para isso basta seguir a mesma lógica que já havia sido utilizado anteriormente, onde (número de elementos do processo &divide; número total de linhas da matriz) irá retornar o número de linhas de cada processo. Essa conversão está ilustrada na condição de parada do laço abaixo:
 
-```
-    for (i = 0; i < sendcounts[myrank] / SIZE; i++) {
-        for (j = 0; j < SIZE; j++) {
-            C[i][j] = 0;
-            for (k = 0; k < SIZE; k++) {
-                C[i][j] += A[i][k] * B[k][j];
-            }
-        }
-    }
-    
+``` c
+  for (i = 0; i < sendcounts[myrank] / SIZE; i++) {
+      for (j = 0; j < SIZE; j++) {
+          C[i][j] = 0;
+          for (k = 0; k < SIZE; k++) {
+              C[i][j] += A[i][k] * B[k][j];
+          }
+      }
+  }
 ```
 
-<p>Analogamente a rotina <i>MPI_Scatterv</i>(), a rotina <i>MPI_Gatherv</i> é utilizada:</p>
+<p>Analogamente a rotina <em>MPI_Scatterv</em>(), a rotina <em>MPI_Gatherv</em> é utilizada:</p>
 
 ``` c
   MPI_Gatherv(const void *sendbuf, int sendcount, MPI_Datatype sendtype, void *recvbuf, 
-                const int *recvcounts, const int *displs, MPI_Datatype recvtype, int root, MPI_Comm comm)
+              const int *recvcounts, const int *displs, MPI_Datatype recvtype, int root, MPI_Comm comm)
 ```    
 
 Para definir o número de elementos enviados de cada processo, basta acessar o vetor _sendcounts_ na posição referente ao seu _rank_. Logo:
@@ -205,17 +206,17 @@ O programa [matrix_mult_sr_alt4.c](matrix_mult/matrix_mult_sr_alt4.c) utiliza as
 A partir do posicionamento, basta adequar os intervalos de atuação no laço. Para isso utiliza-se as varíaveis _from\_row_ e _to\_row_ que são calculadas de forma já apresenta na <a name="parte1-segunda-solucao">Segunda Solução da Parte 1</a>.
 
 ``` c
-    for (i = from_row; i < to_row; i++) {
-        for (j = 0; j < SIZE; j++) {
-            C[i][j] = 0;
-            for (k = 0; k < SIZE; k++) {
-                C[i][j] += A[i][k] * B[k][j];
-            }
-        }
-    }
+  for (i = from_row; i < to_row; i++) {
+      for (j = 0; j < SIZE; j++) {
+          C[i][j] = 0;
+          for (k = 0; k < SIZE; k++) {
+              C[i][j] += A[i][k] * B[k][j];
+          }
+      }
+  }
 ```
 
-E, por fim, na coleta também é feito o posicionamento do _buffer_ de envio.
+<p>E, por fim, na coleta também é feito o posicionamento do <em>buffer</em> de envio.</p>
 
 ``` c
   MPI_Gatherv(C[from_row], sendcounts[myrank], MPI_INT, C, sendcounts, displs, MPI_INT, 0, MPI_COMM_WORLD);
