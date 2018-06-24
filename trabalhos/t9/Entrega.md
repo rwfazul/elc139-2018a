@@ -3,13 +3,13 @@
 # T9: Resolvendo um problema da maratona de programação paralela
 
 Disciplina: ELC139 - Programação Paralela <br/>
-Aluno: Rhauani Weber Aita Fazul e Roger Eduardo Couto
+Aluno: Rhauani Weber Aita Fazul
 
 ### Versão paralelizada com OpenMP
 
 - Primeira solução
 
-	+ Esta solução é baseada na [versão sequencial](mandelbrot/sequencial/mandelbrot.cpp) do problema Mandelbrot Set. Os arquivos de código fonte da versão paralelizada estão disponíveis em [mandelbrot](mandelbrot/openmp/mandelbrot-omp.cpp).
+	+ Esta solução é baseada na [versão sequencial](mandelbrot/sequencial/mandelbrot.cpp) do problema Mandelbrot Set. Os arquivos de código fonte da versão paralelizada estão disponíveis em [openmp/mandelbrot.cpp](mandelbrot/openmp/mandelbrot-omp.cpp).
 
 ### Apresentação
 
