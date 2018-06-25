@@ -11,7 +11,7 @@ Aluno: Rhauani Weber Aita Fazul
 
 ### Apresentação
 
-Os _slides_ podem ser encontrados no arquivo de [apresentação](apresentacao.pdf).
++ Os _slides_ podem ser encontrados no arquivo de [apresentação](apresentacao.pdf).
 
 ### Referências
 - Andrew Williams. <em>Computing the Mandelbrot set</em>. https://goo.gl/apnk2A
