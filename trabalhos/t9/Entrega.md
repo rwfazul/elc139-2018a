@@ -9,7 +9,7 @@ Aluno: Rhauani Weber Aita Fazul
 
 - Primeira solução
 
-	+ Esta solução é baseada na [versão sequencial](mandelbrot/sequencial/mandelbrot.cpp) do problema Mandelbrot Set. Os arquivos de código fonte da versão paralelizada estão disponíveis em [openmp/mandelbrot.cpp](mandelbrot/openmp/mandelbrot-omp.cpp).
+	+ Esta solução é baseada na [versão sequencial](mandelbrot/sequencial/mandelbrot.cpp) do problema Mandelbrot Set. Os arquivos de código fonte da versão paralelizada estão disponíveis em [openmp/mandelbrot.cpp](mandelbrot/openmp/mandelbrot.cpp).
 
 ### Apresentação
 
