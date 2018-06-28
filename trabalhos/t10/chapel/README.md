@@ -33,17 +33,17 @@ Básico:
 	$ ./file
 ```
 
-- Compilar com a flag '--fast' ativa uma série de otimizações;
-- Se no programa estiver definido uma variável de configuração (ex. config const name = "value";), é possível setá-la com novos valores.
+- Compilar com a flag '<em>--fast</em>' ativa uma série de otimizações;
+- Se no programa estiver definido uma variável de configuração (ex. <em>config const name = "value";</em>), é possível setá-la com novos valores.
 	- em tempo de compilação:
 ``` bash
-	chpl -o file file.chpl -s name="novoValor"
+	$ chpl -o file file.chpl -s name="novoValor"
 ```
 	- em tempo de execução: 
 ``` bash
-	./file --name="novoValor"
+	$ ./file --name="novoValor"
 ``` 
 
 ## Descobrindo a linguagem
 
-Alguns testes realizados podem ser vistos nos arquivos *.chpl.
+Os testes que estão sendo realizados podem ser vistos nos arquivos <em>*.chpl</em>.
