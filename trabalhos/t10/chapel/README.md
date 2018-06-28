@@ -35,13 +35,13 @@ Básico:
 
 - Compilar com a flag '<em>--fast</em>' ativa uma série de otimizações;
 - Se no programa estiver definido uma variável de configuração (ex. <em>config const name = "value";</em>), é possível setá-la com novos valores.
-	- em tempo de compilação:
+	+ em tempo de compilação:
 	
 ``` bash
 	$ chpl -o file file.chpl -s name="novoValor"
 ```
 
-	- em tempo de execução: 
+	+ em tempo de execução: 
 	
 ``` bash
 	$ ./file --name="novoValor"
