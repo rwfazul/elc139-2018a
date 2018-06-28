@@ -18,7 +18,7 @@ Em seguida:
 
 O _build_ e a verificação da instalação são realizados com um arquivo Makefile:
 
-``` make
+``` bash
 	$ make && make check
 ```
 
