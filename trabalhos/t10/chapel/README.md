@@ -22,7 +22,7 @@ O _build_ e a verificação da instalação são realizados com um arquivo Makef
 	$ make && make check
 ```
 
-Se tudo correu bem: SUCCESS: 'make check' passed!
+Se tudo correu bem: "SUCCESS: 'make check' passed!".
 
 ## Compilação e execução
 
@@ -34,16 +34,11 @@ Básico:
 ```
 
 - Compilar com a flag '<em>--fast</em>' ativa uma série de otimizações;
-- Se no programa estiver definido uma variável de configuração (ex. <em>config const name = "value";</em>), é possível setá-la com novos valores.
-	+ em tempo de compilação:
+- Se no programa estiver definido uma variável de configuração (ex. <em>config const name = "value";</em>), é possível setá-la com novos valores (em tempo de compilação ou em tempo de execução):
 	
 ``` bash
 	$ chpl -o file file.chpl -s name="novoValor"
-```
-
-	+ em tempo de execução: 
-	
-``` bash
+	// OU
 	$ ./file --name="novoValor"
 ``` 
 
