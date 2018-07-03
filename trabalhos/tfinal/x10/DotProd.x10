@@ -8,9 +8,10 @@ public class DotProd {
     private static val REPEAT_DEFAULT: int = Int.operator_as( 2000  );
     
     public static def main(args:Rail[String]) {
-        val nActiv: int  = (args.size > 1) ? Int.parse( args(0) ) : ACTIVITIES;     // numero de activities a serem criadas
-        val wsize:  int  = (args.size > 2) ? Int.parse( args(1) ) : WSIZE_DEFAULT;  // worksize = tamanho do vetor de cada task
-        val repeat: int  = (args.size > 3) ? Int.parse( args(2) ) : REPEAT_DEFAULT; // numero de repeticoes dos calculos (para aumentar carga)
+
+        val nActiv: int  = (args.size > 0) ? Int.parse( args(0) ) : ACTIVITIES;     // numero de activities a serem criadas
+        val wsize:  int  = (args.size > 1) ? Int.parse( args(1) ) : WSIZE_DEFAULT;  // worksize = tamanho do vetor de cada activity
+        val repeat: int  = (args.size > 2) ? Int.parse( args(2) ) : REPEAT_DEFAULT; // numero de repeticoes dos calculos (para aumentar carga)
 
         // Cria vetores
         val a = new Rail[Double](wsize, 0.01);    	
