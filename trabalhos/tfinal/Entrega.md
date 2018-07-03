@@ -24,14 +24,14 @@ Aluno: Rhauani Weber Aita Fazul
 <a name="chapel"></a>
 ## O que é Chapel?
 
-Uma lingaguem de programação paralela moderna (e _open-souce_) baseada em Java, C/C++, Python e Matlab. Visa aumentar a produtividade no desenvolvimento de programas concorrentes e paralelos (vários tipos de paralelismo em um único programa de maneira simples), sendo portável (roda em notebooks com diferentes SOs, _clusters_, _cloud_ e sistemas de HPC) e escalável (sistemas de memória distribúida, etc). 
+Uma lingaguem de programação paralela moderna (e _open-souce_) baseada em Java, C/C++, Python e Matlab. Visa aumentar a produtividade no desenvolvimento de programas concorrentes e paralelos (vários tipos de paralelismo em um único programa de maneira simples), sendo portável (roda em notebooks com diferentes SOs, _clusters_, _cloud_ e sistemas de HPC) e escalável (e.g. sistemas de memória distribúida). 
 
 <a name="chapel-install"></a>
 ## Instalação
 
 Baseado no [guia oficial](https://chapel-lang.org/docs/usingchapel/QUICKSTART.html) de instalação:
 
-+ Alguns pré-requisitos básicos podem ser vistos [aqui](https://chapel-lang.org/docs/usingchapel/prereqs.html#readme-prereqs) (a maioria são pacotes básicos que muitas distribuições _Unix-like_ já possuem por default).
++ Alguns pré-requisitos básicos podem ser vistos [aqui](https://chapel-lang.org/docs/usingchapel/prereqs.html#readme-prereqs) (a maioria são pacotes básicos que muitas distribuições _Unix-like_ já possuem por _default_).
 
 + O download do _.tar_ contendo o código fonte pode ser feito [aqui](https://chapel-lang.org/download.html) (atualmente na versão 1.17.1).
 
@@ -68,7 +68,7 @@ Básico:
 
 <a name="chapel-discover"></a>
 ## Descobrindo a linguagem
-Os testes que estão sendo realizados podem ser vistos nos arquivos [<em>*.chpl</em>](/chapel).
+Os testes que estão sendo realizados podem ser vistos nos arquivos [<em>*.chpl</em>](chapel).
 
 <a name="chapel-dotprod"></a>
 ## _Dot product_
