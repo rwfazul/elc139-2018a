@@ -109,7 +109,7 @@ X10 possui duas implementações:
 	$ ./file
 ```
 
-		- Compilar com a flag '-O' ativa algumas otimizações.
+	- Compilar com a flag '-O' ativa algumas otimizações.
 		
 - Java _backend_
 	- Tradução dinâmica (JIT);
@@ -121,7 +121,7 @@ X10 possui duas implementações:
 	$ bin/x10 file
 ```	
 
-		- Onde 'file' possuí o mesmo nome do arquivo '.x10' (apenas sem a extensão).
+	- Onde 'file' possuí o mesmo nome do arquivo '.x10' (apenas sem a extensão).
 
 Os desenvolvedores da linguaguem esperam tornar as implementações compatíveis entre si, de modo que, em um mesmo programa, existam partes que poderão ser executadas em Java e outras partes nativamente em C++.
 
@@ -327,18 +327,24 @@ As médias de desempenho (em segundos) podem ser vistas a seguir:
 	- MPI Forum. <i>MPI: A Message-Passing Interface Standard</i>. https://goo.gl/Q1LR4s
 	- Open MPI. <i>Open MPI Documentation</i>. https://goo.gl/WLCJ7M
 - Chapel
-	- Cray. Six Ways to Say “Hello” in Chapel. https://www.cray.com/blog/six-ways-to-say-hello-in-chapel-part-1/
-	- Cray. Chapel. https://chapel-lang.org/presentations/ChapelForATPESC2016-presented.pdf
-	- Cray. Chapel - History. https://chapel-lang.org/publications/PMfPC-Chapel.pdf
-	- Chapel. The Chapel Parallel Programming Language. https://chapel-lang.org/
-	- Chapel. Chapel Documentation. https://chapel-lang.org/docs/index.html
-	- Chapel. Chapel Quick Reference. https://chapel-lang.org/docs/_downloads/quickReference.pdf
-	- Chapel. Chapel Languague Specification. https://chapel-lang.org/docs/_downloads/chapelLanguageSpec.pdf
-	- Wikipedia. Chapel (programming language). https://en.wikipedia.org/wiki/Chapel_(programming_language)
-	- USP. Linguagem Chapel. https://www.ime.usp.br/~gold/cursos/2015/MAC5742/slides/Chapel.pdf
-	- Walter Perez Urcia. Lingaugem Chapel. https://www.ime.usp.br/~gold/cursos/2015/MAC5742/reports/Chapel.pdf
+	- Chapel. <i>Chapel Documentation</i>. https://goo.gl/nSwnqN
+	- Chapel. <i>Chapel Languague Specification</i>. https://goo.gl/vpHBaF
+	- Chapel. <i>Chapel Quick Reference</i>. https://goo.gl/2JuQZr
+	- Chapel. <i>The Chapel Parallel Programming Language</i>. https://goo.gl/P6mvNd
+	- Cray. <i>Chapel</i>. https://goo.gl/EbXJm6
+	- Cray. <i>Chapel - History</i>. https://goo.gl/HF5e9n
+	- Cray. <i>Six Ways to Say “Hello” in Chapel</i>. https://goo.gl/5dcbna
+	- Urcia W. P. <i>Linguagem Chapel</i>. https://goo.gl/1uuRyq
+	- USP. <i>Linguagem Chapel</i>. https://goo.gl/vm1ynL
+	- Wikipedia. <i>Chapel (programming language)</i>. https://goo.gl/ZWSzGv
 - X10
-	- X10. The X10 Programming Language. http://x10-lang.org/
-	- X10. X10 Language Specification. http://x10.sourceforge.net/documentation/languagespec/x10-latest.pdf
-	- PUC. Linguagens para Programaçãao Paralela. http://www.inf.puc-rio.br/~noemi/pcp-10/aula11-lpp.pdf
-	- Wikipedia. X10 (programming language). https://en.wikipedia.org/wiki/X10_(programming_language)
+	- Charles P., et al. <i>X10: An Object-Oriented Approach to Non-Uniform Cluster Computing</i>. https://goo.gl/ohxsCD
+	- IBM Research. <i>An Overview of the X10 Programming Language and X10 Development Tools</i>. https://goo.gl/KNvnak
+	- Praun C. von. <i>X10 (v 2.1) Tutorial</i>. https://goo.gl/VQ5m2G
+	- PUC. <i>Linguagens para Programaçãao Paralela</i>. https://goo.gl/NMdQMg
+	- SC'12. <i>Developing Scalable Parallel Applications in X10</i>. https://goo.gl/czKGfF
+	- Tardieu O. <i>APGAS Programming in X10</i>. https://goo.gl/xQC2G6
+	- Wikipedia. <i>X10 (programming language)</i>. https://goo.gl/S1MFZd
+	- X10. <i>Performance Tuning</i>. https://goo.gl/FGwSox
+	- X10. <i>The X10 Programming Language</i>. https://goo.gl/sS6yui
+	- X10. <i>X10 Language Specification</i>. https://goo.gl/HWmHyU
