@@ -109,7 +109,7 @@ X10 possui duas implementações:
 	$ ./file
 ```
 
-	- Compilar com a flag '-O' ativa algumas otimizações.
+\* Compilar com a flag '-O' ativa algumas otimizações.
 		
 - Java _backend_
 	- Tradução dinâmica (JIT);
@@ -120,8 +120,7 @@ X10 possui duas implementações:
 	$ bin/x10c file 
 	$ bin/x10 file
 ```	
-
-	- Onde 'file' possuí o mesmo nome do arquivo '.x10' (apenas sem a extensão).
+\* Onde 'file' possuí o mesmo nome do arquivo '.x10' (apenas sem a extensão).
 
 Os desenvolvedores da linguaguem esperam tornar as implementações compatíveis entre si, de modo que, em um mesmo programa, existam partes que poderão ser executadas em Java e outras partes nativamente em C++.
 
@@ -146,7 +145,7 @@ Desta forma, os seguintes casos de testes foram definidos { _worksize_, _repetit
 Para obtenção das médias foram realizadas 30 execuções de cada configuração de teste em um computador com a seguinte arquitetura de CPUs:
 
 <p align="center">
-     <img src="analise/setup.png" width="60%" />
+     <img src="analise/setup.png" width="50%" />
 </p>
 
 Os testes foram aplicados nos seguintes contextos:
