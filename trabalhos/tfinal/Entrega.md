@@ -8,20 +8,29 @@ Aluno: Rhauani Weber Aita Fazul
 ## Sumário
 
 - [Chapel](#chapel)
-	- [O que é Chapel?](#chapel)
+	- [O que é Chapel?](#lp-chapel)
 	- [Instalação](#chapel-install)
 	- [Compilação e execução](#chapel-exec)
-	- [Descobrindo a lingaugem](#chapel-discover)
-	- [_Dot Product_](#chapel-dotprod)
 - [X10](#x10)
-	- [O que é X10?](#x10)
+	- [O que é X10?](#lp-x10)
 	- [Instalação](#x10-install)
 	- [Compilação e execução](#x10-exec)
-	- [_Dot Product_](#x10-dotprod)
+- [Análise: _dot product_](#analise)
+	- [Desempenho](#desempenho)
+		- [Sequencial](#sequencial)
+		- [Pthreads](#pthreads)
+		- [OpenMP](#openmp)
+		- [MPI](#mpi)
+		- [Chapel](#dotprod-chapel)
+		- [X10](#dotprod-x10)
+	- [Comparação](#comparacao)
+		- [_Speedup_](#speedup)
 - [Referências](#referências)
 
 <!-- CHAPEL -->
-<a name="chapel"></a>
+# Chapel
+
+<a name="lp-chapel"></a>
 ## O que é Chapel?
 
 Uma lingaguem de programação paralela moderna (e _open-souce_) baseada em Java, C/C++, Python e Matlab. Visa aumentar a produtividade no desenvolvimento de programas concorrentes e paralelos (vários tipos de paralelismo em um único programa de maneira simples), sendo portável (roda em notebooks com diferentes SOs, _clusters_, _cloud_ e sistemas de HPC) e escalável (e.g. sistemas de memória distribúida). 
@@ -49,7 +58,7 @@ O _build_ e a verificação da instalação são realizados com um arquivo Makef
 
 Se tudo correu bem: "SUCCESS: 'make check' passed!".
 
-<a name="chapelexec"></a>
+<a name="chapel-exec"></a>
 ## Compilação e execução
 
 Básico:
@@ -66,16 +75,10 @@ Básico:
 	$ ./file --name="novoValor"
 ``` 
 
-<a name="chapel-discover"></a>
-## Descobrindo a linguagem
-Os testes que estão sendo realizados podem ser vistos nos arquivos [<em>*.chpl</em>](chapel).
-
-<a name="chapel-dotprod"></a>
-## _Dot product_
-
-
 <!-- X10 -->
-<a name="x10"></a>
+# X10
+
+<a name="lp-x10"></a>
 ## O que é X10?
 
 <a name="x10-install"></a>
@@ -85,11 +88,44 @@ Os testes que estão sendo realizados podem ser vistos nos arquivos [<em>*.chpl<
 <a name="x10-exec"></a>
 ## Compilação e execução
 
-<a name="x10-dotprod"></a>
-## _Dot product_
 
+<!-- ANALISE -->
+<a name="analise"></a>
+# Análise: _dot product_
 
-## Referências
+## Desempenho
+
+### Sequencial
+
+### Pthreads
+
+### OpenMP
+
+### MPI
+
+<a name="dotprod-chapel"></a>
+### Chapel
+
+<a name="dotprod-x10"></a>
+### X10
+
+## Comparação
+
+### Speedup
+
+# Referências
+- Pthreads
+	+
+	+
+	+
+- OpenMP
+	+
+	+
+	+
+- MPI
+	+
+	+
+	+
 - Chapel
 	+
 	+
