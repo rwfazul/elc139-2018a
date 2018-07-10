@@ -37,8 +37,9 @@ public class DotProd {
         time += System.nanoTime();
         
         // Mostra resultado e estatisticas da execucao
-        Console.OUT.println(Int.operator_as(c));
-        Console.OUT.println((time/1000) + " usec");
+        // Console.OUT.println(Int.operator_as(c));
+        // Console.OUT.println((time/1000) + " usec);
+        Console.OUT.println((time/1000));
     }
   
 }
