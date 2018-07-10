@@ -56,7 +56,7 @@ O _build_ e a verificação da instalação são realizados com um arquivo Makef
 	$ make && make check
 ```
 
-Se tudo ocorreu conforme esperado, a seguinte mensagem será exibida: "SUCCESS: 'make check' passed!".
+Se tudo ocorreu conforme o esperado, a seguinte mensagem será exibida: "SUCCESS: 'make check' passed!".
 
 <a name="chapel-exec"></a>
 ## Compilação e execução
@@ -81,7 +81,7 @@ Básico:
 <a name="lp-x10"></a>
 ## O que é X10?
 
-Liguaguem orientada a objetos (_open-source_)[https://github.com/x10-lang/x10] baseada em Java, projetada para programação paralela intensiva. Assim como Chapel, é portável e escalável, suportando computação _high-end_ com milhões de tarefas concorrentes. Mantém algumas características presentes no Java, como por exemplo checagem estática e _garbage collection_. É compilada para C++ ou Java.
+Liguaguem orientada a objetos [_open-source_](https://github.com/x10-lang/x10) baseada em Java, projetada para programação paralela intensiva. Assim como Chapel, é portável e escalável, suportando computação _high-end_ com milhões de tarefas concorrentes. Mantém algumas características presentes no Java, como por exemplo checagem estática e _garbage collection_. É compilada para C++ ou Java.
 
 <a name="x10-install"></a>
 ## Instalação
@@ -90,7 +90,7 @@ Duas formas principais, baseado no [guia oficial](http://x10-lang.org/releases/x
 
 - Realizando o _download_ do [X10DT](http://x10-lang.org/software/download-x10/latest-release.html), uma IDE baseada no Eclipse com editor, compilador e _debugger_.
 
-- Fazendo uso dos _pré-built_ [binários](https://sourceforge.net/projects/x10/files/x10/2.6.1/x10-2.6.1_linux_x86_64.tgz/download) disponíveis para algumas plataformas (opção escolhida para os testes). Atualmente no _release_ 2.6.1.
+- Fazendo uso dos _pré-built_ binários disponíveis para algumas plataformas (ex. [Linux/x86_64](https://sourceforge.net/projects/x10/files/x10/2.6.1/x10-2.6.1_linux_x86_64.tgz/download) - opção escolhida para os testes). Atualmente a linguagem está no _release_ 2.6.1. 
 
 
 <a name="x10-exec"></a>
@@ -108,7 +108,8 @@ X10 possui duas implementações:
 	$ bin/x10c++ -o file file.x10
 	$ ./file
 ```
-	- Compilar com a flag -O ativa algumas otimizações.
+
+		- Compilar com a flag '-O' ativa algumas otimizações.
 		
 - Java _backend_
 	- Tradução dinâmica (JIT);
@@ -119,7 +120,8 @@ X10 possui duas implementações:
 	$ bin/x10c file 
 	$ bin/x10 file
 ```	
-	- Onde 'file' possuí o mesmo nome do arquivo '.x10' (apenas sem a extensão).
+
+		- Onde 'file' possuí o mesmo nome do arquivo '.x10' (apenas sem a extensão).
 
 Os desenvolvedores da linguaguem esperam tornar as implementações compatíveis entre si, de modo que, em um mesmo programa, existam partes que poderão ser executadas em Java e outras partes nativamente em C++.
 
@@ -131,20 +133,20 @@ Para realizar a análise, foram realizados testes de performance de diferentes f
 
 Desta forma, os seguintes casos de testes foram definidos { _worksize_, _repetitions_, [U.P.*] }.
 
-- { 1.000.000, 1000, [1, 2, 4, 8] } 
-- { 1.000.000, 2000, [1, 2, 4, 8] } 
+	- { 1.000.000, 1000, [1, 2, 4, 8] } 
+	- { 1.000.000, 2000, [1, 2, 4, 8] } 
 
-- { 10.000.000, 1000, [1, 2, 4, 8] } 
-- { 10.000.000, 2000, [1, 2, 4, 8] }
+	- { 10.000.000, 1000, [1, 2, 4, 8] } 
+	- { 10.000.000, 2000, [1, 2, 4, 8] }
 
-* No contexto deste trabalho, unidades de paralelização (U.P.s) englobam _threads_, processos, _tasks_ ou _activitites_.
+\* No contexto deste trabalho, unidades de paralelização (U.P.s) englobam _threads_, processos, _tasks_ ou _activitites_.
 
 ## Desempenho
 
 Para obtenção das médias foram realizadas 30 execuções de cada configuração de teste em um computador com a seguinte arquitetura de CPUs:
 
 <p align="center">
-     <img src="analise/setup.png" />
+     <img src="analise/setup.png" width="60%" />
 </p>
 
 Os testes foram aplicados nos seguintes contextos:
@@ -212,17 +214,17 @@ Os testes foram aplicados nos seguintes contextos:
 
 + Versão 1:
 
-Esta versão faz uso do _loop forall_. Este laço é uma variante paralela de sua versão comum _for_, sendo a principal forma para expressar paralelismo de dados em Chapel. O _loop forall_ pode usar um número arbitrário de tarefas (_tasks_) para executar as instruções dentro do laço, ou seja, pode vir a executar todas as iterações serialmente (única _task_) ou até mesmo vir a utilizar mais _tasks_ que o número de total de iterações (embora isso seja um evento incomum). 
+Esta versão faz uso do _loop forall_. Este laço é uma variante paralela da construção comum _for_, sendo a principal forma para expressar paralelismo de dados em Chapel. O _loop forall_ pode usar um número arbitrário de tarefas (_tasks_) para executar as instruções dentro do laço, ou seja, pode vir a executar todas as iterações serialmente (única _task_) ou até mesmo vir a utilizar mais _tasks_ que o número de total de iterações (embora isso seja um evento incomum). 
 
 Isso acontece pois o número real de _tasks_ usadas para executar o laço é determinado pela própria construção _forall_. Sua política de escalonamento, além de utilizar informações dinâmicas (tamanho do _loop_, número de CPUs/_cores_ disponíveis na máquina, etc.) para selecionar o número de _tasks_, também é responsável por determinar onde as _tasks_ serão executadas e como as iterações do laço serão divididas entre elas.
 
-	- Código fonte: [dot_prod_alt1.chpl](chapel/dot_prod_alt1.chpl)
-	- Compilação: [compile.sh](chapel/compile.sh)
-	- _Scripts_ de teste:
-		- [execute.sh](chapel/execute.sh) (testes de todas as versões)
-		- [run_tests_alt1.sh](chapel/run_tests_alt1.sh)
-	- _Outputs_: [results/alt1](chapel/results/alt1)
-	- Média dos resultados:
+- Código fonte: [dot_prod_alt1.chpl](chapel/dot_prod_alt1.chpl)
+- Compilação: [compile.sh](chapel/compile.sh)
+- _Scripts_ de teste:
+	- [execute.sh](chapel/execute.sh) (testes de todas as versões)
+	- [run_tests_alt1.sh](chapel/run_tests_alt1.sh)
+- _Outputs_: [results/alt1](chapel/results/alt1)
+- Média dos resultados:
 
 <p align="center">
      <img src="analise/chapel-alt1.png" />
@@ -233,13 +235,13 @@ Isso acontece pois o número real de _tasks_ usadas para executar o laço é det
 Este programa faz uso de _function promotion_ (ou simplesmente _promotion_), que é uma forma de paralelismo de dados implícito da linguagem Chapel.
 
 
-	- Código fonte: [dot_prod_alt2.chpl](chapel/dot_prod_alt2.chpl)
-	- Compilação: [compile.sh](chapel/compile.sh)
-	- _Scripts_ de teste:
-		- [execute.sh](chapel/execute.sh) (testes de todas as versões)
-		- [run_tests_alt2.sh](chapel/run_tests_alt2.sh)
-	- _Outputs_: [results/alt2](chapel/results/alt2)
-	- Média dos resultados:
+- Código fonte: [dot_prod_alt2.chpl](chapel/dot_prod_alt2.chpl)
+- Compilação: [compile.sh](chapel/compile.sh)
+- _Scripts_ de teste:
+	- [execute.sh](chapel/execute.sh) (testes de todas as versões)
+	- [run_tests_alt2.sh](chapel/run_tests_alt2.sh)
+- _Outputs_: [results/alt2](chapel/results/alt2)
+- Média dos resultados:
 
 <p align="center">
      <img src="analise/chapel-alt2.png" />
@@ -248,15 +250,15 @@ Este programa faz uso de _function promotion_ (ou simplesmente _promotion_), que
 
 + Versão 3:
 
-As versões anteriores não permitem determinar um número exato de _tasks_ a serem criadas ao decorrer das iterações do laço. Pensando nisso, este programa utiliza a construção _coforall_, que cria uma _task_ distinta por iteração.
+As versões anteriores não permitem determinar um número exato de _tasks_ a serem criadas ao decorrer das iterações do laço. Pensando nisso, este programa utiliza a construção _coforall_, que cria uma _task_ distinta por iteração, permitindo controlar a quantidade de _tasks_ a serem usadas no cálculo.
 
-	- Código fonte: [dot_prod_ntasks.chpl](chapel/dot_prod_ntasks.chpl)
-	- Compilação: [compile.sh](chapel/compile.sh)
-	- _Scripts_ de teste:
-		- [execute.sh](chapel/execute.sh) (testes de todas as versões)
-		- [run_tests_ntasks.sh](chapel/run_tests_ntasks.sh)
-	- _Outputs_: [results/ntasks](chapel/results/ntasks)
-	- Média dos resultados com 2, 4 e 8 _tasks_:
+- Código fonte: [dot_prod_ntasks.chpl](chapel/dot_prod_ntasks.chpl)
+- Compilação: [compile.sh](chapel/compile.sh)
+- _Scripts_ de teste:
+	- [execute.sh](chapel/execute.sh) (testes de todas as versões)
+	- [run_tests_ntasks.sh](chapel/run_tests_ntasks.sh)
+- _Outputs_: [results/ntasks](chapel/results/ntasks)
+- Média dos resultados com 2, 4 e 8 _tasks_:
 
 <p align="center">
      <img src="analise/chapel-ntasks.png" />
@@ -282,7 +284,7 @@ As versões anteriores não permitem determinar um número exato de _tasks_ a se
 
 - Java _backend_:
 
-	- Código fonte: [DotProd.x10](x10/DotProd.x10)
+	- Código fonte: [DotProd.x10](x10/DotProd.x10) (mesmo código da versão em C++)
 	- Compilação: [compile_java.sh](x10/compile_java.sh)
 	- _Scripts_ de teste:
 		- [execute.sh](chapel/execute.sh) (testes de todas as versões)
