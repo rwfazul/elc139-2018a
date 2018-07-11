@@ -33,14 +33,14 @@ Aluno: Rhauani Weber Aita Fazul
 <a name="lp-chapel"></a>
 ## O que é Chapel?
 
-Uma lingaguem de programação paralela moderna (e [_open-souce_](https://github.com/chapel-lang/chapel)) baseada em Java, C/C++, Python e Matlab. Visa aumentar a produtividade no desenvolvimento de programas concorrentes e paralelos (vários tipos de paralelismo em um único programa de maneira simples), sendo portável (executa em notebooks com diferentes SOs, _clusters_, _cloud_ e sistemas de HPC) e escalável (ex. sistemas de memória distribúida). 
+Uma linguagem de programação paralela moderna (e [_open-souce_](https://github.com/chapel-lang/chapel)) baseada em Java, C/C++, Python e Matlab. Visa aumentar a produtividade no desenvolvimento de programas concorrentes e paralelos (vários tipos de paralelismo em um único programa de maneira simples), sendo portável (executa em notebooks com diferentes SOs, _clusters_, _cloud_ e sistemas de HPC) e escalável (ex. sistemas de memória distribúida). 
 
 <a name="chapel-install"></a>
 ## Instalação
 
 Baseado no [guia oficial](https://chapel-lang.org/docs/usingchapel/QUICKSTART.html) de instalação:
 
-+ Alguns pré-requisitos básicos podem ser vistos [aqui](https://chapel-lang.org/docs/usingchapel/prereqs.html#readme-prereqs) (a maioria são pacotes básicos que muitas distribuições _Unix-like_ já possuem por _default_).
++ Alguns pré-requisitos básicos podem ser vistos [aqui](https://chapel-lang.org/docs/usingchapel/prereqs.html#readme-prereqs) (a maioria são pacotes básicos que muitas das distribuições _Unix-like_ já possuem por _default_).
 
 + O download do _.tar_ contendo o código fonte pode ser feito [aqui](https://chapel-lang.org/download.html) (atualmente na versão 1.17.1).
 
@@ -69,7 +69,7 @@ Básico:
 ```
 
 - Compilar com a flag '<em>--fast</em>' ativa uma série de otimizações;
-- Se, no programa, for definido uma variável de configuração (ex. <em>config const name = "value";</em>), é possível setá-la com novos valores em tempo de execução:
+- Se uma variável de configuração (ex. <em>config const name = "value";</em>) for definida no programa, é possível setá-la com novos valores em tempo de execução:
 	
 ``` bash
 	$ ./file --name="novoValor"
@@ -81,14 +81,14 @@ Básico:
 <a name="lp-x10"></a>
 ## O que é X10?
 
-Liguaguem orientada a objetos [_open-source_](https://github.com/x10-lang/x10) baseada em Java, projetada para programação paralela intensiva. Assim como Chapel, é portável e escalável, suportando computação _high-end_ com milhões de tarefas concorrentes. Mantém algumas características presentes no Java, como por exemplo checagem estática e _garbage collection_. É compilada para C++ ou Java.
+Liguaguem orientada a objetos [_open-source_](https://github.com/x10-lang/x10) baseada em Java, projetada para programação paralela intensiva. Assim como Chapel, é portável e escalável, suportando computação _high-end_ com milhões de tarefas concorrentes. Mantém algumas características presentes no Java, como por exemplo checagem estática e _garbage collection_. O código em X10 é compilado para C++ ou Java.
 
 <a name="x10-install"></a>
 ## Instalação
 
 Duas formas principais, baseado no [guia oficial](http://x10-lang.org/releases/x10-release-261.html):
 
-- Realizando o _download_ do [X10DT](http://x10-lang.org/software/download-x10/latest-release.html), uma IDE baseada no Eclipse com editor, compilador e _debugger_.
+- Realizando o _download_ do [X10DT](http://x10-lang.org/software/download-x10/latest-release.html), uma IDE baseada no Eclipse com editor, compilador e _debugger_ inclusos.
 
 - Fazendo uso dos _pré-built_ binários disponíveis para algumas plataformas (ex. [Linux/x86_64](https://sourceforge.net/projects/x10/files/x10/2.6.1/x10-2.6.1_linux_x86_64.tgz/download) - opção escolhida para os testes). Atualmente a linguagem está no _release_ 2.6.1. 
 
@@ -116,19 +116,21 @@ X10 possui duas implementações:
 	- Otimizações sofisticadas e serviçõs em tempo de execução para funcionalidades de O.O. da linguagem;
 	- Implementada em uma JVM sem extensões (vanila), logo não consegue explorar algumas funcionalidades (ex. _workstealing_);
 	- Compilando e executando:
+	
 ``` bash
 	$ bin/x10c file 
 	$ bin/x10 file
 ```	
+
 \* Onde 'file' possuí o mesmo nome do arquivo '.x10' (apenas sem a extensão).
 
-Os desenvolvedores da linguaguem esperam tornar as implementações compatíveis entre si, de modo que, em um mesmo programa, existam partes que poderão ser executadas em Java e outras partes nativamente em C++.
+Os desenvolvedores da linguaguem esperam tornar as duas implementações compatíveis entre si, de modo que, em um mesmo programa, existam partes de código que poderão ser executadas em Java e outras partes nativamente em C++.
 
 <!-- ANALISE -->
 <a name="analise"></a>
 # Análise: _dot product_
 
-Para realizar a análise, foram realizados testes de performance de diferentes ferramentas de programação paralela no cálculo do produto escalar com repetições. Os programas recebem como parâmetros o número de unidades de paralelização (quando aplicado), o _worksize_ total (este valor é dividido entre as _N_ unidades de paralelização, diferentemente de outras versões do programa utilizados nos trabalhos anteriores) e o número de repetições do cálculo do produto escalar a serem realizadas. 
+Para a análise, foram realizados testes de performance de diferentes ferramentas de programação paralela no cálculo do produto escalar com repetições. Os programas recebem como parâmetros o número de unidades de paralelização (quando aplicado), o _worksize_ total (este valor é dividido entre as _N_ unidades de paralelização, diferentemente de outras versões do programa utilizadas nos trabalhos anteriores) e o número de repetições do cálculo do produto escalar a serem realizadas. 
 
 Desta forma, os seguintes casos de testes foram definidos { _worksize_, _repetitions_, [U.P.*] }.
 
@@ -215,7 +217,7 @@ Os testes foram aplicados nos seguintes contextos:
 
 Esta versão faz uso do _loop forall_. Este laço é uma variante paralela da construção comum _for_, sendo a principal forma para expressar paralelismo de dados em Chapel. O _loop forall_ pode usar um número arbitrário de tarefas (_tasks_) para executar as instruções dentro do laço, ou seja, pode vir a executar todas as iterações serialmente (única _task_) ou até mesmo vir a utilizar mais _tasks_ que o número de total de iterações (embora isso seja um evento incomum). 
 
-Isso acontece pois o número real de _tasks_ usadas para executar o laço é determinado pela própria construção _forall_. Sua política de escalonamento, além de utilizar informações dinâmicas (tamanho do _loop_, número de CPUs/_cores_ disponíveis na máquina, etc.) para selecionar o número de _tasks_, também é responsável por determinar onde as _tasks_ serão executadas e como as iterações do laço serão divididas entre elas.
+Isto acontece pois o número real de _tasks_ usadas para executar o laço é determinado pela própria construção _forall_. Sua política de escalonamento, além de utilizar informações dinâmicas (tamanho do _loop_, número de CPUs/_cores_ disponíveis na máquina, etc.) para selecionar o número de _tasks_ a serem criadas, também é responsável por determinar onde estas _tasks_ serão executadas e como as iterações do laço serão divididas entre elas.
 
 - Código fonte: [dot_prod_alt1.chpl](chapel/dot_prod_alt1.chpl)
 - Compilação: [compile.sh](chapel/compile.sh)
@@ -249,7 +251,7 @@ Este programa faz uso de _function promotion_ (ou simplesmente _promotion_), que
 
 + Versão 3:
 
-As versões anteriores não permitem determinar um número exato de _tasks_ a serem criadas ao decorrer das iterações do laço. Pensando nisso, este programa utiliza a construção _coforall_, que cria uma _task_ distinta por iteração, permitindo controlar a quantidade de _tasks_ a serem usadas no cálculo.
+As versões anteriores não permitem determinar explicitamente o número exato de _tasks_ a serem criadas pelo programa. Pensando nisso, esta versão utiliza a construção _coforall_, que realiza a criação de uma _task_ distinta por iteração do _loop_, permitindo o controle da quantidade de _tasks_ a serem geradas durante a execução do cálculo.
 
 - Código fonte: [dot_prod_ntasks.chpl](chapel/dot_prod_ntasks.chpl)
 - Compilação: [compile.sh](chapel/compile.sh)
@@ -298,14 +300,20 @@ As versões anteriores não permitem determinar um número exato de _tasks_ a se
 <a name="comparacao"></a>
 ## Comparação
 
-As médias de desempenho (em segundos) podem ser vistas a seguir:
+As médias de desempenho (em segundos) podem ser vistas na tabela a seguir:
 
 <p align="center">
      <img src="analise/desempenho.png" />
 </p>
 
 
-### Speedup
+### _Speedup_
+
+Tomando como base os resultados da <a href="sequencial">execução sequencial</a>, o fator de aceleração (_speedup_) pode ser calculado da seguinte maneira:
+
+<p align="center"><img src="https://latex.codecogs.com/svg.latex?S(p)%3D%5Cfrac%7Bt_s%7D%7Bt_p%7D" alt="speedup formula" /></p>
+
+Onde _p_ equivale a quantidade de processadores, <i>t<sub>s</sub></i> equivale ao tempo de execução serial e <i>t<sub>p</sub></i> ao tempo de execução paralelo. Sendo assim, os seguintes resultados foram obtidos:
 
 <p align="center">
      <img src="analise/speedup.png" />
