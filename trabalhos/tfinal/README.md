@@ -309,7 +309,7 @@ As médias de desempenho (em segundos) podem ser vistas na tabela a seguir:
 
 ### _Speedup_
 
-Tomando como base os resultados da <a href="sequencial">execução sequencial</a>, o fator de aceleração (_speedup_) pode ser calculado da seguinte maneira:
+Tomando como base os resultados da <a href="#sequencial">execução sequencial</a>, o fator de aceleração (_speedup_) pode ser calculado da seguinte maneira:
 
 <p align="center"><img src="https://latex.codecogs.com/svg.latex?S(p)%3D%5Cfrac%7Bt_s%7D%7Bt_p%7D" alt="speedup formula" /></p>
 
@@ -318,7 +318,6 @@ Onde _p_ equivale a quantidade de processadores, <i>t<sub>s</sub></i> equivale a
 <p align="center">
      <img src="analise/speedup.png" />
 </p>
-
 
 - Os dados completos podem ser vistos em: [analise-dotprod.pdf](analise/analise-dotprod.pdf) / [analise-dotprod.ods](analise/analise-dotprod.ods).
 
