@@ -51,11 +51,13 @@ void dotprod_omp(int nthreads)
          }
       }
       /* identifica uma seção de código (critical section) que deve ser executada de maneira serializada */
-      #pragma omp critical
+      /* #pragma omp critical
       {
          dotdata.c += mysum;
-      }
+      } */
    }
+   
+   dotdata.c = mysum;
 }
 
 /*
